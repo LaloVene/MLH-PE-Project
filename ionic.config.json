@@ -1,0 +1,7 @@
+{
+  "name": "MLH-PE-Project",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
