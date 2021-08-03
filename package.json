@@ -42,6 +42,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start-api": "cd api && venv/bin/flask run --no-debugger",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -67,5 +68,6 @@
   "devDependencies": {
     "@capacitor/cli": "3.1.2"
   },
+  "proxy": "http://localhost:5000",
   "description": "An Ionic project"
 }
