@@ -83,9 +83,11 @@ const Login: React.FC = () => {
                 value={username}
                 onIonChange={(e: { detail: { value: any; }; }) => setUsername(e.detail.value!)}
               >
-
-
               </IonInput>
+            </IonItem>
+
+            <IonItem>
+
               <IonLabel position="floating"> Password</IonLabel>
               <IonInput
                 type="password"
@@ -93,9 +95,14 @@ const Login: React.FC = () => {
                 onIonChange={(e: { detail: { value: any; }; }) => setPassword(e.detail.value!)}
               >
               </IonInput>
+            </IonItem>
+            <IonItem>
+
               <IonButton expand="block" onClick={onSubmitClick}>
                 Login
               </IonButton>
+            </IonItem>
+            <IonItem>
               <IonButton expand="block" onClick={onRegisterClick}>
                 Register
 

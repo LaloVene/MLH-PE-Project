@@ -1,4 +1,4 @@
-import { UseIonAlertResult, IonButton, IonCol, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonRow, IonTitle, IonToolbar, useIonAlert } from '@ionic/react';
+import { UseIonAlertResult, IonButton, IonCol, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonRow, IonTitle, IonToolbar, useIonAlert, IonSelect, IonSelectOption } from '@ionic/react';
 import React, { useState } from 'react';
 import ExploreContainer from '../components/ExploreContainer';
 import './Tab3.css';
@@ -9,6 +9,7 @@ const Register: React.FC = () => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [github, setGithub] = useState('')
+  const [languages, setLanguages] = useState<string[]>([]);
   const [present] = useIonAlert()
 
   const onSubmitClick = async (e: { preventDefault: () => void; }) => {
@@ -20,26 +21,49 @@ const Register: React.FC = () => {
       'username': username,
       'password': password,
       'github': github,
-      'email': email
+      'email': email,
+    }
+
+    let langopts = {
+      'username': username,
+      'languages': languages
     }
     console.log(opts)
+    const langresp = await fetch('/api/addLanguage', {
+      method: 'POST',
+      headers: {
+
+      },
+      body: JSON.stringify(langopts)
+    }).then(r => r.json())
+      .then(resp => {
+        msg = "Success!"
+        console.log(resp)
+        if (resp.status != "ok") {
+          msg = resp.message
+        }
+      })
+
+
+
     const finalresp = await fetch('/api/register', {
       method: 'post',
+
       body: JSON.stringify(opts)
     }).then(r => r.json())
       .then(resp => {
+
         console.log(resp)
         if (resp.status == "ok") {
           window.open("/tab2")
-          msg = resp.message
-          console.log("Correct,take to login")
-
         }
         else {
           msg = resp.message
 
         }
       })
+
+
     return present({
       cssClass: 'my-css',
       header: msg,
@@ -67,6 +91,9 @@ const Register: React.FC = () => {
         <ExploreContainer name="Register" />
         <IonRow>
           <IonCol>
+
+
+
             <IonItem>
               <IonLabel position="floating"> Name</IonLabel>
               <IonInput
@@ -75,7 +102,9 @@ const Register: React.FC = () => {
                 onIonChange={(e: { detail: { value: any; }; }) => setName(e.detail.value!)}
               >
               </IonInput>
+            </IonItem>
 
+            <IonItem>
               <IonLabel position="floating"> Username</IonLabel>
               <IonInput
                 type="text"
@@ -83,7 +112,10 @@ const Register: React.FC = () => {
                 onIonChange={(e: { detail: { value: any; }; }) => setUsername(e.detail.value!)}
               >
               </IonInput>
+            </IonItem>
 
+
+            <IonItem>
               <IonLabel position="floating"> Email</IonLabel>
               <IonInput
                 type="email"
@@ -92,6 +124,9 @@ const Register: React.FC = () => {
               >
               </IonInput>
 
+            </IonItem>
+
+            <IonItem>
               <IonLabel position="floating"> Password</IonLabel>
               <IonInput
                 type="password"
@@ -99,7 +134,9 @@ const Register: React.FC = () => {
                 onIonChange={(e: { detail: { value: any; }; }) => setPassword(e.detail.value!)}
               >
               </IonInput>
+            </IonItem>
 
+            <IonItem>
               <IonLabel position="floating"> Github</IonLabel>
               <IonInput
                 type="url"
@@ -107,13 +144,27 @@ const Register: React.FC = () => {
                 onIonChange={(e: { detail: { value: any; }; }) => setGithub(e.detail.value!)}
               >
               </IonInput>
-
-
-
-              <IonButton expand="block" onClick={onSubmitClick}>
-                Register
-              </IonButton>
             </IonItem>
+
+            <IonRow>
+              <IonItem>
+                <IonLabel>Languages</IonLabel>
+                <IonSelect value={languages} multiple={true} cancelText="Close" okText="Done" onIonChange={e => setLanguages(e.detail.value)}>
+                  <IonSelectOption value="Python">Python</IonSelectOption>
+                  <IonSelectOption value="Java">Java</IonSelectOption>
+                  <IonSelectOption value="Javascript">Javascript</IonSelectOption>
+                  <IonSelectOption value="C">C</IonSelectOption>
+                </IonSelect>
+              </IonItem>
+
+              <IonItem>Languages: {languages.length ? languages.join(", ") : '(none selected)'}</IonItem>
+              {/* <IonItem>Pets: {interests.length ? interests.join(", ") : '(none selected)'}</IonItem> */}
+            </IonRow>
+
+            <IonButton expand="block" onClick={onSubmitClick}>
+              Register
+            </IonButton>
+
           </IonCol>
         </IonRow>
       </IonContent>
