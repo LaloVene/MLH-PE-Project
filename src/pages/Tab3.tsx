@@ -1,22 +1,90 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
+import { IonCol, IonContent, IonGrid, IonHeader, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+import ProjectCard from '../components/ProjectCard';
+import Profile from '../components/Profile';
 import './Tab3.css';
+import styled from 'styled-components'
+import Tag from '../components/Tag';
+
+
+const Title = styled.h4`
+    margin-bottom: 20px;
+`;
+
+const Wrapper = styled.div`
+    max-width: 1200px;
+    margin: auto;
+`;
+
+const Section = styled.div`
+    width: 50%;
+    position: relative;
+`
+const TagSection = styled.div`
+    display: flex;
+`
+
+const Row = styled.div`
+    display: flex;
+`
 
 const Tab3: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Tab 3</IonTitle>
+          <IonTitle>Profile</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
+    <IonContent>
+        <Wrapper>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Tab 3</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <ExploreContainer name="Tab 3 page" />
+                <IonTitle size="large">Profile</IonTitle>
+        </IonToolbar>
+            </IonHeader>
+                  <Profile name="Profile Name" username="Profile Username" bio="Profile bio" />
+                  <Row>
+                      <Section>
+                            <Title>
+                                Languages
+                          </Title>
+                          <TagSection>
+
+                            <Tag text="Python"/>
+                            <Tag text="JavaScript"/>
+                          </TagSection>
+                        </Section>
+                      <Section>
+                        <Title>
+                            Interests
+                          </Title>
+                          <TagSection>
+
+                            <Tag text="Machine Learning"/>
+                            <Tag text="Algorithms"/>
+                          </TagSection>
+                    </Section>
+                  </Row>
+              <Title>
+                  Projects
+              </Title>
+ 
+              <IonGrid>
+                  <IonRow>
+                    <IonCol>
+                        <ProjectCard username="User1" title="Card title" description="Card description"/>
+                    </IonCol>
+                    <IonCol>
+                        <ProjectCard username="User2" title="Card title" description="Card description"/>
+                    </IonCol>
+                    <IonCol>
+                        <ProjectCard username="User3" title="Card title" description="Card description"/>
+                    </IonCol>
+                  </IonRow>
+              </IonGrid>
+              </Wrapper>
+
+
       </IonContent>
     </IonPage>
   );
