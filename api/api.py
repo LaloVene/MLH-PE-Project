@@ -2,7 +2,7 @@ import os
 from flask import ( Flask , request, jsonify )
 from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
-from datetime import datetime
+from datetime import date, datetime
 import json
 
 # import smtplib
@@ -109,11 +109,14 @@ class ProjectModel(db.Model):
     title = db.Column(db.String())
     description = db.Column(db.Text())
     url = db.Column(db.String())
+    owner = db.Column(db.String())
+    date = db.Column(db.DateTime, default=datetime.utcnow)
 
-    def __init__(self, title, description, url):
+    def __init__(self, title, description, url, owner):
         self.title = title
         self.description = description
         self.url = url
+        self.owner = owner
     def __repr__(self):
         return f"<Project {self.title}>"
 
@@ -307,6 +310,8 @@ def addUserTopic():
 
         if not username or not topic:
             error = "Missing Data"
+        elif TopicModel.query.filter_by(name=topic).first() is None:
+            error = f"Topic {topic} does not exist"
         elif RelUserTopic.query.filter_by(username=username, topicName=topic).first() is not None:
             error = f"User {username} already has topic {topic}"
 
@@ -442,6 +447,8 @@ def addUserLanguage():
 
         if not username or not language:
             error = "Missing Data"
+        elif LanguageModel.query.filter_by(name=language).first() is None:
+            error = f"Language {language} does not exist"
         elif RelUserLanguage.query.filter_by(username=username, langName=language).first() is not None:
             error = f"User {username} already has language {language}"
 
@@ -497,6 +504,388 @@ def deleteUserLanguage():
             RelUserLanguage.query.filter_by(id=id).delete()
             db.session.commit()
             message = f"Language with id {id} removed"
+            return jsonify({"status": "ok", "message": message}), 200
+        else:
+            return jsonify({"status": "bad", "error": error}), 400
+
+    except:
+        return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
+
+########### PROJECTS ##############
+@app.route('/api/addProject', methods=("POST",))
+def addProject():
+    try:
+        body = request.get_json()
+        title = str(body['title'])
+        description = str(body['description'])
+        url = str(body['url'])
+        owner = str(body['owner'])
+        error = None
+
+        if not title or not description or not url or not owner:
+            error = "Missing Data"
+        elif UserModel.query.filter_by(username=owner).first() is None:
+            error = f"User {owner} does not exist"
+
+        if error is None:
+            add_project = ProjectModel(title, description, url, owner)
+            db.session.add(add_project)
+            db.session.commit()
+            message = f"Added Project {title} successfully"
+            return jsonify({"status": "ok", "message": message}), 200
+        else:
+            return jsonify({"status": "bad", "error": error}), 400
+
+    except:
+        return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
+
+@app.route('/api/getProjects', methods=("GET",))
+def getProjects():
+    try:
+        response = ProjectModel.query.all()
+        projects = []
+        for item in response:
+            projects.append({
+                "id": item.id,
+                "owner": item.owner,
+                "title": item.title,
+                "description": item.description,
+                "url": item.url,
+                "date": item.date
+                })
+        return jsonify({"projects": projects}), 200
+    except:
+        return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
+
+@app.route('/api/deleteProject', methods=("DELETE",))
+def deleteProject():
+    try:
+        body = request.get_json()
+        id = str(body['id'])
+        owner = str(body['owner'])
+        error = None
+
+        if not id:
+            error = "Missing Data"
+        elif ProjectModel.query.filter_by(id=id, owner=owner).first() is None:
+            error = f"No project with id {id} or {owner} is not the owner"
+
+        if error is None:
+            ProjectModel.query.filter_by(id=id).delete()
+            RelUserInProject.query.filter_by(projectId=id).delete()
+            RelUserFavProject.query.filter_by(projectId=id).delete()
+            RelProjectTopic.query.filter_by(projectId=id).delete()
+            RelProjectLanguage.query.filter_by(projectId=id).delete()
+            db.session.commit()
+            message = f"Project with id {id} removed"
+            return jsonify({"status": "ok", "message": message}), 200
+        else:
+            return jsonify({"status": "bad", "error": error}), 400
+
+    except:
+        return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
+
+########### USER IN PROJECTS ##############
+@app.route('/api/addUserInProject', methods=("POST",))
+def addUserInProject():
+    try:
+        body = request.get_json()
+        username = str(body['username'])
+        projectId = str(body['projectId'])
+        error = None
+
+        if not username or not projectId:
+            error = "Missing Data"
+        elif UserModel.query.filter_by(username=username).first() is None:
+            error = f"User {username} does not exist"
+        elif ProjectModel.query.filter_by(id=projectId).first() is None:
+            error = f"Project with id {projectId} does not exist"
+        elif RelUserInProject.query.filter_by(username=username, projectId=projectId).first() is not None:
+            error = f"User {username} is already part of project with id {projectId}"
+
+        if error is None:
+            add_user = RelUserInProject(username, projectId)
+            db.session.add(add_user)
+            db.session.commit()
+            message = f"User {username} added to project {projectId} successfully"
+            return jsonify({"status": "ok", "message": message}), 200
+        else:
+            return jsonify({"status": "bad", "error": error}), 400
+
+    except:
+        return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
+
+@app.route('/api/getUsersInProject', methods=("POST",))
+def getUsersInProject():
+    try:
+        body = request.get_json()
+        projectId = str(body['projectId'])
+        error = None
+
+        if not projectId:
+            error = "Missing Data"
+
+        if error is None:
+            response = RelUserInProject.query.filter_by(projectId=projectId).all()
+            users = []
+            for item in response:
+                users.append({
+                    "username": item.username
+                    })
+            return jsonify({"users": users}), 200
+        else:
+            return jsonify({"status": "bad", "error": error}), 400
+    except:
+        return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
+
+@app.route('/api/deleteUserInProject', methods=("DELETE",))
+def deleteUserInProject():
+    try:
+        body = request.get_json()
+        projectId = str(body['projectId'])
+        username = str(body['username'])
+        error = None
+
+        if not projectId:
+            error = "Missing Data"
+        elif RelUserInProject.query.filter_by(username=username, projectId=projectId).first() is None:
+            error = f"User is not in project with id {projectId}"
+
+        if error is None:
+            RelUserInProject.query.filter_by(username=username, projectId=projectId).delete()
+            db.session.commit()
+            message = f"User {username} was removed from project with id {projectId} removed"
+            return jsonify({"status": "ok", "message": message}), 200
+        else:
+            return jsonify({"status": "bad", "error": error}), 400
+
+    except:
+        return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
+
+########### USER FAVORITE PROJECTS ##############
+@app.route('/api/addUserFavProject', methods=("POST",))
+def addUserFavProject():
+    try:
+        body = request.get_json()
+        username = str(body['username'])
+        projectId = str(body['projectId'])
+        error = None
+
+        if not username or not projectId:
+            error = "Missing Data"
+        elif UserModel.query.filter_by(username=username).first() is None:
+            error = f"User {username} does not exist"
+        elif ProjectModel.query.filter_by(id=projectId).first() is None:
+            error = f"Project with id {projectId} does not exist"
+        elif RelUserFavProject.query.filter_by(username=username, projectId=projectId).first() is not None:
+            error = f"User {username} already has as favorite the project with id {projectId}"
+
+        if error is None:
+            add_user = RelUserFavProject(username, projectId)
+            db.session.add(add_user)
+            db.session.commit()
+            message = f"User {username} added to favorites the project with id {projectId} successfully"
+            return jsonify({"status": "ok", "message": message}), 200
+        else:
+            return jsonify({"status": "bad", "error": error}), 400
+
+    except:
+        return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
+
+@app.route('/api/getUsersFavProject', methods=("POST",))
+def getUsersFavProject():
+    try:
+        body = request.get_json()
+        projectId = str(body['projectId'])
+        error = None
+
+        if not projectId:
+            error = "Missing Data"
+
+        if error is None:
+            response = RelUserFavProject.query.filter_by(projectId=projectId).all()
+            users = []
+            for item in response:
+                users.append({
+                    "username": item.username
+                    })
+            return jsonify({"users": users}), 200
+        else:
+            return jsonify({"status": "bad", "error": error}), 400
+    except:
+        return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
+
+@app.route('/api/deleteUserFavProject', methods=("DELETE",))
+def deleteUserFavProject():
+    try:
+        body = request.get_json()
+        projectId = str(body['projectId'])
+        username = str(body['username'])
+        error = None
+
+        if not projectId:
+            error = "Missing Data"
+        elif RelUserFavProject.query.filter_by(username=username, projectId=projectId).first() is None:
+            error = f"User does not have as favorite the project with id {projectId}"
+
+        if error is None:
+            RelUserFavProject.query.filter_by(username=username, projectId=projectId).delete()
+            db.session.commit()
+            message = f"User {username} had removed from favorites the project with id {projectId}"
+            return jsonify({"status": "ok", "message": message}), 200
+        else:
+            return jsonify({"status": "bad", "error": error}), 400
+
+    except:
+        return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
+
+########### TOPIC PROJECTS ##############
+@app.route('/api/addProjectTopic', methods=("POST",))
+def addProjectTopic():
+    try:
+        body = request.get_json()
+        topic = str(body['topic'])
+        projectId = str(body['projectId'])
+        error = None
+
+        if not topic or not projectId:
+            error = "Missing Data"
+        elif TopicModel.query.filter_by(name=topic).first() is None:
+            error = f"Topic {topic} does not exist"
+        elif ProjectModel.query.filter_by(id=projectId).first() is None:
+            error = f"Project with id {projectId} does not exist"
+        elif RelProjectTopic.query.filter_by(topic=topic, projectId=projectId).first() is not None:
+            error = f"Topic {topic} already is in the project with id {projectId}"
+
+        if error is None:
+            add_topic = RelProjectTopic(topic, projectId)
+            db.session.add(add_topic)
+            db.session.commit()
+            message = f"Topic {topic} added to the project with id {projectId} successfully"
+            return jsonify({"status": "ok", "message": message}), 200
+        else:
+            return jsonify({"status": "bad", "error": error}), 400
+
+    except:
+        return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
+
+@app.route('/api/getProjectTopics', methods=("POST",))
+def getProjectTopics():
+    try:
+        body = request.get_json()
+        projectId = str(body['projectId'])
+        error = None
+
+        if not projectId:
+            error = "Missing Data"
+
+        if error is None:
+            response = RelProjectTopic.query.filter_by(projectId=projectId).all()
+            topics = []
+            for item in response:
+                topics.append({
+                    "topic": item.topic
+                    })
+            return jsonify({"topics": topics}), 200
+        else:
+            return jsonify({"status": "bad", "error": error}), 400
+    except:
+        return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
+
+@app.route('/api/deleteProjectTopic', methods=("DELETE",))
+def deleteProjectTopic():
+    try:
+        body = request.get_json()
+        projectId = str(body['projectId'])
+        topic = str(body['topic'])
+        error = None
+
+        if not projectId:
+            error = "Missing Data"
+        elif RelProjectTopic.query.filter_by(topic=topic, projectId=projectId).first() is None:
+            error = f"Topic not in project with id {projectId}"
+
+        if error is None:
+            RelProjectTopic.query.filter_by(topic=topic, projectId=projectId).delete()
+            db.session.commit()
+            message = f"Topic {topic} removed from the project with id {projectId}"
+            return jsonify({"status": "ok", "message": message}), 200
+        else:
+            return jsonify({"status": "bad", "error": error}), 400
+
+    except:
+        return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
+
+########### LANGUAGE PROJECTS ##############
+@app.route('/api/addProjectLanguage', methods=("POST",))
+def addProjectLanguage():
+    try:
+        body = request.get_json()
+        language = str(body['language'])
+        projectId = str(body['projectId'])
+        error = None
+
+        if not language or not projectId:
+            error = "Missing Data"
+        elif LanguageModel.query.filter_by(name=language).first() is None:
+            error = f"Language {language} does not exist"
+        elif ProjectModel.query.filter_by(id=projectId).first() is None:
+            error = f"Project with id {projectId} does not exist"
+        elif RelProjectLanguage.query.filter_by(language=language, projectId=projectId).first() is not None:
+            error = f"Language {language} already is in the project with id {projectId}"
+
+        if error is None:
+            add_language = RelProjectLanguage(language, projectId)
+            db.session.add(add_language)
+            db.session.commit()
+            message = f"Language {language} added to the project with id {projectId} successfully"
+            return jsonify({"status": "ok", "message": message}), 200
+        else:
+            return jsonify({"status": "bad", "error": error}), 400
+
+    except:
+        return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
+
+@app.route('/api/getProjectLanguages', methods=("POST",))
+def getProjectLanguages():
+    try:
+        body = request.get_json()
+        projectId = str(body['projectId'])
+        error = None
+
+        if not projectId:
+            error = "Missing Data"
+
+        if error is None:
+            response = RelProjectLanguage.query.filter_by(projectId=projectId).all()
+            languages = []
+            for item in response:
+                languages.append({
+                    "language": item.language
+                    })
+            return jsonify({"languages": languages}), 200
+        else:
+            return jsonify({"status": "bad", "error": error}), 400
+    except:
+        return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
+
+@app.route('/api/deleteProjectLanguage', methods=("DELETE",))
+def deleteProjectLanguage():
+    try:
+        body = request.get_json()
+        projectId = str(body['projectId'])
+        language = str(body['language'])
+        error = None
+
+        if not projectId:
+            error = "Missing Data"
+        elif RelProjectLanguage.query.filter_by(language=language, projectId=projectId).first() is None:
+            error = f"Language not in project with id {projectId}"
+
+        if error is None:
+            RelProjectLanguage.query.filter_by(language=language, projectId=projectId).delete()
+            db.session.commit()
+            message = f"Language {language} removed from the project with id {projectId}"
             return jsonify({"status": "ok", "message": message}), 200
         else:
             return jsonify({"status": "bad", "error": error}), 400
