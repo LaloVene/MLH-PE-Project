@@ -1,2 +1,6 @@
 FLASK_APP=api.py
 FLASK_ENV=development
+POSTGRES_USER=admin
+POSTGRES_PASSWORD=supersecretpassword
+POSTGRES_HOST=db
+POSTGRES_DB=api

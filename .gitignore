@@ -26,3 +26,8 @@ yarn-error.log*
 
 # Optional eslint cache
 .eslintcache
+
+venv
+__pycache__
+*.pyc
+.env

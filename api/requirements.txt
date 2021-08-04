@@ -1,8 +1,17 @@
 click==8.0.1
+colorama==0.4.4
 Flask==2.0.1
+Flask-Migrate==3.0.1
+Flask-SQLAlchemy==2.5.1
+greenlet==1.1.0
 gunicorn==20.1.0
+importlib-metadata==4.5.0
 itsdangerous==2.0.1
 Jinja2==3.0.1
 MarkupSafe==2.0.1
+psycopg2-binary==2.9.1
 python-dotenv==0.17.1
+SQLAlchemy==1.4.18
+typing-extensions==3.10.0.0
 Werkzeug==2.0.1
+zipp==3.4.1
