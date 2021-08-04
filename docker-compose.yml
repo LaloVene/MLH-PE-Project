@@ -1,13 +1,39 @@
 services:
   api:
+    container_name: api
+    restart: always
+    ports:
+    - "5000:5000"
+    env_file:
+      - .env
     build:
       context: .
       dockerfile: Dockerfile.api
     image: react-flask-app-api
-  client:
-    build:
-      context: .
-      dockerfile: Dockerfile.client
-    image: react-flask-app-client
-    ports:
-      - "3000:80"
+    volumes:
+      - .:/api
+    depends_on:
+      - db
+  
+  db:
+    container_name: db
+    restart: always
+    image: postgres
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - mydatabase:/var/lib/postgresql/data
+  
+  # Comment out the following line if you don't want to run api
+  # client:
+  #   container_name: client
+  #   restart: unless-stopped
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.client
+  #   image: react-flask-app-client
+  #   ports:
+  #     - "3000:80"
+volumes:
+  mydatabase:
