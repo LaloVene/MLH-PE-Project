@@ -9,8 +9,9 @@ import {
   IonTabs,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, square, triangle, analyticsOutline } from 'ionicons/icons';
+import { grid, layers, analyticsOutline } from 'ionicons/icons';
 import Home from './pages/Home';
+import Categories from './pages/Categories.page';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
@@ -40,8 +41,9 @@ const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonTabs>
+        
         <IonRouterOutlet>
-          <Route exact path="/Home">
+          <Route exact path="/projects">
             <Home />
           </Route>
           <Route exact path="/Login">
@@ -56,13 +58,21 @@ const App: React.FC = () => (
           <Route exact path="/Profile">
             <Profile />
           </Route>
+          <Route exact path="/categories">
+            <Categories />
+          </Route>
         </IonRouterOutlet>
+
         <IonTabBar slot="bottom">
-          <IonTabButton tab="Home" href="/Home">
-            <IonIcon icon={triangle} />
-            <IonLabel>Home</IonLabel>
+          <IonTabButton tab="Projects" href="/projects">
+            <IonIcon icon={layers} />
+            <IonLabel>Projects</IonLabel>
           </IonTabButton>
 
+          <IonTabButton tab="Categories" href="/categories">
+            <IonIcon icon={grid} />
+            <IonLabel>Categories</IonLabel>
+          </IonTabButton>
 
           <IonTabButton tab="Profile" href="/Profile">
             <IonIcon icon={analyticsOutline} />
