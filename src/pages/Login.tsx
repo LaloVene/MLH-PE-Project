@@ -13,7 +13,7 @@ const Login: React.FC = () => {
   const [present] = useIonAlert();
 
   const onRegisterClick = () => {
-    window.open("/tab3", "_blank")
+    window.open("/Register", "_blank")
 
   }
   const onSubmitClick = async (e: { preventDefault: () => void; }) => {
@@ -26,6 +26,7 @@ const Login: React.FC = () => {
       'password': password
     }
     console.log(opts)
+
     const finalresp = await fetch('/api/login', {
       method: 'post',
       headers: {
@@ -36,7 +37,7 @@ const Login: React.FC = () => {
       .then(resp => {
         console.log(resp)
         if (resp.status == "ok") {
-          window.open("/tab4")
+          window.open("/Profile")
           msg = "Successfully logged in"
 
         }
