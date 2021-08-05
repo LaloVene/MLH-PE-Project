@@ -85,7 +85,7 @@ const Register: React.FC = () => {
       .then(resp => {
 
         if (resp.status == "ok") {
-          window.open("/Login")
+          window.location.href = ("/Login")
         }
         else {
           msg = resp.message

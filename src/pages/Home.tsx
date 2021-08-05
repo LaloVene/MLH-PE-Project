@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import {
+  IonButton,
   IonContent,
   IonHeader,
+  IonItem,
   IonPage,
   IonTitle,
   IonToolbar,
@@ -33,7 +35,12 @@ function Home() {
             <IonTitle size="large">Home</IonTitle>
           </IonToolbar>
         </IonHeader>
+        <IonItem>
+          <IonButton routerLink="/Login" routerDirection="root" expand="block">
+            Login
 
+          </IonButton>
+        </IonItem>
         <p>The current time is {currentTime}.</p>
       </IonContent>
     </IonPage>
