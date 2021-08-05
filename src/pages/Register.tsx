@@ -85,7 +85,7 @@ const Register: React.FC = () => {
       .then(resp => {
 
         if (resp.status == "ok") {
-          window.open("/tab2")
+          window.open("/Login")
         }
         else {
           msg = resp.message
