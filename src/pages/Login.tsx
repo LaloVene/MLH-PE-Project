@@ -33,7 +33,9 @@ const Login: React.FC = () => {
       .then(resp => {
         console.log(resp)
         if (resp.status == "ok") {
+
           window.location.href = ("/Profile")
+
           msg = "Successfully logged in"
 
         }
