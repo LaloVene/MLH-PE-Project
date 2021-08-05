@@ -7,9 +7,9 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import ExploreContainer from "../components/ExploreContainer";
-import "./Tab1.css";
+import "./Home.css";
 
-function Tab1() {
+function Home() {
   const [currentTime, setCurrentTime] = useState(0);
 
   useEffect(() => {
@@ -24,20 +24,20 @@ function Tab1() {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Tab 1</IonTitle>
+          <IonTitle>Home</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Tab 1</IonTitle>
+            <IonTitle size="large">Home</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <ExploreContainer name="Tab 1 page" />
+
         <p>The current time is {currentTime}.</p>
       </IonContent>
     </IonPage>
   );
 }
 
-export default Tab1;
+export default Home;

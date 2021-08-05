@@ -1,7 +1,7 @@
 import { IonCol, IonContent, IonGrid, IonHeader, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import ProjectCard from '../components/ProjectCard';
 import Profile from '../components/Profile';
-import './Tab3.css';
+import './Register.css';
 import styled from 'styled-components'
 import Tag from '../components/Tag';
 

@@ -1,7 +1,7 @@
 import { UseIonAlertResult, IonButton, IonCol, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonRow, IonTitle, IonToolbar, useIonAlert, IonSelect, IonSelectOption } from '@ionic/react';
 import React, { useState } from 'react';
 import ExploreContainer from '../components/ExploreContainer';
-import './Tab3.css';
+import './Register.css';
 
 const Register: React.FC = () => {
   const [username, setUsername] = useState('')
@@ -10,11 +10,12 @@ const Register: React.FC = () => {
   const [email, setEmail] = useState('')
   const [github, setGithub] = useState('')
   const [languages, setLanguages] = useState<string[]>([]);
+  const [topics, setTopics] = useState<string[]>([]);
+
   const [present] = useIonAlert()
 
   const onSubmitClick = async (e: { preventDefault: () => void; }) => {
     e.preventDefault()
-    console.log("You pressed register")
     var msg = ""
     let opts = {
       'name': name,
@@ -24,25 +25,52 @@ const Register: React.FC = () => {
       'email': email,
     }
 
-    let langopts = {
-      'username': username,
-      'languages': languages
-    }
-    console.log(opts)
-    // const langresp = await fetch('/api/addLanguage', {
-    //   method: 'POST',
-    //   headers: {
 
-    //   },
-    //   body: JSON.stringify(langopts)
-    // }).then(r => r.json())
-    //   .then(resp => {
-    //     msg = "Success!"
-    //     console.log(resp)
-    //     if (resp.status != "ok") {
-    //       msg = resp.message
-    //     }
-    //   })
+    languages.forEach(function (lang) {
+      fetch('/api/addUserLanguage', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'username': username,
+          'language': lang
+        })
+      }).then(r => r.json())
+        .then(resp => {
+
+          if (resp.status == "ok") {
+            console.log(resp.message)
+          }
+          else {
+            console.log(resp.error)
+          }
+        })
+    })
+
+    topics.forEach(function (topic) {
+      fetch('/api/addUserTopic', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'username': username,
+          'topic': topic
+        })
+      }).then(r => r.json())
+        .then(resp => {
+
+          console.log(topic)
+          if (resp.status == "ok") {
+            console.log(resp.message)
+          }
+          else {
+            console.log(resp.error)
+          }
+        })
+    })
+
 
 
 
@@ -56,7 +84,6 @@ const Register: React.FC = () => {
     }).then(r => r.json())
       .then(resp => {
 
-        console.log(resp)
         if (resp.status == "ok") {
           window.open("/tab2")
         }
@@ -149,7 +176,7 @@ const Register: React.FC = () => {
               </IonInput>
             </IonItem>
 
-            {/* <IonRow>
+            <IonRow>
               <IonItem>
                 <IonLabel>Languages</IonLabel>
                 <IonSelect value={languages} multiple={true} cancelText="Close" okText="Done" onIonChange={e => setLanguages(e.detail.value)}>
@@ -160,9 +187,20 @@ const Register: React.FC = () => {
                 </IonSelect>
               </IonItem>
 
-              <IonItem>Languages: {languages.length ? languages.join(", ") : '(none selected)'}</IonItem> */}
-            {/* <IonItem>Pets: {interests.length ? interests.join(", ") : '(none selected)'}</IonItem> */}
-            {/* </IonRow> */}
+              <IonItem>Languages: {languages.length ? languages.join(", ") : '(none selected)'}</IonItem>
+            </IonRow>
+            <IonRow>
+              <IonItem>
+                <IonLabel>Interests</IonLabel>
+                <IonSelect value={topics} multiple={true} cancelText="Close" okText="Done" onIonChange={e => setTopics(e.detail.value)}>
+                  <IonSelectOption value="Machine Learning">Machine Learning</IonSelectOption>
+                  <IonSelectOption value="DevOps">DevOps</IonSelectOption>
+                  <IonSelectOption value="Distributed Systems">Distributed Systems</IonSelectOption>
+                  <IonSelectOption value="Artifical Intelligence">Artifical Intelligence</IonSelectOption>
+                </IonSelect>
+              </IonItem>
+              <IonItem>Topics: {topics.length ? topics.join(", ") : '(none selected)'}</IonItem>
+            </IonRow>
 
             <IonButton expand="block" onClick={onSubmitClick}>
               Register

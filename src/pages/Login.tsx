@@ -1,7 +1,7 @@
 import { useIonAlert, IonButton, IonCol, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import React, { useState } from 'react';
 import ExploreContainer from '../components/ExploreContainer';
-import './Tab2.css';
+import './Login.css';
 
 
 
