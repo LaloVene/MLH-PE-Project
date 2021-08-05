@@ -1,26 +1,37 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
-  IonButton,
   IonContent,
   IonHeader,
-  IonItem,
   IonPage,
   IonTitle,
   IonToolbar,
+  IonRow,
+  IonCol
 } from "@ionic/react";
-import ExploreContainer from "../components/ExploreContainer";
-import "./Home.css";
+import styled from "styled-components";
+import SectionTitle from "../components/SectionTitle.component";
+import ProjectCard from "../components/ProjectCard.component";
+import CategoryButton from "../components/CategoryButton.component";
+import projects from "../utils/projects.json";
+import categories from "../utils/categories.json";
+
+const Container = styled.div`
+  padding: 1rem;
+`;
+const Separator = styled.div`
+  margin: 3rem 0;
+`;
 
 function Home() {
-  const [currentTime, setCurrentTime] = useState(0);
+  // const [currentTime, setCurrentTime] = useState(0);
 
-  useEffect(() => {
-    fetch("/api/time")
-      .then((res) => res.json())
-      .then((data) => {
-        setCurrentTime(data.time);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch("/api/time")
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setCurrentTime(data.time);
+  //     });
+  // }, []);
 
   return (
     <IonPage>
@@ -35,13 +46,40 @@ function Home() {
             <IonTitle size="large">Home</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonItem>
-          <IonButton routerLink="/Login" routerDirection="root" expand="block">
-            Login
+        <Container>
+          {/* Categories */}
+          <section>
+            <SectionTitle>Explore by Category</SectionTitle>
+            {categories.slice(0, 4).map((category) => (
+              <CategoryButton key={category.name}>
+                {category.name}
+              </CategoryButton>
+            ))}
+          </section>
 
-          </IonButton>
-        </IonItem>
-        <p>The current time is {currentTime}.</p>
+          <Separator />
+
+          {/* Projects */}
+          <section>
+            <SectionTitle>Recommended for You</SectionTitle>
+            <IonRow>
+              {projects.map((project, index) => {
+                const { id, title, description, date, url, owner } = project;
+                return (
+                  <IonCol size="12" size-md="4" key={id}>
+                    <ProjectCard
+                      title={title}
+                      description={description}
+                      date={date}
+                      url={url}
+                      owner={owner}
+                    />
+                  </IonCol>
+                );
+              })}
+            </IonRow>
+          </section>
+        </Container>
       </IonContent>
     </IonPage>
   );
