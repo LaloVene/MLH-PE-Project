@@ -5,6 +5,7 @@ import LRButton from '../components/LoginRegisterButton.component';
 import './Register.css';
 import dblanguages from "../utils/languages.json";
 import dbtopics from "../utils/topics.json";
+import { ReactComponent as RegIcon } from "../components/RegIcon.svg"
 
 const Register: React.FC = () => {
   const [username, setUsername] = useState('')
@@ -122,7 +123,11 @@ const Register: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <ExploreContainer name="Register" />
-        <IonRow>
+        <IonRow style={{
+
+          margin: "25px"
+
+        }}>
           <IonCol style={{
             display: 'flex',
             alignItems: 'center',
@@ -132,7 +137,10 @@ const Register: React.FC = () => {
 
           }}>
 
-
+            {/* <RegIcon style={{
+              width: "100px",
+              height: "auto"
+            }} /> */}
 
             <IonItem>
               <IonLabel position="floating"> Name</IonLabel>

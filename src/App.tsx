@@ -37,51 +37,59 @@ import './theme/variables.css';
 import React, { useState } from 'react';
 
 
-const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonTabs>
-        
-        <IonRouterOutlet>
-          <Route exact path="/projects">
-            <Home />
-          </Route>
-          <Route exact path="/Login">
-            <Login />
-          </Route>
-          <Route path="/Register">
-            <Register />
-          </Route>
-          <Route exact path="/">
-            <Redirect to="/Login" />
-          </Route>
-          <Route exact path="/Profile">
-            <Profile />
-          </Route>
-          <Route exact path="/categories">
-            <Categories />
-          </Route>
-        </IonRouterOutlet>
+const App: React.FC = () => {
+  var showNav = true;
+  if (window.location.href.indexOf("Login") > -1 || window.location.href.indexOf("Register") > -1) {
+    showNav = false;
+  }
 
-        <IonTabBar slot="bottom">
-          <IonTabButton tab="Projects" href="/projects">
-            <IonIcon icon={layers} />
-            <IonLabel>Projects</IonLabel>
-          </IonTabButton>
+  return (
+    <IonApp>
+      <IonReactRouter>
+        <IonTabs>
 
-          <IonTabButton tab="Categories" href="/categories">
-            <IonIcon icon={grid} />
-            <IonLabel>Categories</IonLabel>
-          </IonTabButton>
+          <IonRouterOutlet>
+            <Route exact path="/projects">
+              <Home />
+            </Route>
+            <Route exact path="/Login">
+              <Login />
+            </Route>
+            <Route path="/Register">
+              <Register />
+            </Route>
+            <Route exact path="/">
+              <Redirect to="/Login" />
+            </Route>
+            <Route exact path="/Profile">
+              <Profile />
+            </Route>
+            <Route exact path="/categories">
+              <Categories />
+            </Route>
+          </IonRouterOutlet>
 
-          <IonTabButton tab="Profile" href="/Profile">
-            <IonIcon icon={analyticsOutline} />
-            <IonLabel>Profile</IonLabel>
-          </IonTabButton>
-        </IonTabBar>
-      </IonTabs>
-    </IonReactRouter>
-  </IonApp>
-);
 
+          <IonTabBar slot="bottom" style={showNav ? {} : { display: 'none' }}>
+            {/* check if url in certain [], do/don't display */}
+            <IonTabButton tab="Projects" href="/projects">
+              <IonIcon icon={layers} />
+              <IonLabel>Projects</IonLabel>
+            </IonTabButton>
+
+            <IonTabButton tab="Categories" href="/categories">
+              <IonIcon icon={grid} />
+              <IonLabel>Categories</IonLabel>
+            </IonTabButton>
+
+            <IonTabButton tab="Profile" href="/Profile">
+              <IonIcon icon={analyticsOutline} />
+              <IonLabel>Profile</IonLabel>
+            </IonTabButton>
+          </IonTabBar>
+        </IonTabs>
+      </IonReactRouter>
+    </IonApp>
+  );
+}
 export default App;

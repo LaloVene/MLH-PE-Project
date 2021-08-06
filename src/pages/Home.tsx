@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   IonContent,
   IonHeader,
@@ -6,7 +6,9 @@ import {
   IonTitle,
   IonToolbar,
   IonRow,
-  IonCol
+  IonCol,
+  IonInput,
+  IonSearchbar
 } from "@ionic/react";
 import styled from "styled-components";
 import SectionTitle from "../components/SectionTitle.component";
@@ -23,6 +25,8 @@ const Separator = styled.div`
 `;
 
 function Home() {
+  const [search, setSearch] = useState('')
+
   // const [currentTime, setCurrentTime] = useState(0);
 
   // useEffect(() => {
@@ -47,6 +51,11 @@ function Home() {
           </IonToolbar>
         </IonHeader>
         <Container>
+          {/* Search Bar */}
+          <section>
+            <IonSearchbar value={search} onIonChange={e => setSearch(e.detail.value!)}></IonSearchbar>
+          </section>
+
           {/* Categories */}
           <section>
             <SectionTitle>Explore by Category</SectionTitle>

@@ -13,6 +13,8 @@ const Login: React.FC = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [present] = useIonAlert();
+  console.log(window.location.href)
+
 
   const onSubmitClick = async (e: { preventDefault: () => void; }) => {
 
@@ -75,7 +77,11 @@ const Login: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <ExploreContainer name="Login" />
-        <IonRow>
+        <IonRow style={{
+
+          margin: "130px"
+
+        }}>
           <IonCol style={{
             display: 'flex',
             alignItems: 'center',
