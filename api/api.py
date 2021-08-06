@@ -630,24 +630,90 @@ def addProject():
     except:
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
-
 @app.route('/api/getProjects', methods=("GET",))
 def getProjects():
-    try:
+    # try:
+    searchterm = request.args.get('searchterm')
+    topic = request.args.get('topic')
+    language = request.args.get('language')
+
+    # Query for projects using inputs as a filter
+    # If searchterm and topic and language
+    if searchterm and topic and language:
+        # join ProjectModel, RelProjectTopic and RelProjectLanguage on projectId
+        # where ProjectModel.id == RelProjectTopic.projectId and RelProjectTopic.projectId == RelProjectLanguage.projectId
+        # and query for projects that match the search term and topic and language
+        # and return the results
+        response = ProjectModel.query\
+            .join(RelProjectTopic, ProjectModel.id == RelProjectTopic.projectId)\
+            .join(RelProjectLanguage, RelProjectLanguage.projectId == RelProjectTopic.projectId)\
+            .filter(ProjectModel.title.ilike(f"%{searchterm}%"), RelProjectTopic.topic == topic, RelProjectLanguage.language == language)\
+            .all()
+    # If searchterm and topic
+    elif searchterm and topic:
+        # join ProjectModel, RelProjectTopic on projectId
+        # where ProjectModel.id == RelProjectTopic.projectId and RelProjectTopic.topicId == topic
+        # and query for projects that match the search term and topic
+        # and return the results
+        response = ProjectModel.query\
+            .join(RelProjectTopic, ProjectModel.id == RelProjectTopic.projectId)\
+            .filter(ProjectModel.title.ilike(f"%{searchterm}%"), RelProjectTopic.topic == topic)\
+            .all()
+    # If searchterm and language
+    elif searchterm and language:
+        # join ProjectModel, RelProjectLanguage on projectId
+        # where ProjectModel.id == RelProjectLanguage.projectId and RelProjectLanguage.languageId == language
+        # and query for projects that match the search term and language
+        # and return the results
+        response = ProjectModel.query\
+            .join(RelProjectLanguage, ProjectModel.id == RelProjectLanguage.projectId)\
+            .filter(ProjectModel.title.ilike(f"%{searchterm}%"), RelProjectLanguage.language == language)\
+            .all()
+    # If topic and language
+    elif topic and language:
+        # join ProjectModel, RelProjectLanguage on projectId
+        # where ProjectModel.id == RelProjectLanguage.projectId and RelProjectLanguage.languageId == language
+        # and query for projects that match the topic and language
+        # and return the results
+        response = ProjectModel.query\
+            .join(RelProjectLanguage, ProjectModel.id == RelProjectLanguage.projectId)\
+            .filter(RelProjectLanguage.language == language)\
+            .all()
+    # If searchterm
+    elif searchterm:
+        # join ProjectModel and query for projects that match the search term
+        response = ProjectModel.query.filter(
+            ProjectModel.title.ilike("%" + searchterm + "%")
+        ).all()
+    # If topic
+    elif topic:
+        # join ProjectModel and RelProjectTopic and query for projects that match the topic
+        response = ProjectModel.query.join(RelProjectTopic, ProjectModel.id == RelProjectTopic.projectId).filter(
+            RelProjectTopic.topic.ilike("%" + topic + "%")
+        ).all()
+    # If language
+    elif language:
+        # join ProjectModel and RelProjectLanguage where ProjectModel.id == RelProjectLanguage.projectId and query for projects that match the language
+        response = ProjectModel.query.join(RelProjectLanguage, ProjectModel.id == RelProjectLanguage.projectId).filter(
+            RelProjectLanguage.language.ilike("%" + language + "%")
+        ).all()
+    # If no search term
+    else:
+        # Query for all projects
         response = ProjectModel.query.all()
-        projects = []
-        for item in response:
-            projects.append({
-                "id": item.id,
-                "owner": item.owner,
-                "title": item.title,
-                "description": item.description,
-                "url": item.url,
-                "date": item.date
-            })
-        return jsonify({"projects": projects}), 200
-    except:
-        return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
+    projects = []
+    for item in response:
+        projects.append({
+            "id": item.id,
+            "owner": item.owner,
+            "title": item.title,
+            "description": item.description,
+            "url": item.url,
+            "date": item.date
+        })
+    return jsonify({"projects": projects}), 200
+    # except:
+    #     return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 
 @app.route('/api/deleteProject', methods=("DELETE",))
