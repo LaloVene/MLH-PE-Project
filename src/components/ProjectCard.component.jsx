@@ -49,10 +49,10 @@ const Tags = styled.p`
 
 function CategoryCard(props) {
 
-  const { title, description, date, url, owner } = props;
+  const { title, description, date, url, owner, customClick } = props;
 
   return (
-    <Card>
+    <Card onClick={customClick}>
       <CardHeader>
         <Icon icon={personCircleOutline} />
         <Username>{owner}</Username>
