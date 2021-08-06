@@ -52,6 +52,14 @@ class UserModel(db.Model):
         self.github = github
     def __repr__(self):
         return f"<User {self.username}>"
+    def serialize(self):
+        return {
+            "username": self.username,
+            "password": self.password,
+            "name": self.name,
+            "email": self.email,
+            "github": self.github
+        }
 
 #--------------- LANGUAGE MODEL------------------
 class LanguageModel(db.Model):
@@ -235,6 +243,48 @@ def login():
     except:
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
+########### USER DATA ##############
+@app.route('/api/getUserData', methods=("GET",))
+def getUserData():
+    # try:
+    username = request.args.get('username')
+    error = None
+
+    if not username:
+        error = "Missing Data"
+    elif UserModel.query.filter_by(username=username).first() is None:
+        error = "Username does not exist"
+
+    if error is None:
+        response = UserModel.query.filter_by(username=username).first()
+        userDic = response.serialize()
+        userData = {
+            "username": userDic["username"],
+            "name": userDic["name"],
+            "email": userDic["email"],
+            "github": userDic["github"]
+        }
+        response = RelUserLanguage.query.filter_by(username=username).all()
+        languages = []
+        for item in response:
+            languages.append({
+                "id": item.id,
+                "name": item.langName
+                })
+        userData["languages"] = languages
+        response = RelUserTopic.query.filter_by(username=username).all()
+        topics = []
+        for item in response:
+            topics.append({
+                "id": item.id,
+                "name": item.topicName
+                })
+        userData["topics"] = topics
+        return jsonify({"userData": userData}), 200
+    else:
+        return jsonify({"status": "bad", "error": error, "username": username}), 400
+    # except:
+    #     return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 ########### TOPICS ##############
 
