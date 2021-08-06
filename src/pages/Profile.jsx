@@ -4,6 +4,7 @@ import Profile from '../components/Profile';
 import './Register.css';
 import styled from 'styled-components'
 import Tag from '../components/Tag';
+import { useEffect, useState } from 'react';
 
 
 const Title = styled.h4`
@@ -27,7 +28,18 @@ const Row = styled.div`
     display: flex;
 `
 
-const Tab4: React.FC = () => {
+function ProfilePage() {
+  
+  const [profileData, setProfileData] = useState([]);
+
+  useEffect(() => {
+
+      fetch('/api/getUserData?username=test').then(res => res.json()).then(data => {
+        setProfileData(data.userData)
+      }).then(console.log(profileData))
+    
+  }, [])
+
   return (
     <IonPage>
       <IonHeader>
@@ -42,7 +54,7 @@ const Tab4: React.FC = () => {
               <IonTitle size="large">Profile</IonTitle>
             </IonToolbar>
           </IonHeader>
-          <Profile name="Profile Name" username="Profile Username" bio="Profile bio" />
+          <Profile name={profileData.name} username={profileData.username} bio="Profile bio" />
           <Row>
             <Section>
               <Title>
@@ -90,4 +102,4 @@ const Tab4: React.FC = () => {
   );
 };
 
-export default Tab4;
+export default ProfilePage;
