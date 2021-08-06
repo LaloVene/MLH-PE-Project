@@ -1,13 +1,13 @@
 import { IonCol, IonContent, IonGrid, IonHeader, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
-import ProjectCard from '../components/ProjectCard';
-import Profile from '../components/Profile';
-import './Register.css';
-import styled from 'styled-components'
-import Tag from '../components/Tag';
 import { useEffect, useState } from 'react';
+import styled from 'styled-components'
+import ProjectCard from "../components/ProjectCard.component";
+import Profile from '../components/Profile';
+import Tag from '../components/Tag';
 
 const Title = styled.h4`
-    margin-bottom: 20px;
+    margin-bottom: 12px;
+    margin-top: 36px;
 `;
 
 const Wrapper = styled.div`
@@ -33,19 +33,16 @@ function ProfilePage() {
   const [projectList, setProjectList] = useState([]);
 
   useEffect(() => {
-
       fetch('/api/getUserData?username=test').then(res => res.json()).then(data => {
         setProfileData(data.userData)
       })
   }, [])
 
   useEffect(() => {
-
       fetch('/api/getProjects').then(res => res.json()).then(data => {
         setProjectList(data.projects)
       })    
   }, [])
-
 
   return (
     <IonPage>
@@ -61,7 +58,11 @@ function ProfilePage() {
               <IonTitle size="large">Profile</IonTitle>
             </IonToolbar>
           </IonHeader>
+
+          {/* Profile information */}
           <Profile name={profileData.name} username={profileData.username} bio="Profile bio" />
+
+          {/* Languages and interests row */}
           <Row>
             <Section>
               <Title>
@@ -80,18 +81,31 @@ function ProfilePage() {
               </TagSection>
             </Section>
           </Row>
+
+          {/* Projects section */}
           <Title>
             Projects
           </Title>
-
           <IonGrid>
             <IonRow>
-              {projectList?.filter(project => project.owner === profileData.username).map(project => <ProjectCard username={project.owner} title={project.title} description={project.description}/>)}
+              {projectList?.filter(project => project.owner === profileData.username).map(project => {
+                const { id, title, description, date, url, owner } = project;
+                return (
+                  <IonCol size="12" size-md="4" key={id}>
+                    <ProjectCard
+                      title={title}
+                      description={description}
+                      date={date}
+                      url={url}
+                      owner={owner}
+                    />
+                  </IonCol>
+                );
+              })}
             </IonRow>
           </IonGrid>
+
         </Wrapper>
-
-
       </IonContent>
     </IonPage>
   );
