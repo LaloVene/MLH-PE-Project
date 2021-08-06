@@ -1,7 +1,10 @@
 import { UseIonAlertResult, IonButton, IonCol, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonRow, IonTitle, IonToolbar, useIonAlert, IonSelect, IonSelectOption } from '@ionic/react';
 import React, { useState } from 'react';
 import ExploreContainer from '../components/ExploreContainer';
+import LRButton from '../components/LoginRegisterButton.component';
 import './Register.css';
+import dblanguages from "../utils/languages.json";
+import dbtopics from "../utils/topics.json";
 
 const Register: React.FC = () => {
   const [username, setUsername] = useState('')
@@ -11,6 +14,7 @@ const Register: React.FC = () => {
   const [github, setGithub] = useState('')
   const [languages, setLanguages] = useState<string[]>([]);
   const [topics, setTopics] = useState<string[]>([]);
+
 
   const [present] = useIonAlert()
 
@@ -24,7 +28,6 @@ const Register: React.FC = () => {
       'github': github,
       'email': email,
     }
-
 
     languages.forEach(function (lang) {
       fetch('/api/addUserLanguage', {
@@ -71,9 +74,6 @@ const Register: React.FC = () => {
         })
     })
 
-
-
-
     const finalresp = await fetch('/api/register', {
       method: 'POST',
       headers: {
@@ -90,7 +90,8 @@ const Register: React.FC = () => {
 
         }
         else {
-          msg = resp.message
+
+          msg = resp.error
 
         }
       })
@@ -122,7 +123,14 @@ const Register: React.FC = () => {
         </IonHeader>
         <ExploreContainer name="Register" />
         <IonRow>
-          <IonCol>
+          <IonCol style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexDirection: 'column',
+            margin: "25px"
+
+          }}>
 
 
 
@@ -131,6 +139,8 @@ const Register: React.FC = () => {
               <IonInput
                 type="text"
                 value={name}
+                placeholder="Name"
+                required
                 onIonChange={(e: { detail: { value: any; }; }) => setName(e.detail.value!)}
               >
               </IonInput>
@@ -140,6 +150,8 @@ const Register: React.FC = () => {
               <IonLabel position="floating"> Username</IonLabel>
               <IonInput
                 type="text"
+                placeholder="Username"
+                required
                 value={username}
                 onIonChange={(e: { detail: { value: any; }; }) => setUsername(e.detail.value!)}
               >
@@ -152,6 +164,8 @@ const Register: React.FC = () => {
               <IonInput
                 type="email"
                 value={email}
+                placeholder="Email"
+                required
                 onIonChange={(e: { detail: { value: any; }; }) => setEmail(e.detail.value!)}
               >
               </IonInput>
@@ -163,6 +177,8 @@ const Register: React.FC = () => {
               <IonInput
                 type="password"
                 value={password}
+                placeholder="Password"
+                required
                 onIonChange={(e: { detail: { value: any; }; }) => setPassword(e.detail.value!)}
               >
               </IonInput>
@@ -172,41 +188,49 @@ const Register: React.FC = () => {
               <IonLabel position="floating"> Github</IonLabel>
               <IonInput
                 type="url"
+                placeholder="Github"
+                required
                 value={github}
                 onIonChange={(e: { detail: { value: any; }; }) => setGithub(e.detail.value!)}
               >
               </IonInput>
             </IonItem>
 
-            <IonRow>
+            <IonRow style={{
+              margin: "10px"
+            }}>
               <IonItem>
                 <IonLabel>Languages</IonLabel>
-                <IonSelect value={languages} multiple={true} cancelText="Close" okText="Done" onIonChange={e => setLanguages(e.detail.value)}>
-                  <IonSelectOption value="Python">Python</IonSelectOption>
-                  <IonSelectOption value="Java">Java</IonSelectOption>
-                  <IonSelectOption value="Javascript">Javascript</IonSelectOption>
-                  <IonSelectOption value="C">C</IonSelectOption>
+                <IonSelect value={languages} multiple={true} cancelText="Close" okText="Done" onIonChange={e => setLanguages(e.detail.value)} style={{ width: "200px" }}>
+                  {
+                    dblanguages.map(lang =>
+                      <IonSelectOption value={lang}>{lang}</IonSelectOption>
+                    )
+                  }
                 </IonSelect>
               </IonItem>
 
-              <IonItem>Languages: {languages.length ? languages.join(", ") : '(none selected)'}</IonItem>
             </IonRow>
             <IonRow>
               <IonItem>
                 <IonLabel>Interests</IonLabel>
-                <IonSelect value={topics} multiple={true} cancelText="Close" okText="Done" onIonChange={e => setTopics(e.detail.value)}>
-                  <IonSelectOption value="Machine Learning">Machine Learning</IonSelectOption>
-                  <IonSelectOption value="DevOps">DevOps</IonSelectOption>
-                  <IonSelectOption value="Distributed Systems">Distributed Systems</IonSelectOption>
-                  <IonSelectOption value="Artifical Intelligence">Artifical Intelligence</IonSelectOption>
+                <IonSelect value={topics} multiple={true} cancelText="Close" okText="Done" onIonChange={e => setTopics(e.detail.value)} style={{ width: "200px" }}>
+                  {
+                    dbtopics.map(topic =>
+                      <IonSelectOption value={topic}>{topic}</IonSelectOption>
+                    )
+                  }
                 </IonSelect>
               </IonItem>
-              <IonItem>Topics: {topics.length ? topics.join(", ") : '(none selected)'}</IonItem>
             </IonRow>
 
-            <IonButton expand="block" onClick={onSubmitClick}>
+            <LRButton onClick={onSubmitClick} >
               Register
-            </IonButton>
+            </LRButton>
+            <LRButton onClick={() => window.location.href = '/Login'} >
+              I already have an account
+
+            </LRButton>
 
           </IonCol>
         </IonRow>
