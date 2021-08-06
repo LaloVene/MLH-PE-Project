@@ -5,8 +5,6 @@ import './Register.css';
 import styled from 'styled-components'
 import Tag from '../components/Tag';
 import { useEffect, useState } from 'react';
-import { list } from 'ionicons/icons';
-
 
 const Title = styled.h4`
     margin-bottom: 20px;
@@ -38,16 +36,14 @@ function ProfilePage() {
 
       fetch('/api/getUserData?username=test').then(res => res.json()).then(data => {
         setProfileData(data.userData)
-      }).then(console.log(profileData))
-    
+      })
   }, [])
 
   useEffect(() => {
 
       fetch('/api/getProjects').then(res => res.json()).then(data => {
         setProjectList(data.projects)
-      }).then(console.log(projectList))
-    
+      })    
   }, [])
 
 
@@ -72,9 +68,7 @@ function ProfilePage() {
                 Languages
               </Title>
               <TagSection>
-
-                <Tag text="Python" />
-                <Tag text="JavaScript" />
+                {profileData.languages ? profileData.languages.map(language => <Tag text={language.name} />) : <div />}
               </TagSection>
             </Section>
             <Section>
@@ -82,9 +76,7 @@ function ProfilePage() {
                 Interests
               </Title>
               <TagSection>
-
-                <Tag text="Machine Learning" />
-                <Tag text="Algorithms" />
+                {profileData.topics ? profileData.topics.map(topic => <Tag text={topic.name} />) : <div />}
               </TagSection>
             </Section>
           </Row>
@@ -94,7 +86,7 @@ function ProfilePage() {
 
           <IonGrid>
             <IonRow>
-              {projectList.filter(project => project.owner === profileData.username).map(project => <ProjectCard username={project.owner} title={project.title} description={project.description}/>)}
+              {projectList?.filter(project => project.owner === profileData.username).map(project => <ProjectCard username={project.owner} title={project.title} description={project.description}/>)}
             </IonRow>
           </IonGrid>
         </Wrapper>
