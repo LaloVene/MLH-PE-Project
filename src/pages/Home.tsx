@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom"; 
 import {
   IonContent,
   IonHeader,
@@ -60,9 +61,11 @@ function Home() {
           <section>
             <SectionTitle>Explore by Category</SectionTitle>
             {categories.slice(0, 4).map((category) => (
-              <CategoryButton key={category.name}>
-                {category.name}
-              </CategoryButton>
+              <Link to={`/category/${category.name}`}>
+                <CategoryButton key={category.name}>
+                  {category.name}
+                </CategoryButton>
+              </Link>
             ))}
           </section>
 

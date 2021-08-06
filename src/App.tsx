@@ -12,6 +12,7 @@ import { IonReactRouter } from '@ionic/react-router';
 import { grid, layers, analyticsOutline } from 'ionicons/icons';
 import Home from './pages/Home';
 import Categories from './pages/Categories.page';
+import Category from './pages/Category.page';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
@@ -47,7 +48,6 @@ const App: React.FC = () => {
     <IonApp>
       <IonReactRouter>
         <IonTabs>
-
           <IonRouterOutlet>
             <Route exact path="/projects">
               <Home />
@@ -67,10 +67,11 @@ const App: React.FC = () => {
             <Route exact path="/categories">
               <Categories />
             </Route>
+            <Route exact path="/category/:id"
+              render={(props: any) => <Category {...props} />} />
           </IonRouterOutlet>
 
-
-          <IonTabBar slot="bottom" style={showNav ? {} : { display: 'none' }}>
+          <IonTabBar slot="bottom" style={showNav ? {} : { display: "none" }}>
             {/* check if url in certain [], do/don't display */}
             <IonTabButton tab="Projects" href="/projects">
               <IonIcon icon={layers} />
