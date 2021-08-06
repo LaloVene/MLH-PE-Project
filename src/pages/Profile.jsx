@@ -5,6 +5,7 @@ import './Register.css';
 import styled from 'styled-components'
 import Tag from '../components/Tag';
 import { useEffect, useState } from 'react';
+import { list } from 'ionicons/icons';
 
 
 const Title = styled.h4`
@@ -31,6 +32,7 @@ const Row = styled.div`
 function ProfilePage() {
   
   const [profileData, setProfileData] = useState([]);
+  const [projectList, setProjectList] = useState([]);
 
   useEffect(() => {
 
@@ -39,6 +41,15 @@ function ProfilePage() {
       }).then(console.log(profileData))
     
   }, [])
+
+  useEffect(() => {
+
+      fetch('/api/getProjects').then(res => res.json()).then(data => {
+        setProjectList(data.projects)
+      }).then(console.log(projectList))
+    
+  }, [])
+
 
   return (
     <IonPage>
@@ -83,15 +94,7 @@ function ProfilePage() {
 
           <IonGrid>
             <IonRow>
-              <IonCol>
-                <ProjectCard username="User1" title="Card title" description="Card description" />
-              </IonCol>
-              <IonCol>
-                <ProjectCard username="User2" title="Card title" description="Card description" />
-              </IonCol>
-              <IonCol>
-                <ProjectCard username="User3" title="Card title" description="Card description" />
-              </IonCol>
+              {projectList.filter(project => project.owner === profileData.username).map(project => <ProjectCard username={project.owner} title={project.title} description={project.description}/>)}
             </IonRow>
           </IonGrid>
         </Wrapper>
