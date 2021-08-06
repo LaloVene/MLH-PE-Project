@@ -1,6 +1,8 @@
 import { useIonAlert, IonButton, IonCol, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import React, { useState } from 'react';
+import CategoryButton from '../components/CategoryButton.component';
 import ExploreContainer from '../components/ExploreContainer';
+import LRButton from '../components/LoginRegisterButton.component';
 import './Login.css';
 
 
@@ -11,6 +13,8 @@ const Login: React.FC = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [present] = useIonAlert();
+  console.log(window.location.href)
+
 
   const onSubmitClick = async (e: { preventDefault: () => void; }) => {
 
@@ -39,12 +43,9 @@ const Login: React.FC = () => {
           msg = "Successfully logged in"
 
         }
-        else if (resp[1] == 418) {
-          msg = resp.error
 
-        }
         else {
-          msg = resp.message
+          msg = resp.error
 
         }
       })
@@ -76,8 +77,19 @@ const Login: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <ExploreContainer name="Login" />
-        <IonRow>
-          <IonCol>
+        <IonRow style={{
+
+          margin: "130px"
+
+        }}>
+          <IonCol style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexDirection: 'column',
+            margin: "25px"
+
+          }}>
             <IonItem>
               <IonLabel position="floating"> Username</IonLabel>
               <IonInput
@@ -99,16 +111,16 @@ const Login: React.FC = () => {
               </IonInput>
             </IonItem>
             <IonItem>
-
-              <IonButton expand="block" onClick={onSubmitClick}>
+              <LRButton onClick={onSubmitClick}>
                 Login
-              </IonButton>
+              </LRButton>
+
             </IonItem>
             <IonItem>
-              <IonButton expand="block" routerLink="/Register" routerDirection="root">
-                Register
+              <LRButton onClick={() => window.location.href = '/Register'} >
+                Create an Account
 
-              </IonButton>
+              </LRButton>
             </IonItem>
           </IonCol>
         </IonRow>

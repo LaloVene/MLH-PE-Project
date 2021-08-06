@@ -15,7 +15,7 @@ const Button = styled.button`
 `;
 
 function CategoryButton(props) {
-
+  console.log(props)
   return (
     <Button>
       {props.children}

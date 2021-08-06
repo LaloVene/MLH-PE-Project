@@ -1,5 +1,5 @@
 import os
-from flask import ( Flask , request, jsonify )
+from flask import (Flask, request, jsonify)
 from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
 from datetime import date, datetime
@@ -34,7 +34,9 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-#--------------- USER MODEL------------------
+# --------------- USER MODEL------------------
+
+
 class UserModel(db.Model):
     __tablename__ = "users"
 
@@ -50,10 +52,13 @@ class UserModel(db.Model):
         self.name = name
         self.email = email
         self.github = github
+
     def __repr__(self):
         return f"<User {self.username}>"
 
-#--------------- LANGUAGE MODEL------------------
+# --------------- LANGUAGE MODEL------------------
+
+
 class LanguageModel(db.Model):
     __tablename__ = "language"
 
@@ -61,8 +66,10 @@ class LanguageModel(db.Model):
 
     def __init__(self, name):
         self.name = name
+
     def __repr__(self):
         return f"<Language {self.name}>"
+
 
 class RelUserLanguage(db.Model):
     __tablename__ = "relUserLanguage"
@@ -74,10 +81,13 @@ class RelUserLanguage(db.Model):
     def __init__(self, username, langName):
         self.username = username
         self.langName = langName
+
     def __repr__(self):
         return f"<RelUserLanguage {self.username} {self.langName}>"
 
-#--------------- TOPIC MODEL------------------
+# --------------- TOPIC MODEL------------------
+
+
 class TopicModel(db.Model):
     __tablename__ = "topic"
 
@@ -85,8 +95,10 @@ class TopicModel(db.Model):
 
     def __init__(self, name):
         self.name = name
+
     def __repr__(self):
         return f"<Topic {self.name}>"
+
 
 class RelUserTopic(db.Model):
     __tablename__ = "relUserTopic"
@@ -98,10 +110,13 @@ class RelUserTopic(db.Model):
     def __init__(self, username, topicName):
         self.username = username
         self.topicName = topicName
+
     def __repr__(self):
         return f"<RelUserTopic {self.username} {self.topicName}>"
 
-#--------------- PROJECT MODEL------------------
+# --------------- PROJECT MODEL------------------
+
+
 class ProjectModel(db.Model):
     __tablename__ = "project"
 
@@ -117,8 +132,10 @@ class ProjectModel(db.Model):
         self.description = description
         self.url = url
         self.owner = owner
+
     def __repr__(self):
         return f"<Project {self.title}>"
+
 
 class RelUserInProject(db.Model):
     __tablename__ = "relUserInProject"
@@ -130,9 +147,11 @@ class RelUserInProject(db.Model):
     def __init__(self, username, projectId):
         self.username = username
         self.projectId = projectId
+
     def __repr__(self):
         return f"<RelUserInProject {self.username} {self.projectId}>"
-        
+
+
 class RelUserFavProject(db.Model):
     __tablename__ = "relUserFavProject"
 
@@ -143,8 +162,10 @@ class RelUserFavProject(db.Model):
     def __init__(self, username, projectId):
         self.username = username
         self.projectId = projectId
+
     def __repr__(self):
         return f"<RelUserFavProject {self.username} {self.projectId}>"
+
 
 class RelProjectLanguage(db.Model):
     __tablename__ = "relProjectLanguage"
@@ -156,8 +177,10 @@ class RelProjectLanguage(db.Model):
     def __init__(self, language, projectId):
         self.language = language
         self.projectId = projectId
+
     def __repr__(self):
         return f"<RelProjectLanguage {self.language} {self.projectId}>"
+
 
 class RelProjectTopic(db.Model):
     __tablename__ = "relProjectTopic"
@@ -169,6 +192,7 @@ class RelProjectTopic(db.Model):
     def __init__(self, topic, projectId):
         self.topic = topic
         self.projectId = projectId
+
     def __repr__(self):
         return f"<RelProjectTopic {self.topic} {self.projectId}>"
 
@@ -177,11 +201,13 @@ class RelProjectTopic(db.Model):
 def not_found(e):
     return 'Not found'
 
+
 @app.route('/')
 def index():
     return 'Im here'
 
 ########### LOGIN ##############
+
 
 @app.route("/api/register", methods=("POST",))
 def register():
@@ -201,7 +227,8 @@ def register():
             error = f"User {username} is already registered"
 
         if error is None:
-            new_user = UserModel(username, generate_password_hash(password), name, email, github)
+            new_user = UserModel(username, generate_password_hash(
+                password), name, email, github)
             db.session.add(new_user)
             db.session.commit()
             message = f"User {username} created successfully"
@@ -262,6 +289,7 @@ def addTopic():
     except:
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
+
 @app.route('/api/getTopics', methods=("GET",))
 def getTopics():
     try:
@@ -270,10 +298,11 @@ def getTopics():
         for item in response:
             topics.append({
                 "name": item.name
-                })
+            })
         return jsonify({"topics": topics}), 200
     except:
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
+
 
 @app.route('/api/deleteTopic', methods=("DELETE",))
 def deleteTopic():
@@ -299,6 +328,7 @@ def deleteTopic():
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 ########### USER TOPICS ##############
+
 
 @app.route('/api/addUserTopic', methods=("POST",))
 def addUserTopic():
@@ -327,6 +357,7 @@ def addUserTopic():
     except:
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
+
 @app.route('/api/getUserTopics', methods=("POST",))
 def getUserTopics():
     try:
@@ -344,12 +375,13 @@ def getUserTopics():
                 topics.append({
                     "id": item.id,
                     "name": item.topicName
-                    })
+                })
             return jsonify({"topics": topics}), 200
         else:
             return jsonify({"status": "bad", "error": error}), 400
     except:
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
+
 
 @app.route('/api/deleteUserTopic', methods=("DELETE",))
 def deleteUserTopic():
@@ -375,6 +407,8 @@ def deleteUserTopic():
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 ########### LANGUAGES ##############
+
+
 @app.route('/api/addLanguage', methods=("POST",))
 def addLanguage():
     try:
@@ -399,6 +433,7 @@ def addLanguage():
     except:
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
+
 @app.route('/api/getLanguages', methods=("GET",))
 def getLanguages():
     try:
@@ -407,10 +442,11 @@ def getLanguages():
         for item in response:
             languages.append({
                 "name": item.name
-                })
+            })
         return jsonify({"languages": languages}), 200
     except:
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
+
 
 @app.route('/api/deleteLanguage', methods=("DELETE",))
 def deleteLanguage():
@@ -434,8 +470,9 @@ def deleteLanguage():
 
     except:
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
-        
+
 ########### USER LANGUAGES ##############
+
 
 @app.route('/api/addUserLanguage', methods=("POST",))
 def addUserLanguage():
@@ -464,6 +501,7 @@ def addUserLanguage():
     except:
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
+
 @app.route('/api/getUserLanguages', methods=("POST",))
 def getUserLanguages():
     try:
@@ -481,12 +519,13 @@ def getUserLanguages():
                 languages.append({
                     "id": item.id,
                     "name": item.langName
-                    })
+                })
             return jsonify({"languages": languages}), 200
         else:
             return jsonify({"status": "bad", "error": error}), 400
     except:
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
+
 
 @app.route('/api/deleteUserLanguage', methods=("DELETE",))
 def deleteUserLanguage():
@@ -512,6 +551,8 @@ def deleteUserLanguage():
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 ########### PROJECTS ##############
+
+
 @app.route('/api/addProject', methods=("POST",))
 def addProject():
     try:
@@ -539,6 +580,7 @@ def addProject():
     except:
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
+
 @app.route('/api/getProjects', methods=("GET",))
 def getProjects():
     try:
@@ -552,10 +594,11 @@ def getProjects():
                 "description": item.description,
                 "url": item.url,
                 "date": item.date
-                })
+            })
         return jsonify({"projects": projects}), 200
     except:
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
+
 
 @app.route('/api/deleteProject', methods=("DELETE",))
 def deleteProject():
@@ -586,6 +629,8 @@ def deleteProject():
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 ########### USER IN PROJECTS ##############
+
+
 @app.route('/api/addUserInProject', methods=("POST",))
 def addUserInProject():
     try:
@@ -615,6 +660,7 @@ def addUserInProject():
     except:
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
+
 @app.route('/api/getUsersInProject', methods=("POST",))
 def getUsersInProject():
     try:
@@ -626,17 +672,19 @@ def getUsersInProject():
             error = "Missing Data"
 
         if error is None:
-            response = RelUserInProject.query.filter_by(projectId=projectId).all()
+            response = RelUserInProject.query.filter_by(
+                projectId=projectId).all()
             users = []
             for item in response:
                 users.append({
                     "username": item.username
-                    })
+                })
             return jsonify({"users": users}), 200
         else:
             return jsonify({"status": "bad", "error": error}), 400
     except:
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
+
 
 @app.route('/api/deleteUserInProject', methods=("DELETE",))
 def deleteUserInProject():
@@ -652,7 +700,8 @@ def deleteUserInProject():
             error = f"User is not in project with id {projectId}"
 
         if error is None:
-            RelUserInProject.query.filter_by(username=username, projectId=projectId).delete()
+            RelUserInProject.query.filter_by(
+                username=username, projectId=projectId).delete()
             db.session.commit()
             message = f"User {username} was removed from project with id {projectId} removed"
             return jsonify({"status": "ok", "message": message}), 200
@@ -663,6 +712,8 @@ def deleteUserInProject():
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 ########### USER FAVORITE PROJECTS ##############
+
+
 @app.route('/api/addUserFavProject', methods=("POST",))
 def addUserFavProject():
     try:
@@ -692,6 +743,7 @@ def addUserFavProject():
     except:
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
+
 @app.route('/api/getUsersFavProject', methods=("POST",))
 def getUsersFavProject():
     try:
@@ -703,17 +755,19 @@ def getUsersFavProject():
             error = "Missing Data"
 
         if error is None:
-            response = RelUserFavProject.query.filter_by(projectId=projectId).all()
+            response = RelUserFavProject.query.filter_by(
+                projectId=projectId).all()
             users = []
             for item in response:
                 users.append({
                     "username": item.username
-                    })
+                })
             return jsonify({"users": users}), 200
         else:
             return jsonify({"status": "bad", "error": error}), 400
     except:
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
+
 
 @app.route('/api/deleteUserFavProject', methods=("DELETE",))
 def deleteUserFavProject():
@@ -729,7 +783,8 @@ def deleteUserFavProject():
             error = f"User does not have as favorite the project with id {projectId}"
 
         if error is None:
-            RelUserFavProject.query.filter_by(username=username, projectId=projectId).delete()
+            RelUserFavProject.query.filter_by(
+                username=username, projectId=projectId).delete()
             db.session.commit()
             message = f"User {username} had removed from favorites the project with id {projectId}"
             return jsonify({"status": "ok", "message": message}), 200
@@ -740,6 +795,8 @@ def deleteUserFavProject():
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 ########### TOPIC PROJECTS ##############
+
+
 @app.route('/api/addProjectTopic', methods=("POST",))
 def addProjectTopic():
     try:
@@ -769,6 +826,7 @@ def addProjectTopic():
     except:
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
+
 @app.route('/api/getProjectTopics', methods=("POST",))
 def getProjectTopics():
     try:
@@ -780,17 +838,19 @@ def getProjectTopics():
             error = "Missing Data"
 
         if error is None:
-            response = RelProjectTopic.query.filter_by(projectId=projectId).all()
+            response = RelProjectTopic.query.filter_by(
+                projectId=projectId).all()
             topics = []
             for item in response:
                 topics.append({
                     "topic": item.topic
-                    })
+                })
             return jsonify({"topics": topics}), 200
         else:
             return jsonify({"status": "bad", "error": error}), 400
     except:
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
+
 
 @app.route('/api/deleteProjectTopic', methods=("DELETE",))
 def deleteProjectTopic():
@@ -806,7 +866,8 @@ def deleteProjectTopic():
             error = f"Topic not in project with id {projectId}"
 
         if error is None:
-            RelProjectTopic.query.filter_by(topic=topic, projectId=projectId).delete()
+            RelProjectTopic.query.filter_by(
+                topic=topic, projectId=projectId).delete()
             db.session.commit()
             message = f"Topic {topic} removed from the project with id {projectId}"
             return jsonify({"status": "ok", "message": message}), 200
@@ -817,6 +878,8 @@ def deleteProjectTopic():
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 ########### LANGUAGE PROJECTS ##############
+
+
 @app.route('/api/addProjectLanguage', methods=("POST",))
 def addProjectLanguage():
     try:
@@ -846,6 +909,7 @@ def addProjectLanguage():
     except:
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
+
 @app.route('/api/getProjectLanguages', methods=("POST",))
 def getProjectLanguages():
     try:
@@ -857,17 +921,19 @@ def getProjectLanguages():
             error = "Missing Data"
 
         if error is None:
-            response = RelProjectLanguage.query.filter_by(projectId=projectId).all()
+            response = RelProjectLanguage.query.filter_by(
+                projectId=projectId).all()
             languages = []
             for item in response:
                 languages.append({
                     "language": item.language
-                    })
+                })
             return jsonify({"languages": languages}), 200
         else:
             return jsonify({"status": "bad", "error": error}), 400
     except:
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
+
 
 @app.route('/api/deleteProjectLanguage', methods=("DELETE",))
 def deleteProjectLanguage():
@@ -883,7 +949,8 @@ def deleteProjectLanguage():
             error = f"Language not in project with id {projectId}"
 
         if error is None:
-            RelProjectLanguage.query.filter_by(language=language, projectId=projectId).delete()
+            RelProjectLanguage.query.filter_by(
+                language=language, projectId=projectId).delete()
             db.session.commit()
             message = f"Language {language} removed from the project with id {projectId}"
             return jsonify({"status": "ok", "message": message}), 200
@@ -894,6 +961,8 @@ def deleteProjectLanguage():
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 ########### FILL DB ##############
+
+
 @app.route('/api/filldb')
 def filldb():
     try:
@@ -951,7 +1020,7 @@ def filldb():
         for language in languages:
             add_language = LanguageModel(language)
             db.session.add(add_language)
-        
+
         for topic in topics:
             add_topic = TopicModel(topic)
             db.session.add(add_topic)
@@ -960,6 +1029,7 @@ def filldb():
         return 'db filled'
     except:
         return 'db not filled'
+
 
 @app.route('/api/fillusers')
 def fillusers():
@@ -988,12 +1058,14 @@ def fillusers():
             }
         ]
         for user in users:
-            add_user = UserModel(user['username'], user['password'], user['name'], user['email'], user['github'])
+            add_user = UserModel(
+                user['username'], user['password'], user['name'], user['email'], user['github'])
             db.session.add(add_user)
         db.session.commit()
         return 'db filled'
     except:
         return 'db not filled'
+
 
 @app.route('/api/fillprojects')
 def fillprojects():
@@ -1019,18 +1091,22 @@ def fillprojects():
             },
         ]
         for project in projects:
-            add_project = ProjectModel(project['name'], project['description'], project['url'], project['owner'])
+            add_project = ProjectModel(
+                project['name'], project['description'], project['url'], project['owner'])
             db.session.add(add_project)
         db.session.commit()
         return 'db filled'
     except:
         return 'db not filled'
 
+
 @app.route('/api/time')
 def get_current_time():
     return {'time': time.time()}
 
 # Health: For testing
+
+
 @app.route("/api/health")
 def check_health():
     has_lalo = UserModel.query.filter_by(username="lalo").first()
