@@ -38,7 +38,6 @@ const Profile: React.FC<ContainerProps> = ({ name, username, bio }) => {
                     <IonCardTitle><strong>{name}</strong></IonCardTitle>
                     <i><IonCardSubtitle>{username}</IonCardSubtitle></i>
                 </IonCardHeader>
-
                 <IonCardContent>
                     {bio}
             </IonCardContent>

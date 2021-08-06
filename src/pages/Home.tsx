@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom"; 
 import {
+  IonModal,
   IonContent,
   IonHeader,
   IonPage,
@@ -9,7 +10,8 @@ import {
   IonRow,
   IonCol,
   IonInput,
-  IonSearchbar
+  IonSearchbar,
+  IonButton
 } from "@ionic/react";
 import styled from "styled-components";
 import SectionTitle from "../components/SectionTitle.component";
@@ -17,6 +19,7 @@ import ProjectCard from "../components/ProjectCard.component";
 import CategoryButton from "../components/CategoryButton.component";
 import projects from "../utils/projects.json";
 import categories from "../utils/categories.json";
+import './Home.css';
 
 const Container = styled.div`
   padding: 1rem;
@@ -27,6 +30,7 @@ const Separator = styled.div`
 
 function Home() {
   const [search, setSearch] = useState('')
+  const [showProject, setShowProject] = useState(false);
 
   // const [currentTime, setCurrentTime] = useState(0);
 
@@ -79,13 +83,44 @@ function Home() {
                 const { id, title, description, date, url, owner } = project;
                 return (
                   <IonCol size="12" size-md="4" key={id}>
+                    <IonModal id="projmod" isOpen={showProject} cssClass='my-custom-class'>
+                      <h2 style={{
+                        marginTop: "50px"
+                      }}>{title}</h2>
+                      <p style={{
+                        margin: "0px",
+                        padding: "0px",
+                        fontSize: "0.75em"
+                      }}>Created By: {owner}</p>
+                      <p style={{
+                        fontSize: "0.75em"
+                      }}>{date}</p>
+                      <p style={{
+                        margin: "20px",
+                        marginTop: "5px",
+                        textAlign: "center"
+                      }}>   {description}</p>
+
+                      <p style={{
+                        margin: "20px",
+                        marginTop: "5px",
+                        textAlign: "center"
+                      }}>   {description}</p>
+
+                      <IonButton id="closemodal">Contact</IonButton>
+
+                      <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={() => setShowProject(false)}>Close</IonButton>
+                    </IonModal>
                     <ProjectCard
                       title={title}
                       description={description}
                       date={date}
                       url={url}
                       owner={owner}
+                      customClick={() => setShowProject(true)}
+
                     />
+
                   </IonCol>
                 );
               })}
@@ -93,7 +128,7 @@ function Home() {
           </section>
         </Container>
       </IonContent>
-    </IonPage>
+    </IonPage >
   );
 }
 
