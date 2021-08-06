@@ -4,7 +4,7 @@ import Profile from '../components/Profile';
 import './Register.css';
 import styled from 'styled-components'
 import Tag from '../components/Tag';
-
+import { useEffect, useState } from 'react';
 
 const Title = styled.h4`
     margin-bottom: 20px;
@@ -27,7 +27,26 @@ const Row = styled.div`
     display: flex;
 `
 
-const Tab4: React.FC = () => {
+function ProfilePage() {
+  
+  const [profileData, setProfileData] = useState([]);
+  const [projectList, setProjectList] = useState([]);
+
+  useEffect(() => {
+
+      fetch('/api/getUserData?username=test').then(res => res.json()).then(data => {
+        setProfileData(data.userData)
+      })
+  }, [])
+
+  useEffect(() => {
+
+      fetch('/api/getProjects').then(res => res.json()).then(data => {
+        setProjectList(data.projects)
+      })    
+  }, [])
+
+
   return (
     <IonPage>
       <IonHeader>
@@ -42,16 +61,14 @@ const Tab4: React.FC = () => {
               <IonTitle size="large">Profile</IonTitle>
             </IonToolbar>
           </IonHeader>
-          <Profile name="Profile Name" username="Profile Username" bio="Profile bio" />
+          <Profile name={profileData.name} username={profileData.username} bio="Profile bio" />
           <Row>
             <Section>
               <Title>
                 Languages
               </Title>
               <TagSection>
-
-                <Tag text="Python" />
-                <Tag text="JavaScript" />
+                {profileData.languages ? profileData.languages.map(language => <Tag text={language.name} />) : <div />}
               </TagSection>
             </Section>
             <Section>
@@ -59,9 +76,7 @@ const Tab4: React.FC = () => {
                 Interests
               </Title>
               <TagSection>
-
-                <Tag text="Machine Learning" />
-                <Tag text="Algorithms" />
+                {profileData.topics ? profileData.topics.map(topic => <Tag text={topic.name} />) : <div />}
               </TagSection>
             </Section>
           </Row>
@@ -71,15 +86,7 @@ const Tab4: React.FC = () => {
 
           <IonGrid>
             <IonRow>
-              <IonCol>
-                <ProjectCard username="User1" title="Card title" description="Card description" />
-              </IonCol>
-              <IonCol>
-                <ProjectCard username="User2" title="Card title" description="Card description" />
-              </IonCol>
-              <IonCol>
-                <ProjectCard username="User3" title="Card title" description="Card description" />
-              </IonCol>
+              {projectList?.filter(project => project.owner === profileData.username).map(project => <ProjectCard username={project.owner} title={project.title} description={project.description}/>)}
             </IonRow>
           </IonGrid>
         </Wrapper>
@@ -90,4 +97,4 @@ const Tab4: React.FC = () => {
   );
 };
 
-export default Tab4;
+export default ProfilePage;
