@@ -39,7 +39,7 @@ import React, { useState } from 'react';
 
 const App: React.FC = () => {
   var showNav = true;
-  if (window.location.href.indexOf("Login") > -1 || window.location.href.indexOf("Register") > -1) {
+  if (window.location.href.indexOf("Login") > -1 || window.location.href.indexOf("Register") > -1 || window.location.href.slice(-1) == "/") {
     showNav = false;
   }
 

@@ -6,6 +6,7 @@ import './Register.css';
 import dblanguages from "../utils/languages.json";
 import dbtopics from "../utils/topics.json";
 import { ReactComponent as RegIcon } from "../components/RegIcon.svg"
+import { ifError } from 'assert';
 
 const Register: React.FC = () => {
   const [username, setUsername] = useState('')
@@ -86,12 +87,16 @@ const Register: React.FC = () => {
       .then(resp => {
 
         if (resp.status == "ok") {
+          msg = "Success!"
+          setTimeout(() => window.location.href = ("/Login"), 3000)
 
-          window.location.href = ("/Login")
 
         }
+        else if (resp.status == "1") {
+          msg = "Missing Fields"
+        }
         else {
-
+          console.log(resp)
           msg = resp.error
 
         }
@@ -105,7 +110,11 @@ const Register: React.FC = () => {
       buttons: [
         'Ok',
       ],
-      onDidDismiss: (e) => console.log('clicked ok'),
+      onDidDismiss: () => {
+        if (msg == "Success!") {
+          window.location.href = ("/Login")
+        }
+      },
     })
   }
 
