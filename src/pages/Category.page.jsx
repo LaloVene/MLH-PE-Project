@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
+  IonModal,
   IonContent,
   IonHeader,
   IonPage,
@@ -7,6 +8,9 @@ import {
   IonToolbar,
   IonRow,
   IonCol,
+  IonInput,
+  IonSearchbar,
+  IonButton,
   IonButtons,
   IonBackButton
 } from "@ionic/react";
@@ -15,6 +19,7 @@ import Searchbar from '../components/Searchbar.component';
 import ProjectCard from '../components/ProjectCard.component';
 import NotFound from '../components/NotFound.component';
 import { useProjects } from "../utils/hooks/useProject";
+import './Home.css';
 
 const Container = styled.div`
   padding: 1rem;
@@ -34,8 +39,9 @@ function Category(props) {
   const [state, changeUrl] = useProjects();
   const [searchText, setSearchText] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [showProject, setShowProject] = useState(false);
   const categoryName = props.match.params.id;
-  
+
   // Fetch categories from /api/getTopics
   useEffect(() => {
     if (searchQuery) {
@@ -43,8 +49,8 @@ function Category(props) {
     } else {
       changeUrl(`?topic=${categoryName}`);
     }
-    }, [categoryName, searchQuery, changeUrl]);
-  
+  }, [categoryName, searchQuery, changeUrl]);
+
   // const onChange = (event) => {
   //   const query = event.target.value;
   //   setSearchQuery(query);
@@ -63,7 +69,7 @@ function Category(props) {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/categories"/>
+            <IonBackButton defaultHref="/categories" />
           </IonButtons>
           <IonTitle>Category</IonTitle>
         </IonToolbar>
@@ -78,7 +84,7 @@ function Category(props) {
         <Container>
           <Title>{categoryName}</Title>
           <SearchBarContainer>
-            <Searchbar placeholder="Search" onChange={onChange} onSubmit={Search}/>
+            <Searchbar placeholder="Search" onChange={onChange} onSubmit={Search} />
           </SearchBarContainer>
           {
             state.data?.projects?.length &&
@@ -88,12 +94,42 @@ function Category(props) {
                   const { id, title, description, date, url, owner } = project;
                   return (
                     <IonCol size="12" size-md="4" key={id}>
+                      <IonModal id="projmod" isOpen={showProject} cssClass='my-custom-class'>
+                        <h2 style={{
+                          marginTop: "50px"
+                        }}>{title}</h2>
+                        <p style={{
+                          margin: "0px",
+                          padding: "0px",
+                          fontSize: "0.75em"
+                        }}>Created By: {owner}</p>
+                        <p style={{
+                          fontSize: "0.75em"
+                        }}>{date}</p>
+                        <p style={{
+                          margin: "20px",
+                          marginTop: "5px",
+                          textAlign: "center"
+                        }}>   {description}</p>
+
+                        <p style={{
+                          margin: "20px",
+                          marginTop: "5px",
+                          textAlign: "center"
+                        }}>   {description}</p>
+
+                        <IonButton id="closemodal">Contact</IonButton>
+
+                        <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={() => setShowProject(false)}>Close</IonButton>
+                      </IonModal>
+
                       <ProjectCard
                         title={title}
                         description={description}
                         date={date}
                         url={url}
                         owner={owner}
+                        customClick={() => setShowProject(true)}
                       />
                     </IonCol>
                   );

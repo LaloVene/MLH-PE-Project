@@ -5,6 +5,7 @@ import ProjectCard from "../components/ProjectCard.component";
 import Profile from '../components/Profile';
 import Tag from '../components/Tag';
 
+
 const Title = styled.h4`
     margin-bottom: 12px;
     margin-top: 36px;
@@ -28,20 +29,21 @@ const Row = styled.div`
 `
 
 function ProfilePage() {
-  
+
   const [profileData, setProfileData] = useState([]);
   const [projectList, setProjectList] = useState([]);
 
   useEffect(() => {
-      fetch('/api/getUserData?username=test').then(res => res.json()).then(data => {
-        setProfileData(data.userData)
-      })
+    fetch('/api/getUserData?username=test').then(res => res.json()).then(data => {
+      console.log(data)
+      setProfileData(data.userData)
+    })
   }, [])
 
   useEffect(() => {
-      fetch('/api/getProjects').then(res => res.json()).then(data => {
-        setProjectList(data.projects)
-      })    
+    fetch('/api/getProjects').then(res => res.json()).then(data => {
+      setProjectList(data.projects)
+    })
   }, [])
 
   return (

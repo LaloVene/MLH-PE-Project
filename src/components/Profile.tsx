@@ -1,5 +1,6 @@
 import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle } from '@ionic/react';
 import styled from 'styled-components'
+import { ReactComponent as ProfPic } from "../components/RegIcon.svg"
 
 interface ContainerProps {
     name: string;
@@ -27,24 +28,27 @@ const Col7 = styled(IonCard)`
 
 
 const Profile: React.FC<ContainerProps> = ({ name, username, bio }) => {
-  return (
-      <div >
-          <ProfileWrapper>
-              <Col3>
-                  Profile Image
-              </Col3>
-              <Col7>
-                <IonCardHeader>
-                    <IonCardTitle><strong>{name}</strong></IonCardTitle>
-                    <i><IonCardSubtitle>{username}</IonCardSubtitle></i>
-                </IonCardHeader>
-                <IonCardContent>
-                    {bio}
-            </IonCardContent>
-              </Col7>
-          </ProfileWrapper>
-    </div>
-  );
+    return (
+        <div >
+            <ProfileWrapper>
+                <Col3>
+                    <ProfPic style={{
+                        width: "200px",
+                        height: "200px"
+                    }} />
+                </Col3>
+                <Col7>
+                    <IonCardHeader>
+                        <IonCardTitle><strong>{name}</strong></IonCardTitle>
+                        <i><IonCardSubtitle>{username}</IonCardSubtitle></i>
+                    </IonCardHeader>
+                    <IonCardContent>
+                        {bio}
+                    </IonCardContent>
+                </Col7>
+            </ProfileWrapper>
+        </div>
+    );
 };
 
 export default Profile;
