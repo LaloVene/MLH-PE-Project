@@ -103,7 +103,7 @@ function Category(props) {
           }
           {
             !state.data?.projects?.length &&
-            <NotFound />
+            <NotFound message="There are no projects under this category."/>
           }
         </Container>
       </IonContent>

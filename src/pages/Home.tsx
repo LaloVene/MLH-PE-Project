@@ -17,6 +17,7 @@ import styled from "styled-components";
 import SectionTitle from "../components/SectionTitle.component";
 import ProjectCard from "../components/ProjectCard.component";
 import CategoryButton from "../components/CategoryButton.component";
+import Searchbar from '../components/Searchbar.component';
 import projects from "../utils/projects.json";
 import categories from "../utils/categories.json";
 import './Home.css';
@@ -58,7 +59,7 @@ function Home() {
         <Container>
           {/* Search Bar */}
           <section>
-            <IonSearchbar value={search} onIonChange={e => setSearch(e.detail.value!)}></IonSearchbar>
+            <Searchbar placeholder="Search" onChange={(e: any) => setSearch(e.target.value!)} />
           </section>
 
           {/* Categories */}
