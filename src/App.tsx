@@ -9,13 +9,14 @@ import {
   IonTabs,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { grid, layers, analyticsOutline } from 'ionicons/icons';
+import { grid, layers, analyticsOutline, albums } from 'ionicons/icons';
 import Home from './pages/Home';
 import Categories from './pages/Categories.page';
 import Category from './pages/Category.page';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile.jsx';
+import Projects from './pages/Projects'
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -49,8 +50,11 @@ const App: React.FC = () => {
       <IonReactRouter>
         <IonTabs>
           <IonRouterOutlet>
-            <Route exact path="/projects">
+            <Route exact path="/explore">
               <Home />
+            </Route>
+            <Route exact path="/projects">
+              <Projects />
             </Route>
             <Route exact path="/Login">
               <Login />
@@ -73,8 +77,13 @@ const App: React.FC = () => {
 
           <IonTabBar slot="bottom" style={showNav ? {} : { display: "none" }}>
             {/* check if url in certain [], do/don't display */}
-            <IonTabButton tab="Projects" href="/projects">
+            <IonTabButton tab="Explore" href="/explore">
               <IonIcon icon={layers} />
+              <IonLabel>Explore</IonLabel>
+            </IonTabButton>
+
+            <IonTabButton tab="Projects" href="/projects">
+              <IonIcon icon={albums} />
               <IonLabel>Projects</IonLabel>
             </IonTabButton>
 
