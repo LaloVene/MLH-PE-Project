@@ -143,11 +143,10 @@ function Projects() {
 
                                         <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={() => setShowProject(false)}>Close</IonButton>
                                     </IonModal>
-                                    <Card style={{
+                                    <Card class="ion-align-items-center ion-justify-content-center" style={{
                                         height: "93%",
                                         display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "center"
+                                        minHeight: "200px"
 
                                     }} onClick={() => setShowProject(true)}>
                                         <Icon icon={addCircleOutline} />
