@@ -93,15 +93,15 @@ function ProfilePage() {
               {projectList?.filter(project => project.owner === profileData.username).map(project => {
                 const { id, title, description, date, url, owner } = project;
                 return (
-                  <IonCol size="12" size-md="4" key={id}>
-                    <ProjectCard
-                      title={title}
-                      description={description}
-                      date={date}
-                      url={url}
-                      owner={owner}
-                    />
-                  </IonCol>
+                  <ProjectCard
+                    title={title}
+                    description={description}
+                    date={date}
+                    url={url}
+                    owner={owner}
+                    id={id}
+                  />
+
                 );
               })}
             </IonRow>

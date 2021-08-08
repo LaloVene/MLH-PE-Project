@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   IonCard,
   IonCardHeader,
   IonCardTitle,
   IonCardSubtitle,
   IonCardContent,
-  IonIcon
+  IonIcon,
+  IonCol,
+  IonModal,
+  IonButton
 } from "@ionic/react";
 import { personCircleOutline } from "ionicons/icons";
 import styled from "styled-components";
@@ -49,21 +52,55 @@ const Tags = styled.p`
 
 function CategoryCard(props) {
 
-  const { title, description, date, url, owner, customClick } = props;
+  const { title, description, date, url, owner, id, customClick } = props;
+  const [showProject, setShowProject] = useState(false);
 
   return (
-    <Card onClick={customClick}>
-      <CardHeader>
-        <Icon icon={personCircleOutline} />
-        <Username>{owner}</Username>
-      </CardHeader>
-      <IonCardContent>
-        <Title>{title}</Title>
-        <p>{description}</p>
-        <Date>{date}</Date>
-        <Tags>{'Tags: Python, ML/AI, Web Dev'}</Tags>
-      </IonCardContent>
-    </Card>
+    <IonCol size="12" size-md="4" key={id}>
+      <IonModal id="projmod" isOpen={showProject} cssClass='my-custom-class'>
+        <h2 style={{
+          marginTop: "50px"
+        }}>{title}</h2>
+        <p style={{
+          margin: "0px",
+          padding: "0px",
+          fontSize: "0.75em"
+        }}>Created By: {owner}</p>
+        <p style={{
+          fontSize: "0.75em"
+        }}>{date}</p>
+        <p style={{
+          margin: "20px",
+          marginTop: "5px",
+          textAlign: "center"
+        }}>   {description}</p>
+
+        <p style={{
+          margin: "20px",
+          marginTop: "5px",
+          textAlign: "center"
+        }}>   {description}</p>
+
+        <IonButton id="closemodal">Contact</IonButton>
+
+        <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={() => setShowProject(false)}>Close</IonButton>
+      </IonModal>
+
+      <Card onClick={() => setShowProject(true)}>
+        <CardHeader>
+          <Icon icon={personCircleOutline} />
+          <Username>{owner}</Username>
+        </CardHeader>
+        <IonCardContent>
+          <Title>{title}</Title>
+          <p>{description}</p>
+          <Date>{date}</Date>
+          <Tags>{'Tags: Python, ML/AI, Web Dev'}</Tags>
+        </IonCardContent>
+      </Card>
+
+    </IonCol>
+
   );
 }
 
