@@ -32,7 +32,7 @@ const Register: React.FC = () => {
     }
 
     languages.forEach(function (lang) {
-      fetch('/api/addUserLanguage', {
+      fetch('http://lalovene.duckdns.org:5000/api/addUserLanguage', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -54,7 +54,7 @@ const Register: React.FC = () => {
     })
 
     topics.forEach(function (topic) {
-      fetch('/api/addUserTopic', {
+      fetch('http://lalovene.duckdns.org:5000/api/addUserTopic', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -76,7 +76,7 @@ const Register: React.FC = () => {
         })
     })
 
-    const finalresp = await fetch('/api/register', {
+    const finalresp = await fetch('http://lalovene.duckdns.org:5000/api/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -152,7 +152,7 @@ const Register: React.FC = () => {
             }} /> */}
 
             <IonItem>
-              <IonLabel position="floating"> Name</IonLabel>
+              {/* <IonLabel position="floating"> Name</IonLabel> */}
               <IonInput
                 type="text"
                 value={name}
@@ -164,7 +164,7 @@ const Register: React.FC = () => {
             </IonItem>
 
             <IonItem>
-              <IonLabel position="floating"> Username</IonLabel>
+              {/* <IonLabel position="floating"> Username</IonLabel> */}
               <IonInput
                 type="text"
                 placeholder="Username"
@@ -177,7 +177,7 @@ const Register: React.FC = () => {
 
 
             <IonItem>
-              <IonLabel position="floating"> Email</IonLabel>
+              {/* <IonLabel position="floating"> Email</IonLabel> */}
               <IonInput
                 type="email"
                 value={email}
@@ -190,7 +190,7 @@ const Register: React.FC = () => {
             </IonItem>
 
             <IonItem>
-              <IonLabel position="floating"> Password</IonLabel>
+              {/* <IonLabel position="floating"> Password</IonLabel> */}
               <IonInput
                 type="password"
                 value={password}
@@ -202,7 +202,7 @@ const Register: React.FC = () => {
             </IonItem>
 
             <IonItem>
-              <IonLabel position="floating"> Github</IonLabel>
+              {/* <IonLabel position="floating"> Github</IonLabel> */}
               <IonInput
                 type="url"
                 placeholder="Github"

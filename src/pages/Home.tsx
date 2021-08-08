@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom"; 
+import { Link } from "react-router-dom";
 import {
   IonModal,
   IonContent,
@@ -33,15 +33,7 @@ function Home() {
   const [search, setSearch] = useState('')
   const [showProject, setShowProject] = useState(false);
 
-  // const [currentTime, setCurrentTime] = useState(0);
 
-  // useEffect(() => {
-  //   fetch("/api/time")
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setCurrentTime(data.time);
-  //     });
-  // }, []);
 
   return (
     <IonPage>
@@ -80,7 +72,7 @@ function Home() {
           <section>
             <SectionTitle>Recommended for You</SectionTitle>
             <IonRow>
-              {projects.map((project, index) => {
+              {projects.filter(proj => proj.description.toLowerCase().includes(search.toLowerCase()) || proj.title.toLowerCase().includes(search.toLowerCase())).map((project, index) => {
                 const { id, title, description, date, url, owner } = project;
                 return (
                   <IonCol size="12" size-md="4" key={id}>

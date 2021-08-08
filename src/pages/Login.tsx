@@ -27,7 +27,7 @@ const Login: React.FC = () => {
     }
     console.log(opts)
 
-    const finalresp = await fetch('/api/login', {
+    const finalresp = await fetch('http://lalovene.duckdns.org:5000/api/login', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
