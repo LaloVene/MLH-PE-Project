@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom"; 
+import { Link } from "react-router-dom";
 import {
   IonContent,
   IonHeader,
@@ -31,18 +31,18 @@ function Categories() {
 
   const [categories, setCategories] = useState(categoriesData);
   const [filteredCategories, setFilteredCategories] = useState(categories);
-  
+
   // Fetch categories from /api/getTopics
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch("/api/getTopics");
+      const response = await fetch("http://lalovene.duckdns.org:5000/api/getTopics");
       const data = await response.json();
       setCategories(data.topics)
       setFilteredCategories(data.topics)
     }
     fetchData();
-    }, [setCategories, setFilteredCategories]);
-  
+  }, [setCategories, setFilteredCategories]);
+
   const Search = (event) => {
     const query = event.target.value;
     setFilteredCategories(categories.filter(category => category.name.toLowerCase().includes(query.toLowerCase())));
@@ -65,7 +65,7 @@ function Categories() {
         <Container>
           <Title>Categories</Title>
           <SearchBarContainer>
-            <Searchbar placeholder="Search" onChange={Search} onSubmit={() => {}}/>
+            <Searchbar placeholder="Search" onChange={Search} onSubmit={() => { }} />
           </SearchBarContainer>
           <IonRow>
             {
@@ -75,7 +75,7 @@ function Categories() {
                     <CategoryCard
                       key={category.name}
                       name={category.name}
-                      />
+                    />
                   </Link>
                 </IonCol>
               )
