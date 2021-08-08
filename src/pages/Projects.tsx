@@ -14,7 +14,8 @@ import {
     IonButton,
     IonCard,
     IonIcon,
-    IonGrid
+    IonGrid,
+    IonItem
 } from "@ionic/react";
 import styled from "styled-components";
 import { addCircleOutline } from "ionicons/icons";
@@ -60,8 +61,26 @@ function Projects() {
 
     function saveChanges() {
         setShowProject(false)
-        // send new project to backend
+        // send new project to backend missing owners
 
+
+        // let opts = {
+        //     'title': eTitle,
+        //     'description': eDescription,
+        //     'url': eUrl,
+        //     // 'owner':owner
+        // }
+        // fetch('http://lalovene.duckdns.org:5000/api/addProject', {
+        //     method: 'post',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify(opts)
+        // }).then(r => r.json())
+        //     .then(resp => {
+        //         console.log(resp)
+
+        //     })
     }
 
 
@@ -100,42 +119,26 @@ function Projects() {
                         <IonGrid>
                             <IonRow>
                                 <IonCol size="12" size-md="4">
-                                    <IonModal id="projmod" isOpen={showProject} cssClass='my-custom-class'>
-                                        <IonInput
-                                            style={{
-                                                marginTop: "50px",
-                                                textAlign: "center",
-                                                fontSize: "24px",
-                                                fontWeight: "500",
-                                                lineHeight: "1.2",
-                                                borderStyle: "solid",
-                                                border: "1px solid black",
-                                                background: "gray"
-                                            }}
-                                            value={eTitle}
-                                            onChange={(e: any) => setTitle(e.target.value!)}
-                                            type="text"
-                                            placeholder="Title"
-                                        ></IonInput>
+                                    <IonModal id="projmod" isOpen={showProject} cssClass='my-custom-class' >
+                                        <IonItem>
+                                            <IonInput id="eTitle"
+                                                placeholder="Title"
+                                                value={eTitle}
+                                                onIonChange={(e: { detail: { value: any; }; }) => setTitle(e.detail.value!)}
 
-
-
-
-
-                                        <IonInput
-                                            style={{
-                                                margin: "20px",
-                                                marginTop: "5px",
-                                                textAlign: "center",
-                                                borderStyle: "solid",
-                                                border: "1px solid black",
-                                                background: "gray"
-                                            }}
-                                            value={eDescription}
-                                            onChange={(e: any) => setDescription(e.target.value!)}
-                                            type="text"
+                                                type="text"
+                                            ></IonInput>
+                                        </IonItem>
+                                        <textarea id="desarea"
                                             placeholder="Description"
-                                        ></IonInput>
+                                            value={eDescription}
+                                            onChange={(
+                                                ev: React.ChangeEvent<HTMLTextAreaElement>
+                                            ): void => setDescription(ev.target.value)}
+
+
+
+                                        ></textarea>
 
 
 

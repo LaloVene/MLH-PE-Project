@@ -1,0 +1,33 @@
+.textarea-wrapper {
+    height: 100%;
+}
+
+#projmod {
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+#eTitle {
+    margin: 50px;
+    text-align: center;
+    font-size: 24px;
+    border-style: none;
+    line-height: 1.2;
+    padding: 15px;
+    border-radius: 2rem;
+    background: #dfe5f5
+}
+
+#desarea {
+    margin: 20px;
+    border-style: none;
+    border-radius: 2rem;
+    background: #dfe5f5;
+    resize: none;
+    height: 60%;
+    width: 80%;
+    padding: 15px;
+    border: none;
+    outline: none
+}
