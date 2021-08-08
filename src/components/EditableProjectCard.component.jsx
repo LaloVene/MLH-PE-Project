@@ -9,11 +9,14 @@ import {
   IonCol,
   IonModal,
   IonButton,
-  IonInput
+  IonInput,
+  IonTextarea,
+  IonItem
 } from "@ionic/react";
 import { personCircleOutline } from "ionicons/icons";
 import styled from "styled-components";
 import { URLSearchParams } from "url";
+import '../pages/Projects.css';
 
 const Card = styled(IonCard)`
   cursor: pointer;
@@ -52,6 +55,12 @@ const Tags = styled.p`
   color: #B4B5B8;
 `;
 
+const Description = styled.p`
+  margin: 20px;
+  margin-top: 5px;
+  text-align: center;
+`
+
 function CategoryCard(props) {
   const [editMode, setEditMode] = useState(false);
   const { title, description, date, url, owner, id, customClick } = props;
@@ -84,17 +93,9 @@ function CategoryCard(props) {
             fontSize: "0.75em"
           }}>{date}</p>
 
-          <p style={{
-            margin: "20px",
-            marginTop: "5px",
-            textAlign: "center"
-          }}>   {description}</p>
+          <Description >   {description}</Description>
 
-          <p style={{
-            margin: "20px",
-            marginTop: "5px",
-            textAlign: "center"
-          }}>   {description}</p>
+          <Description >   {description}</Description>
 
           <IonButton id="closemodal" onClick={() => setEditMode(true)}>Edit</IonButton>
 
@@ -102,48 +103,55 @@ function CategoryCard(props) {
         </IonModal>}
 
       {editMode &&
-        <IonModal id="projmod" isOpen={showProject} cssClass='my-custom-class'>
-          <IonInput
+        <IonModal id="projmod" isOpen={showProject} cssClass='my-custom-class' style={{
+          display: "flex",
+          justifyContet: "center",
+          alignItems: "center"
+        }}>
+          <IonItem>
+            <IonInput
+              style={{
+                margin: "50px",
+                textAlign: "center",
+                fontSize: "24px",
+                borderStyle: "none",
+                lineHeight: "1.2",
+                padding: "15px",
+
+                borderRadius: "2rem",
+                background: "#dfe5f5"
+              }}
+              value={eTitle}
+              onIonChange={(e) => {
+                setTitle(e.target.value)
+
+              }}
+              type="text"
+            ></IonInput>
+          </IonItem>
+          <textarea id="desarea"
             style={{
-              marginTop: "50px",
-              textAlign: "center",
-              fontSize: "24px",
-              fontWeight: "500",
-              lineHeight: "1.2",
-              borderStyle: "solid",
-              border: "1px solid black",
-              background: "gray"
-            }}
-            value={eTitle}
-            onIonChange={(e) => setTitle(e.target.value)}
-            type="text"
-          ></IonInput>
 
-          <p style={{
-            margin: "0px",
-            padding: "0px",
-            fontSize: "0.75em"
-          }}>
-            Created By: {owner}
-          </p>
-
-          <p style={{
-            fontSize: "0.75em"
-          }}>{date}</p>
-
-          <IonInput
-            style={{
               margin: "20px",
-              marginTop: "5px",
-              textAlign: "center",
-              borderStyle: "solid",
-              border: "1px solid black",
-              background: "gray"
+              borderStyle: "none",
+              borderRadius: "2rem",
+              background: "#dfe5f5",
+              resize: "none",
+              height: "60%",
+              width: "80%",
+              padding: "15px",
+              border: "none",
+              outline: "none"
+
+
             }}
             value={eDescription}
-            onIonChange={(e) => setDescription(e.target.value)}
-            type="text"
-          ></IonInput>
+            onChange={(e) => {
+              setDescription(e.target.value)
+            }}
+
+
+          ></textarea>
 
 
 
@@ -166,7 +174,7 @@ function CategoryCard(props) {
         </IonCardContent>
       </Card>
 
-    </IonCol>
+    </IonCol >
 
   );
 }
