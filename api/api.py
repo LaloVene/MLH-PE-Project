@@ -3,6 +3,7 @@ from flask import Flask, request, jsonify
 from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
 from datetime import date, datetime
+from flask_cors import CORS
 import json
 import jwt
 
@@ -17,6 +18,7 @@ import time
 
 load_dotenv()
 app = Flask(__name__, static_folder="../build", static_url_path="/")
+CORS(app)
 
 app.secret_key = "development key"
 
