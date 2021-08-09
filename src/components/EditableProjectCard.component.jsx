@@ -69,9 +69,42 @@ function CategoryCard(props) {
   const [eDescription, setDescription] = useState(description);
   const [eUrl, setUrl] = useState(url);
 
+  function closeEdit() {
+    setEditMode(false)
+    setTitle(title)
+    setDescription(description)
+    setUrl(url)
+
+  }
   function saveChanges() {
     setEditMode(false)
-    // send changes to backend
+    let opts = {
+      "id": id,
+      "title": eTitle,
+      "description": eDescription,
+      "url": eUrl
+
+    }
+
+    fetch('/api/editProject', {
+      method: 'put',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(opts)
+    }).then(r => r.json())
+      .then(resp => {
+        console.log(resp)
+        if (resp.status == "ok") {
+          console.log("Successfully edited")
+        }
+        else {
+          console.log(resp.error)
+        }
+      })
+
+
+
 
   }
 
@@ -157,7 +190,7 @@ function CategoryCard(props) {
 
           <IonButton id="closemodal" onClick={saveChanges}>Save</IonButton>
 
-          <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={() => setShowProject(false)}>Close</IonButton>
+          <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={closeEdit}>Close</IonButton>
         </IonModal>
       }
 

@@ -35,7 +35,6 @@ function ProfilePage() {
 
   useEffect(() => {
     fetch('/api/getUserData?username=test').then(res => res.json()).then(data => {
-      console.log(data)
       setProfileData(data.userData)
     })
   }, [])

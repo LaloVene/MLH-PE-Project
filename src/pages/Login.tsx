@@ -30,7 +30,7 @@ const Login: React.FC = () => {
     }
     console.log(opts)
 
-    const finalresp = await fetch('api/login', {
+    const finalresp = await fetch('/api/login', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
