@@ -59,11 +59,9 @@ function Projects() {
     const [eUrl, setUrl] = useState("");
 
 
-    // need to figure out CORS
     const [projects, setProjects] = useState([]);
     useEffect(() => {
         fetch("/api/getProjects").then(res => res.json()).then(data => {
-            console.log(data.projects)
             setProjects(data.projects)
         })
     })
@@ -74,23 +72,23 @@ function Projects() {
         // send new project to backend missing owners
 
 
-        // let opts = {
-        //     'title': eTitle,
-        //     'description': eDescription,
-        //     'url': eUrl,
-        //     // 'owner':owner
-        // }
-        // fetch('http://lalovene.duckdns.org:5000/api/addProject', {
-        //     method: 'post',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(opts)
-        // }).then(r => r.json())
-        //     .then(resp => {
-        //         console.log(resp)
+        let opts = {
+            'title': eTitle,
+            'description': eDescription,
+            'url': "google.com",
+            'owner': "mshen63"
+        }
+        fetch('/api/addProject', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(opts)
+        }).then(r => r.json())
+            .then(resp => {
+                console.log(resp)
 
-        //     })
+            })
     }
 
 

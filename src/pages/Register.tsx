@@ -32,7 +32,7 @@ const Register: React.FC = () => {
     }
 
     languages.forEach(function (lang) {
-      fetch('http://lalovene.duckdns.org:5000/api/addUserLanguage', {
+      fetch('/api/addUserLanguage', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -54,7 +54,7 @@ const Register: React.FC = () => {
     })
 
     topics.forEach(function (topic) {
-      fetch('http://lalovene.duckdns.org:5000/api/addUserTopic', {
+      fetch('/api/addUserTopic', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -76,7 +76,7 @@ const Register: React.FC = () => {
         })
     })
 
-    const finalresp = await fetch('http://lalovene.duckdns.org:5000/api/register', {
+    const finalresp = await fetch('/api/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
