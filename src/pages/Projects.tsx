@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
     IonModal,
@@ -24,7 +24,7 @@ import ProjectCard from "../components/ProjectCard.component";
 import EditableProjectCard from "../components/EditableProjectCard.component";
 import CategoryButton from "../components/CategoryButton.component";
 import Searchbar from '../components/Searchbar.component';
-import projects from "../utils/projects.json";
+// import projects from "../utils/projects.json";
 import categories from "../utils/categories.json";
 import './Projects.css';
 
@@ -60,22 +60,14 @@ function Projects() {
 
 
     // need to figure out CORS
-    // const [projects,setProjects]=useState([]);
-    // useEffect(() => {
-    //     async function fetchData() {
-    //         const response = await fetch("http://lalovene.duckdns.org:5000/api/getProjects", {
+    const [projects, setProjects] = useState([]);
+    useEffect(() => {
+        fetch("/api/getProjects").then(res => res.json()).then(data => {
+            console.log(data.projects)
+            setProjects(data.projects)
+        })
+    })
 
-    //             mode: 'no-cors'
-
-    //         });
-    //         const data = await response.json();
-    //         setProjects(data.projects)
-    //         console.log(data.projects)
-    //         console.log(data.projects[0].descrit)
-
-    //     }
-
-    // }, [setProjects]);
 
     function saveChanges() {
         setShowProject(false)
@@ -173,7 +165,7 @@ function Projects() {
                                         <Icon icon={addCircleOutline} />
                                     </Card>
                                 </IonCol>
-                                {projects.filter(proj => proj.description.toLowerCase().includes(search.toLowerCase()) || proj.title.toLowerCase().includes(search.toLowerCase())).map((project, index) => {
+                                {projects ? projects.map((project, index) => {
                                     const { id, title, description, date, url, owner } = project;
                                     return (
                                         <EditableProjectCard
@@ -186,7 +178,7 @@ function Projects() {
                                         />
 
                                     );
-                                })}
+                                }) : <div></div>}
 
                             </IonRow>
                         </IonGrid>
