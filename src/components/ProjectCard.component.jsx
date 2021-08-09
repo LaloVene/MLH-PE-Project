@@ -54,6 +54,29 @@ function CategoryCard(props) {
 
   const { title, description, date, url, owner, id, customClick } = props;
   const [showProject, setShowProject] = useState(false);
+  // const [languages, setLanguages] = useState([]);
+  // const [topics, setTopics] = useState([])
+
+  // useEffect(() => {
+  //   fetch("http://lalovene.duckdns.org:5000/api/getProjectTopics", {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify({ "projectId": id })
+  //   }).then(r => setTopics(r.json().topics))
+  // }, [setTopics]);
+
+  // useEffect(() => {
+  //   fetch("http://lalovene.duckdns.org:5000/api/getProjectLanguages", {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify({ "projectId": id })
+  //   }).then(r => setLanguages(r.json().languages))
+  // }, [setLanguages]);
+
 
   return (
     <IonCol size="12" size-md="4" key={id}>
@@ -95,6 +118,8 @@ function CategoryCard(props) {
           <Title>{title}</Title>
           <p>{description}</p>
           <Date>{date}</Date>
+          {/* <Tags>Languages: {languages}</Tags>
+          <Tags>Topics: {topics}</Tags> */}
           <Tags>{'Tags: Python, ML/AI, Web Dev'}</Tags>
         </IonCardContent>
       </Card>

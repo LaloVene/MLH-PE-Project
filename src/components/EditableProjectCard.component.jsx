@@ -71,7 +71,22 @@ function CategoryCard(props) {
 
   function saveChanges() {
     setEditMode(false)
-    // send changes to backend
+    let opts = {
+      "id": id,
+      "title": eTitle,
+      "description": eDescription,
+      "url": eUrl
+
+    }
+
+    fetch('http://lalovene.duckdns.org:5000/api/editProject', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(opts)
+    }).then(r => r.json())
+
 
   }
 

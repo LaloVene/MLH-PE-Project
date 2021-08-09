@@ -59,6 +59,24 @@ function Projects() {
     const [eUrl, setUrl] = useState("");
 
 
+    // need to figure out CORS
+    // const [projects,setProjects]=useState([]);
+    // useEffect(() => {
+    //     async function fetchData() {
+    //         const response = await fetch("http://lalovene.duckdns.org:5000/api/getProjects", {
+
+    //             mode: 'no-cors'
+
+    //         });
+    //         const data = await response.json();
+    //         setProjects(data.projects)
+    //         console.log(data.projects)
+    //         console.log(data.projects[0].descrit)
+
+    //     }
+
+    // }, [setProjects]);
+
     function saveChanges() {
         setShowProject(false)
         // send new project to backend missing owners
