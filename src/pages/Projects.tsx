@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
     IonModal,
@@ -24,7 +24,7 @@ import ProjectCard from "../components/ProjectCard.component";
 import EditableProjectCard from "../components/EditableProjectCard.component";
 import CategoryButton from "../components/CategoryButton.component";
 import Searchbar from '../components/Searchbar.component';
-import projects from "../utils/projects.json";
+// import projects from "../utils/projects.json";
 import categories from "../utils/categories.json";
 import './Projects.css';
 
@@ -59,28 +59,36 @@ function Projects() {
     const [eUrl, setUrl] = useState("");
 
 
+    const [projects, setProjects] = useState([]);
+    useEffect(() => {
+        fetch("/api/getProjects").then(res => res.json()).then(data => {
+            setProjects(data.projects)
+        })
+    })
+
+
     function saveChanges() {
         setShowProject(false)
         // send new project to backend missing owners
 
 
-        // let opts = {
-        //     'title': eTitle,
-        //     'description': eDescription,
-        //     'url': eUrl,
-        //     // 'owner':owner
-        // }
-        // fetch('http://lalovene.duckdns.org:5000/api/addProject', {
-        //     method: 'post',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(opts)
-        // }).then(r => r.json())
-        //     .then(resp => {
-        //         console.log(resp)
+        let opts = {
+            'title': eTitle,
+            'description': eDescription,
+            'url': "google.com",
+            'owner': "mshen63"
+        }
+        fetch('/api/addProject', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(opts)
+        }).then(r => r.json())
+            .then(resp => {
+                console.log(resp)
 
-        //     })
+            })
     }
 
 
@@ -155,7 +163,7 @@ function Projects() {
                                         <Icon icon={addCircleOutline} />
                                     </Card>
                                 </IonCol>
-                                {projects.filter(proj => proj.description.toLowerCase().includes(search.toLowerCase()) || proj.title.toLowerCase().includes(search.toLowerCase())).map((project, index) => {
+                                {projects ? projects.map((project, index) => {
                                     const { id, title, description, date, url, owner } = project;
                                     return (
                                         <EditableProjectCard
@@ -168,7 +176,7 @@ function Projects() {
                                         />
 
                                     );
-                                })}
+                                }) : <div></div>}
 
                             </IonRow>
                         </IonGrid>
