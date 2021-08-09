@@ -30,7 +30,7 @@ const Login: React.FC = () => {
     }
     console.log(opts)
 
-    const finalresp = await fetch('http://lalovene.duckdns.org:5000/api/login', {
+    const finalresp = await fetch('api/login', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
@@ -40,7 +40,7 @@ const Login: React.FC = () => {
       .then(resp => {
         console.log(resp)
         if (resp.status == "ok") {
-          dispatch({ type: "TOGGLE_THEME", token: resp.token });
+          dispatch({ type: "ADD_TOKEN", token: resp.token });
 
           window.location.href = ("/Profile")
 

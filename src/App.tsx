@@ -17,6 +17,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile.jsx';
 import Projects from './pages/Projects'
+import Private from './pages/Private.page';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -75,9 +76,9 @@ const App: React.FC = () => {
               <Route exact path="/">
                 <Redirect to="/Login" />
               </Route>
-              <Route exact path="/Profile">
+              <Private exact path="/Profile">
                 <Profile />
-              </Route>
+              </Private>
               <Route exact path="/categories">
                 <Categories />
               </Route>

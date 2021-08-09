@@ -1,13 +1,20 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { useJwt } from "react-jwt";
+import GlobalContext from "../utils/state/GlobalContext";
 
 function Private({ children, ...rest }) {
-  const { decodedToken } = useJwt("token");
+  const {state} = useContext(GlobalContext);
+  const { decodedToken } = useJwt(state.token);
 
   return (
-    <Route {...rest} render={() => (decodedToken.username ? children : <Redirect to="/Login" />)} />
+    <>
+    {
+      decodedToken &&
+      <Route {...rest} render={() => (decodedToken?.username ? children : <Redirect to="/Login" />)} />
+    }
+    </>
   );
-}
+}   
 
 export default Private;
