@@ -14,7 +14,7 @@ import Home from './pages/Home';
 import Categories from './pages/Categories.page';
 import Category from './pages/Category.page';
 import Login from './pages/Login';
-import Register from './pages/Register';
+import Register from './pages/Register.jsx';
 import Profile from './pages/Profile.jsx';
 import Projects from './pages/Projects'
 import Private from './pages/Private.page';
