@@ -83,7 +83,6 @@ function Category(props) {
 
         <Container>
           <Title>{categoryName}</Title>
-          dfshajf
           <SearchBarContainer>
             <Searchbar placeholder="Search" onChange={onChange} onSubmit={Search} />
           </SearchBarContainer>
