@@ -1,8 +1,9 @@
 import { useIonAlert, IonButton, IonCol, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import CategoryButton from '../components/CategoryButton.component';
 import ExploreContainer from '../components/ExploreContainer';
 import LRButton from '../components/LoginRegisterButton.component';
+import GlobalContext from "../utils/state/GlobalContext";
 import './Login.css';
 
 
@@ -10,6 +11,7 @@ import './Login.css';
 
 
 const Login: React.FC = () => {
+  const { dispatch } = useContext(GlobalContext);
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [present] = useIonAlert();
@@ -17,6 +19,7 @@ const Login: React.FC = () => {
 
 
   const onSubmitClick = async (e: { preventDefault: () => void; }) => {
+
 
     var msg = "";
     e.preventDefault()
@@ -37,6 +40,7 @@ const Login: React.FC = () => {
       .then(resp => {
         console.log(resp)
         if (resp.status == "ok") {
+          dispatch({ type: "ADD_TOKEN", token: resp.token });
 
           window.location.href = ("/Profile")
 

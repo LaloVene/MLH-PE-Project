@@ -3,7 +3,9 @@ from flask import Flask, request, jsonify
 from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
 from datetime import date, datetime
+from flask_cors import CORS
 import json
+import jwt
 
 # import smtplib
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -16,6 +18,7 @@ import time
 
 load_dotenv()
 app = Flask(__name__, static_folder="../build", static_url_path="/")
+CORS(app)
 
 app.secret_key = "development key"
 
@@ -256,25 +259,26 @@ def register():
 
 @app.route("/api/login", methods=("POST",))
 def login():
-    try:
-        body = request.get_json()
-        username = str(body["username"])
-        password = str(body["password"])
-        error = None
-        user = UserModel.query.filter_by(username=username).first()
+    # try:
+    body = request.get_json()
+    username = str(body["username"])
+    password = str(body["password"])
+    error = None
+    user = UserModel.query.filter_by(username=username).first()
 
-        if user is None:
-            error = "Incorrect username."
-        if not check_password_hash(user.password, password):
-            error = "Incorrect password."
+    if user is None:
+        error = "Incorrect username."
+    if not check_password_hash(user.password, password):
+        error = "Incorrect password."
 
-        if error is None:
-            return jsonify({"status": "ok"}), 200
-        else:
-            return jsonify({"status": "bad", "error": error}), 418
+    if error is None:
+        token = jwt.encode({"username": username}, "TOKEN_SEED", algorithm="HS256")
+        return jsonify({"status": "ok", "token": token}), 200
+    else:
+        return jsonify({"status": "bad", "error": error}), 418
 
-    except:
-        return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
+    # except:
+    #     return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 
 ########### USER DATA ##############
