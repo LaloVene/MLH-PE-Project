@@ -1,6 +1,7 @@
-import { IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonRow, IonTitle, IonToolbar, useIonAlert, IonSelect, IonSelectOption } from '@ionic/react';
+import { IonContent, IonInput, IonItem, IonLabel, IonPage, IonRow, useIonAlert, IonSelect, IonSelectOption } from '@ionic/react';
 import React, { useState } from 'react';
 import ExploreContainer from '../components/ExploreContainer';
+import Header from '../components/Header.component';
 import dblanguages from "../utils/languages.json";
 import dbtopics from "../utils/topics.json";
 import { LRTitle, LRWrapper, LRSwitch, LRLink, LRCol, LRButton } from '../components/LRStyles' 
@@ -16,7 +17,7 @@ const Register: React.FC = () => {
 
   const [present] = useIonAlert()
 
-  const onSubmitClick = async (e: { preventDefault: () => void; }) => {
+  const onSubmitClick = (e: { preventDefault: () => void; }) => {
     e.preventDefault()
     var msg = ""
     let opts = {
@@ -40,7 +41,7 @@ const Register: React.FC = () => {
       }).then(r => r.json())
         .then(resp => {
 
-          if (resp.status == "ok") {
+          if (resp.status === "ok") {
             console.log(resp.message)
           }
           else {
@@ -63,7 +64,7 @@ const Register: React.FC = () => {
         .then(resp => {
 
           console.log(topic)
-          if (resp.status == "ok") {
+          if (resp.status === "ok") {
             console.log(resp.message)
           }
           else {
@@ -72,19 +73,16 @@ const Register: React.FC = () => {
         })
     })
 
-    const finalresp = await fetch('/api/register', {
+    fetch('/api/register', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-
-      },
+      headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(opts)
     }).then(r => r.json())
       .then(resp => {
 
-        if (resp.status == "ok") {
+        if (resp.status === "ok") {
           msg = "Success!"
-          setTimeout(() => window.location.href = ("/Login"), 3000)
+          setTimeout(() => window.location.href = ("login"), 3000)
         }
         else if (resp.status == "1") {
           msg = "Missing Fields"
@@ -103,8 +101,8 @@ const Register: React.FC = () => {
         'Ok',
       ],
       onDidDismiss: () => {
-        if (msg == "Success!") {
-          window.location.href = ("/Login")
+        if (msg === "Success!") {
+          window.location.href = ("/login")
         }
       },
     })
@@ -112,17 +110,8 @@ const Register: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Register</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+      <Header />
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Register</IonTitle>
-          </IonToolbar>
-        </IonHeader>
         <ExploreContainer name="Register" />
         <IonRow style={{
           margin: "25px"
@@ -216,7 +205,6 @@ const Register: React.FC = () => {
             <LRButton onClick={onSubmitClick} >
               Register
             </LRButton>
-
             <LRSwitch>
               Already have an account? <LRLink to="/login">Login</LRLink>
             </LRSwitch>

@@ -10,9 +10,9 @@ import {
   IonCol,
 } from "@ionic/react";
 import styled from "styled-components";
+import Header from '../components/Header.component';
 import Searchbar from '../components/Searchbar.component';
 import CategoryCard from '../components/CategoryCard.component';
-import categoriesData from '../utils/categories.json';
 
 const Container = styled.div`
   padding: 1rem;
@@ -29,7 +29,7 @@ const SearchBarContainer = styled.h1`
 
 function Categories() {
 
-  const [categories, setCategories] = useState(categoriesData);
+  const [categories, setCategories] = useState([]);
   const [filteredCategories, setFilteredCategories] = useState(categories);
 
   // Fetch categories from /api/getTopics
@@ -50,17 +50,8 @@ function Categories() {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Categories</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+      <Header />
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Categories</IonTitle>
-          </IonToolbar>
-        </IonHeader>
 
         <Container>
           <Title>Categories</Title>
@@ -70,10 +61,9 @@ function Categories() {
           <IonRow>
             {
               filteredCategories.map(category =>
-                <IonCol size="6" size-md="3">
+                <IonCol size="6" size-md="3" key={category.name}>
                   <Link to={`/category/${category.name}`}>
                     <CategoryCard
-                      key={category.name}
                       name={category.name}
                     />
                   </Link>
