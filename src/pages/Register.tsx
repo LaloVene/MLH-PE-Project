@@ -1,7 +1,6 @@
 import { UseIonAlertResult, IonButton, IonCol, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonRow, IonTitle, IonToolbar, useIonAlert, IonSelect, IonSelectOption } from '@ionic/react';
 import React, { useState } from 'react';
 import ExploreContainer from '../components/ExploreContainer';
-import './Register.css';
 import dblanguages from "../utils/languages.json";
 import dbtopics from "../utils/topics.json";
 import { ReactComponent as RegIcon } from "../components/RegIcon.svg"
