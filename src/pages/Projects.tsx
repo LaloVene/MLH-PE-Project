@@ -69,13 +69,17 @@ function Projects() {
     const {state} = useContext(GlobalContext);
     let decodedToken:any;
     decodedToken = useJwt(state.token);
+    console.log(decodedToken)
 
-    const [projects, setProjects] = useState(jsonprojects);
+    const [projects, setProjects] = useState([]);
     useEffect(() => {
         fetch("/api/getProjects").then(res => res.json()).then(data => {
-            setProjects(data.projects)
+            console.log(decodedToken?.decodedToken?.username)
+            const projs=data.projects.filter((proj: { owner: any; })=>proj.owner==decodedToken?.decodedToken?.username)
+            console.log(projs)
+            setProjects(projs)
         })
-    }, [])
+    })
 
 
     function saveChanges() {
@@ -86,7 +90,7 @@ function Projects() {
             'title': eTitle,
             'description': eDescription,
             'url': eUrl,
-            'owner': decodedToken.decodeToken.username
+            'owner': decodedToken.decodedToken.username
         }
         fetch('/api/addProject', {
             method: 'post',
