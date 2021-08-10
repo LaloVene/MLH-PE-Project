@@ -27,6 +27,14 @@ const LoginLink = styled(Link)`
   text-decoration: none;
 `
 
+const LoginCol = styled(IonCol)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 25px;
+`;
+
 const Login: React.FC = () => {
   const { dispatch } = useContext(GlobalContext);
   const [username, setUsername] = useState('')
@@ -56,12 +64,9 @@ const Login: React.FC = () => {
         console.log(resp)
         if (resp.status == "ok") {
           dispatch({ type: "ADD_TOKEN", token: resp.token });
-
           window.location.href = ("/Profile")
-
           msg = "Successfully logged in"
         }
-
         else {
           msg = resp.error
         }
@@ -95,49 +100,46 @@ const Login: React.FC = () => {
         <IonRow style={{
           margin: "130px"
         }}>
-          <IonCol style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexDirection: 'column',
-            margin: "25px"
-
-          }}>
+          <LoginCol>
             <LoginTitle>
               Login to DevUp
             </LoginTitle>
+
             <LoginWrapper>
-            <IonItem>
-              <IonLabel position="floating"> Username</IonLabel>
-              <IonInput
-                type="text"
-                value={username}
-                onIonChange={(e: { detail: { value: any; }; }) => setUsername(e.detail.value!)}
-              >
-              </IonInput>
-            </IonItem>
 
-            <IonItem>
+              <IonItem>
+                <IonLabel position="floating"> Username</IonLabel>
+                <IonInput
+                  type="text"
+                  value={username}
+                  onIonChange={(e: { detail: { value: any; }; }) => setUsername(e.detail.value!)}
+                />
+              </IonItem>
 
-              <IonLabel position="floating"> Password</IonLabel>
-              <IonInput
-                type="password"
-                value={password}
-                onIonChange={(e: { detail: { value: any; }; }) => setPassword(e.detail.value!)}
-              >
-              </IonInput>
-            </IonItem>
-            <LoginSmall>
-              <LoginLink to="#">Forgot password?</LoginLink>
-            </LoginSmall>
+              <IonItem>
+                <IonLabel position="floating"> Password</IonLabel>
+                <IonInput
+                  type="password"
+                  value={password}
+                  onIonChange={(e: { detail: { value: any; }; }) => setPassword(e.detail.value!)}
+                />
+              </IonItem>
+
+              <LoginSmall>
+                <LoginLink to="#">Forgot password?</LoginLink>
+              </LoginSmall>
+
             </LoginWrapper>
-              <LRButton onClick={onSubmitClick}>
-                Login
-              </LRButton>
-              <LoginNew>
-                New to DevUp? <LoginLink to="/register">Create an account</LoginLink>
-              </LoginNew>
-          </IonCol>
+
+            <LRButton onClick={onSubmitClick}>
+              Login
+            </LRButton>
+
+            <LoginNew>
+              New to DevUp? <LoginLink to="/register">Create an account</LoginLink>
+            </LoginNew>
+            
+          </LoginCol>
         </IonRow>
       </IonContent>
     </IonPage>
