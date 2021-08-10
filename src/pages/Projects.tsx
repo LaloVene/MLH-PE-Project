@@ -70,7 +70,7 @@ function Projects() {
         fetch("/api/getProjects").then(res => res.json()).then(data => {
             setProjects(data.projects)
         })
-    })
+    }, [])
 
 
     function saveChanges() {
