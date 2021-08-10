@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonRow, IonTitle, IonToolbar, useIonAlert, IonSelect, IonSelectOption, IonButton } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import dblanguages from "../utils/languages.json";
@@ -19,15 +20,18 @@ const validationSchema = yup.object({
   name: yup.string().nullable().min(3, "Name should be a minimum of 3 characters long").required("Name is required"),
   username: yup.string().nullable().min(3, "Username should be a minimum of 3 characters long").required("Username is required"),
   password: yup.string().nullable().min(8, "Password should be a minimum of 8 characters long").required("Password is required"),
-  github: yup.string().nullable().min(3, "Github should be a minimum of 3 characters long"),
-
+  github: yup.string().nullable().min(3, "Github username should be a minimum of 3 characters long").required("Github is required"),
 })
 
 const Register = () => {
+  const [languages, setLanguages] = useState([]);
+  const [topics, setTopics] = useState([]);
+
   const [present] = useIonAlert()
 
-  const onSubmitClick = async ({name, email, username, password, github, topics, languages}) => {
-    console.log(name)
+  const onSubmitClick = async ({name, email, username, password, github}) => {
+    console.log(languages)
+    console.log(topics)
 
     var msg = ""
     let opts = {
@@ -150,14 +154,12 @@ const Register = () => {
               username: null,
               password: null,
               github: null,
-              languages: [],
-              topics: [],
+
             }}
 
             validationSchema={validationSchema}
             onSubmit={values => {
               onSubmitClick(values);
-              alert(JSON.stringify(values, null, 2));
             }}
             >
               {formikProps => (
@@ -230,20 +232,23 @@ const Register = () => {
                   <ErrorMsg>
                     {formikProps.touched.github && formikProps.errors.github}
                   </ErrorMsg>
-                <IonItem>
-                  <IonLabel>Languages</IonLabel>
-                  <IonSelect value={formikProps.values.languages} multiple={true} cancelText="Close" okText="Done" onIonChange={formikProps.handleChange}>
-                  {
-                    dblanguages.map(lang =>
-                      <IonSelectOption value={lang}>{lang}</IonSelectOption>
-                    )
-                  }
-                  </IonSelect>
-                </IonItem>
 
-                <IonItem>
+                  <IonItem style={{width:"300px"}}>
+                    <IonLabel>Languages</IonLabel>
+                    <IonSelect value={languages} multiple={true} cancelText="Close" okText="Done" 
+                      onIonChange={e => setLanguages(e.target.value)}>
+                    {
+                      dblanguages.map(lang =>
+                        <IonSelectOption value={lang}>{lang}</IonSelectOption>
+                      )
+                    }
+                    </IonSelect>
+                  </IonItem>
+
+                <IonItem style={{width:"300px"}}>
                   <IonLabel>Interests</IonLabel>
-                  <IonSelect value={formikProps.values.topics} multiple={true} cancelText="Close" okText="Done" onIonChange={formikProps.handleChange}>
+                  <IonSelect value={topics} multiple={true} cancelText="Close" okText="Done" 
+                    onIonChange={e => setTopics(e.target.value)}>
                     {
                       dbtopics.map(topic =>
                         <IonSelectOption value={topic}>{topic}</IonSelectOption>
@@ -254,14 +259,6 @@ const Register = () => {
                 <LRButton type="submit">Register</LRButton>
                 </form>
                 </LRWrapper>
-
-                <div>
-                  <p>VALUES</p>
-                  <pre>{JSON.stringify(formikProps.values, null, 2)}</pre>
-                  <p>ERRORS</p>
-                  <pre>{JSON.stringify(formikProps.errors, null, 2)}</pre>
-
-                </div>
                 </>
               )}
 
