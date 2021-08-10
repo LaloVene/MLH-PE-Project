@@ -72,10 +72,15 @@ function Projects() {
 
     const [projects, setProjects] = useState([]);
     useEffect(() => {
-        fetch("/api/getProjects").then(res => res.json()).then(data => {
-            setProjects(data.projects)
+
+
+
+        fetch("/api/getProjects?searchterm="+search).then(res => res.json()).then(data => {
+            const projs=data.projects.filter((proj: { owner: any; })=>proj.owner==decodedToken?.decodedToken?.username)
+            console.log(projs)
+            setProjects(projs)
         })
-    }, [])
+    },[search])
 
 
     function saveChanges() {
@@ -86,7 +91,7 @@ function Projects() {
             'title': eTitle,
             'description': eDescription,
             'url': eUrl,
-            'owner': decodedToken.decodeToken.username
+            'owner': decodedToken.decodedToken.username
         }
         fetch('/api/addProject', {
             method: 'post',
