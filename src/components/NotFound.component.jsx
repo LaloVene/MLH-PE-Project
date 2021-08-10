@@ -10,7 +10,6 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-top: 15vh;
   text-align: center;
 `;
 const Icon = styled(IonIcon)`
@@ -24,11 +23,11 @@ const Message = styled.p`
 `;      
 
 function Searchbar(props) {
-  const { message } = props;
+  const { title, message } = props;
   return (
     <Container>
       <Icon icon={earth} />
-      <Title>{ '404 Not Found' }</Title>
+      <Title>{ title || '404 Not Found' }</Title>
       <Message>{ message || 'We weren´t able to find this content.' }</Message>
     </Container>
   );

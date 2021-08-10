@@ -17,7 +17,7 @@ import { personCircleOutline } from "ionicons/icons";
 import styled from "styled-components";
 import { URLSearchParams } from "url";
 import '../pages/Projects.css';
-import LRButton from '../components/LoginRegisterButton.component';
+import { LRTitle, LRWrapper, LRSmall, LRSwitch, LRLink, LRCol, LRButton } from '../components/LRStyles' 
 
 const Card = styled(IonCard)`
   cursor: pointer;
