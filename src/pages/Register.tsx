@@ -1,12 +1,9 @@
-import { UseIonAlertResult, IonButton, IonCol, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonRow, IonTitle, IonToolbar, useIonAlert, IonSelect, IonSelectOption } from '@ionic/react';
+import { IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonRow, IonTitle, IonToolbar, useIonAlert, IonSelect, IonSelectOption } from '@ionic/react';
 import React, { useState } from 'react';
 import ExploreContainer from '../components/ExploreContainer';
-import LRButton from '../components/LoginRegisterButton.component';
-import './Register.css';
 import dblanguages from "../utils/languages.json";
 import dbtopics from "../utils/topics.json";
-import { ReactComponent as RegIcon } from "../components/RegIcon.svg"
-import { ifError } from 'assert';
+import { LRTitle, LRWrapper, LRSwitch, LRLink, LRCol, LRButton } from '../components/LRStyles' 
 
 const Register: React.FC = () => {
   const [username, setUsername] = useState('')
@@ -16,7 +13,6 @@ const Register: React.FC = () => {
   const [github, setGithub] = useState('')
   const [languages, setLanguages] = useState<string[]>([]);
   const [topics, setTopics] = useState<string[]>([]);
-
 
   const [present] = useIonAlert()
 
@@ -89,8 +85,6 @@ const Register: React.FC = () => {
         if (resp.status == "ok") {
           msg = "Success!"
           setTimeout(() => window.location.href = ("/Login"), 3000)
-
-
         }
         else if (resp.status == "1") {
           msg = "Missing Fields"
@@ -98,10 +92,8 @@ const Register: React.FC = () => {
         else {
           console.log(resp)
           msg = resp.error
-
         }
       })
-
 
     return present({
       cssClass: 'my-css',
@@ -133,89 +125,67 @@ const Register: React.FC = () => {
         </IonHeader>
         <ExploreContainer name="Register" />
         <IonRow style={{
-
           margin: "25px"
-
         }}>
-          <IonCol style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexDirection: 'column',
-            margin: "25px"
+          <LRCol>
 
-          }}>
+          <LRTitle>
+              Register for DevUp
+          </LRTitle>
 
-            {/* <RegIcon style={{
-              width: "100px",
-              height: "auto"
-            }} /> */}
+          <LRWrapper>
 
             <IonItem>
-              {/* <IonLabel position="floating"> Name</IonLabel> */}
               <IonInput
                 type="text"
                 value={name}
                 placeholder="Name"
                 required
                 onIonChange={(e: { detail: { value: any; }; }) => setName(e.detail.value!)}
-              >
-              </IonInput>
+              />
             </IonItem>
 
             <IonItem>
-              {/* <IonLabel position="floating"> Username</IonLabel> */}
               <IonInput
                 type="text"
                 placeholder="Username"
                 required
                 value={username}
                 onIonChange={(e: { detail: { value: any; }; }) => setUsername(e.detail.value!)}
-              >
-              </IonInput>
+              />
             </IonItem>
 
-
             <IonItem>
-              {/* <IonLabel position="floating"> Email</IonLabel> */}
               <IonInput
                 type="email"
                 value={email}
                 placeholder="Email"
                 required
                 onIonChange={(e: { detail: { value: any; }; }) => setEmail(e.detail.value!)}
-              >
-              </IonInput>
-
+              />
             </IonItem>
 
             <IonItem>
-              {/* <IonLabel position="floating"> Password</IonLabel> */}
               <IonInput
                 type="password"
                 value={password}
                 placeholder="Password"
                 required
                 onIonChange={(e: { detail: { value: any; }; }) => setPassword(e.detail.value!)}
-              >
-              </IonInput>
+              />
             </IonItem>
 
             <IonItem>
-              {/* <IonLabel position="floating"> Github</IonLabel> */}
               <IonInput
                 type="url"
                 placeholder="Github"
                 required
                 value={github}
                 onIonChange={(e: { detail: { value: any; }; }) => setGithub(e.detail.value!)}
-              >
-              </IonInput>
+              />
             </IonItem>
 
-            <IonRow style={{
-              margin: "10px"
-            }}>
+            <IonRow>
               <IonItem>
                 <IonLabel>Languages</IonLabel>
                 <IonSelect value={languages} multiple={true} cancelText="Close" okText="Done" onIonChange={e => setLanguages(e.detail.value)} style={{ width: "200px" }}>
@@ -226,8 +196,8 @@ const Register: React.FC = () => {
                   }
                 </IonSelect>
               </IonItem>
-
             </IonRow>
+
             <IonRow>
               <IonItem>
                 <IonLabel>Interests</IonLabel>
@@ -241,15 +211,17 @@ const Register: React.FC = () => {
               </IonItem>
             </IonRow>
 
+            </LRWrapper>
+
             <LRButton onClick={onSubmitClick} >
               Register
             </LRButton>
-            <LRButton onClick={() => window.location.href = '/Login'} >
-              I already have an account
 
-            </LRButton>
+            <LRSwitch>
+              Already have an account? <LRLink to="/login">Login</LRLink>
+            </LRSwitch>
 
-          </IonCol>
+          </LRCol>
         </IonRow>
       </IonContent>
     </IonPage>
