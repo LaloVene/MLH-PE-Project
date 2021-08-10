@@ -1,6 +1,7 @@
 import { UseIonAlertResult, IonButton, IonCol, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonRow, IonTitle, IonToolbar, useIonAlert, IonSelect, IonSelectOption } from '@ionic/react';
 import React, { useState } from 'react';
 import ExploreContainer from '../components/ExploreContainer';
+import Header from '../components/Header.component';
 import LRButton from '../components/LoginRegisterButton.component';
 import './Register.css';
 import dblanguages from "../utils/languages.json";
@@ -20,7 +21,7 @@ const Register: React.FC = () => {
 
   const [present] = useIonAlert()
 
-  const onSubmitClick = async (e: { preventDefault: () => void; }) => {
+  const onSubmitClick = (e: { preventDefault: () => void; }) => {
     e.preventDefault()
     var msg = ""
     let opts = {
@@ -76,19 +77,16 @@ const Register: React.FC = () => {
         })
     })
 
-    const finalresp = await fetch('/api/register', {
+    fetch('/api/register', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-
-      },
+      headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(opts)
     }).then(r => r.json())
       .then(resp => {
 
         if (resp.status == "ok") {
           msg = "Success!"
-          setTimeout(() => window.location.href = ("/Login"), 3000)
+          setTimeout(() => window.location.href = ("login"), 3000)
 
 
         }
@@ -112,7 +110,7 @@ const Register: React.FC = () => {
       ],
       onDidDismiss: () => {
         if (msg == "Success!") {
-          window.location.href = ("/Login")
+          window.location.href = ("/login")
         }
       },
     })
@@ -120,17 +118,8 @@ const Register: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Register</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+      <Header />
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Register</IonTitle>
-          </IonToolbar>
-        </IonHeader>
         <ExploreContainer name="Register" />
         <IonRow style={{
 
@@ -244,7 +233,7 @@ const Register: React.FC = () => {
             <LRButton onClick={onSubmitClick} >
               Register
             </LRButton>
-            <LRButton onClick={() => window.location.href = '/Login'} >
+            <LRButton onClick={() => window.location.href = '/login'} >
               I already have an account
 
             </LRButton>

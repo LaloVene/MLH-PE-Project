@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import ProjectCard from "../components/ProjectCard.component";
 import Profile from '../components/Profile';
 import Tag from '../components/Tag';
+import Header from '../components/Header.component';
 
 
 const Title = styled.h4`
@@ -47,18 +48,9 @@ function ProfilePage() {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Profile</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+      <Header/>
       <IonContent>
         <Wrapper>
-          <IonHeader collapse="condense">
-            <IonToolbar>
-              <IonTitle size="large">Profile</IonTitle>
-            </IonToolbar>
-          </IonHeader>
 
           {/* Profile information */}
           <Profile name={profileData.name} username={profileData.username} bio="Profile bio" />

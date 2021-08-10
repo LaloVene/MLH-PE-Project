@@ -1,14 +1,10 @@
 import { useIonAlert, IonButton, IonCol, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import React, { useState, useContext } from 'react';
-import CategoryButton from '../components/CategoryButton.component';
+import Header from '../components/Header.component';
 import ExploreContainer from '../components/ExploreContainer';
 import LRButton from '../components/LoginRegisterButton.component';
 import GlobalContext from "../utils/state/GlobalContext";
 import './Login.css';
-
-
-
-
 
 const Login: React.FC = () => {
   const { dispatch } = useContext(GlobalContext);
@@ -69,61 +65,50 @@ const Login: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Login</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+      <Header />
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Login</IonTitle>
-          </IonToolbar>
-        </IonHeader>
         <ExploreContainer name="Login" />
-        <IonRow style={{
-
-          margin: "130px"
-
-        }}>
-          <IonCol style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexDirection: 'column',
-            margin: "25px"
-
-          }}>
+        <IonRow
+          style={{
+            margin: "130px",
+          }}
+        >
+          <IonCol
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexDirection: "column",
+              margin: "25px",
+            }}
+          >
             <IonItem>
               <IonLabel position="floating"> Username</IonLabel>
               <IonInput
                 type="text"
                 value={username}
-                onIonChange={(e: { detail: { value: any; }; }) => setUsername(e.detail.value!)}
-              >
-              </IonInput>
+                onIonChange={(e: { detail: { value: any } }) =>
+                  setUsername(e.detail.value!)
+                }
+              ></IonInput>
             </IonItem>
 
             <IonItem>
-
               <IonLabel position="floating"> Password</IonLabel>
               <IonInput
                 type="password"
                 value={password}
-                onIonChange={(e: { detail: { value: any; }; }) => setPassword(e.detail.value!)}
-              >
-              </IonInput>
+                onIonChange={(e: { detail: { value: any } }) =>
+                  setPassword(e.detail.value!)
+                }
+              ></IonInput>
             </IonItem>
             <IonItem>
-              <LRButton onClick={onSubmitClick}>
-                Login
-              </LRButton>
-
+              <LRButton onClick={onSubmitClick}>Login</LRButton>
             </IonItem>
             <IonItem>
-              <LRButton onClick={() => window.location.href = '/Register'} >
+              <LRButton onClick={() => (window.location.href = "/register")}>
                 Create an Account
-
               </LRButton>
             </IonItem>
           </IonCol>
