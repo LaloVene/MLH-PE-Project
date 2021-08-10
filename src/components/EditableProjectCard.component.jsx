@@ -124,13 +124,12 @@ function CategoryCard(props) {
   function saveChanges() {
     setShowProject(false)
     setEditMode(false)
-    const fullURL = eUrl.match(/^https?:/) ? eUrl : '//' + eUrl
-    console.log(fullURL)
+
     let opts = {
       "id": id,
       "title": eTitle,
       "description": eDescription,
-      "url": fullURL
+      "url": eUrl
 
     }
 
@@ -161,7 +160,10 @@ function CategoryCard(props) {
           <Owner>Created By: {owner}</Owner>
           <Date>{date}</Date>
           <Description >{description}</Description>
-          <LRButton onClick={() => window.open(url)}>
+          <LRButton onClick={() => {
+            const fullURL = eUrl.match(/^https?:/) ? eUrl : '//' + eUrl
+            window.open(fullURL)
+          }}>
             More Information
           </LRButton>
 

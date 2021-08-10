@@ -76,11 +76,11 @@ function Projects() {
     function saveChanges() {
         setShowProject(false)
         // send new project to backend missing owners
-        const fullURL = eUrl.match(/^https?:/) ? eUrl : '//' + eUrl
+
         let opts = {
             'title': eTitle,
             'description': eDescription,
-            'url': fullURL,
+            'url': eUrl,
             'owner': "mshen63"
         }
         fetch('/api/addProject', {
@@ -94,6 +94,9 @@ function Projects() {
                 console.log(resp)
 
             })
+        setTitle("")
+        setDescription("")
+        setUrl("")
     }
 
 
