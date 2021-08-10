@@ -1,10 +1,16 @@
-import { useIonAlert, IonButton, IonCol, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+import { useIonAlert, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import React, { useState, useContext } from 'react';
+<<<<<<< HEAD
 import Header from '../components/Header.component';
+=======
+>>>>>>> a7edc60431a7d1389ec29a1d982837355114424b
 import ExploreContainer from '../components/ExploreContainer';
-import LRButton from '../components/LoginRegisterButton.component';
 import GlobalContext from "../utils/state/GlobalContext";
+<<<<<<< HEAD
 import './Login.css';
+=======
+import { LRTitle, LRWrapper, LRSmall, LRSwitch, LRLink, LRCol, LRButton } from '../components/LRStyles' 
+>>>>>>> a7edc60431a7d1389ec29a1d982837355114424b
 
 const Login: React.FC = () => {
   const { dispatch } = useContext(GlobalContext);
@@ -13,9 +19,7 @@ const Login: React.FC = () => {
   const [present] = useIonAlert();
   console.log(window.location.href)
 
-
   const onSubmitClick = async (e: { preventDefault: () => void; }) => {
-
 
     var msg = "";
     e.preventDefault()
@@ -37,16 +41,11 @@ const Login: React.FC = () => {
         console.log(resp)
         if (resp.status == "ok") {
           dispatch({ type: "ADD_TOKEN", token: resp.token });
-
           window.location.href = ("/Profile")
-
           msg = "Successfully logged in"
-
         }
-
         else {
           msg = resp.error
-
         }
       })
 
@@ -59,8 +58,6 @@ const Login: React.FC = () => {
       ],
       onDidDismiss: (e) => console.log('clicked ok'),
     })
-
-
   }
 
   return (
@@ -68,6 +65,7 @@ const Login: React.FC = () => {
       <Header />
       <IonContent fullscreen>
         <ExploreContainer name="Login" />
+<<<<<<< HEAD
         <IonRow
           style={{
             margin: "130px",
@@ -112,6 +110,51 @@ const Login: React.FC = () => {
               </LRButton>
             </IonItem>
           </IonCol>
+=======
+        <IonRow style={{
+          margin: "130px"
+        }}>
+          <LRCol>
+            <LRTitle>
+              Login to DevUp
+            </LRTitle>
+
+            <LRWrapper>
+
+              <IonItem>
+                <IonLabel position="floating"> Username</IonLabel>
+                <IonInput
+                  type="text"
+                  value={username}
+                  onIonChange={(e: { detail: { value: any; }; }) => setUsername(e.detail.value!)}
+                />
+              </IonItem>
+
+              <IonItem>
+                <IonLabel position="floating"> Password</IonLabel>
+                <IonInput
+                  type="password"
+                  value={password}
+                  onIonChange={(e: { detail: { value: any; }; }) => setPassword(e.detail.value!)}
+                />
+              </IonItem>
+
+              <LRSmall>
+                <LRLink to="#">Forgot password?</LRLink>
+              </LRSmall>
+
+            </LRWrapper>
+
+            <LRButton onClick={onSubmitClick}>
+              Login
+            </LRButton>
+
+            <LRSwitch>
+              New to DevUp? <LRLink to="/register">Create an account</LRLink>
+            </LRSwitch>
+
+          </LRCol>
+>>>>>>> a7edc60431a7d1389ec29a1d982837355114424b
         </IonRow>
       </IonContent>
     </IonPage>

@@ -1,10 +1,13 @@
-import { IonCol, IonContent, IonGrid, IonHeader, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
-import { useEffect, useState } from 'react';
+import { IonContent, IonGrid, IonHeader, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components'
 import ProjectCard from "../components/ProjectCard.component";
 import Profile from '../components/Profile';
 import Tag from '../components/Tag';
 import Header from '../components/Header.component';
+import NotFound from '../components/NotFound.component';
+import GlobalContext from "../utils/state/GlobalContext";
+import { useJwt } from "react-jwt";
 
 
 const Title = styled.h4`
@@ -15,6 +18,7 @@ const Title = styled.h4`
 const Wrapper = styled.div`
     max-width: 1200px;
     margin: auto;
+    padding: 1rem;
 `;
 
 const Section = styled.div`
@@ -31,20 +35,28 @@ const Row = styled.div`
 
 function ProfilePage() {
 
+  // Auth
+  const {state} = useContext(GlobalContext);
+  const { decodedToken } = useJwt(state.token);
+
   const [profileData, setProfileData] = useState([]);
   const [projectList, setProjectList] = useState([]);
 
   useEffect(() => {
-    fetch('/api/getUserData?username=test').then(res => res.json()).then(data => {
-      setProfileData(data.userData)
-    })
-  }, [])
+    if (decodedToken) {
+      fetch(`/api/getUserData?username=${decodedToken.username}`).then(res => res.json()).then(data => {
+        setProfileData(data.userData)
+      })
+    }
+  }, [decodedToken])
 
   useEffect(() => {
     fetch('/api/getProjects').then(res => res.json()).then(data => {
-      setProjectList(data.projects)
+      setProjectList(data.projects);
+      console.log(data.projects);
     })
   }, [])
+
 
   return (
     <IonPage>
@@ -62,7 +74,7 @@ function ProfilePage() {
                 Languages
               </Title>
               <TagSection>
-                {profileData.languages ? profileData.languages.map(language => <Tag text={language.name} />) : <div />}
+                {profileData.languages ? profileData.languages.map(language => <Tag key={language.name} text={language.name} />) : <div />}
               </TagSection>
             </Section>
             <Section>
@@ -70,7 +82,7 @@ function ProfilePage() {
                 Interests
               </Title>
               <TagSection>
-                {profileData.topics ? profileData.topics.map(topic => <Tag text={topic.name} />) : <div />}
+                {profileData.topics ? profileData.topics.map(topic => <Tag key={topic.name} text={topic.name} />) : <div />}
               </TagSection>
             </Section>
           </Row>
@@ -80,22 +92,28 @@ function ProfilePage() {
             Projects
           </Title>
           <IonGrid>
-            <IonRow>
-              {projectList?.filter(project => project.owner === profileData.username).map(project => {
-                const { id, title, description, date, url, owner } = project;
-                return (
-                  <ProjectCard
-                    title={title}
-                    description={description}
-                    date={date}
-                    url={url}
-                    owner={owner}
-                    id={id}
-                  />
+              {
+                projectList.filter(project => project.owner === profileData.username).length ?
+                <IonRow>
+                  {projectList.filter(project => project.owner === profileData.username).map(project => {
+                    const { id, title, description, date, url, owner } = project;
+                    return (
+                      <ProjectCard
+                        title={title}
+                        description={description}
+                        date={date}
+                        url={url}
+                        owner={owner}
+                        id={id}
+                        key={id}
+                      />
 
-                );
-              })}
-            </IonRow>
+                    );
+                  })}
+                </IonRow>
+                :
+                  <NotFound title="No Projects" message="You don´t have projects yet"/>
+              }
           </IonGrid>
 
         </Wrapper>
