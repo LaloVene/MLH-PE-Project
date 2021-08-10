@@ -1,14 +1,31 @@
-import { useIonAlert, IonButton, IonCol, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+import { useIonAlert, IonCol, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import React, { useState, useContext } from 'react';
-import CategoryButton from '../components/CategoryButton.component';
 import ExploreContainer from '../components/ExploreContainer';
 import LRButton from '../components/LoginRegisterButton.component';
 import GlobalContext from "../utils/state/GlobalContext";
-import './Login.css';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components'
 
+const LoginTitle = styled.h3`
+    margin-bottom: 24px;
+    margin-top: 36px;
+`;
 
+const LoginWrapper = styled.div`
+    margin-bottom: 12px;
+`;
 
+const LoginSmall = styled.small`
+  margin-left: 10px;
+`;
 
+const LoginNew = styled.p`
+  border-top: black;
+`;
+
+const LoginLink = styled(Link)`
+  text-decoration: none;
+`
 
 const Login: React.FC = () => {
   const { dispatch } = useContext(GlobalContext);
@@ -17,9 +34,7 @@ const Login: React.FC = () => {
   const [present] = useIonAlert();
   console.log(window.location.href)
 
-
   const onSubmitClick = async (e: { preventDefault: () => void; }) => {
-
 
     var msg = "";
     e.preventDefault()
@@ -45,12 +60,10 @@ const Login: React.FC = () => {
           window.location.href = ("/Profile")
 
           msg = "Successfully logged in"
-
         }
 
         else {
           msg = resp.error
-
         }
       })
 
@@ -63,8 +76,6 @@ const Login: React.FC = () => {
       ],
       onDidDismiss: (e) => console.log('clicked ok'),
     })
-
-
   }
 
   return (
@@ -82,9 +93,7 @@ const Login: React.FC = () => {
         </IonHeader>
         <ExploreContainer name="Login" />
         <IonRow style={{
-
           margin: "130px"
-
         }}>
           <IonCol style={{
             display: 'flex',
@@ -94,6 +103,10 @@ const Login: React.FC = () => {
             margin: "25px"
 
           }}>
+            <LoginTitle>
+              Login to DevUp
+            </LoginTitle>
+            <LoginWrapper>
             <IonItem>
               <IonLabel position="floating"> Username</IonLabel>
               <IonInput
@@ -114,18 +127,16 @@ const Login: React.FC = () => {
               >
               </IonInput>
             </IonItem>
-            <IonItem>
+            <LoginSmall>
+              <LoginLink to="#">Forgot password?</LoginLink>
+            </LoginSmall>
+            </LoginWrapper>
               <LRButton onClick={onSubmitClick}>
                 Login
               </LRButton>
-
-            </IonItem>
-            <IonItem>
-              <LRButton onClick={() => window.location.href = '/Register'} >
-                Create an Account
-
-              </LRButton>
-            </IonItem>
+              <LoginNew>
+                New to DevUp? <LoginLink to="/register">Create an account</LoginLink>
+              </LoginNew>
           </IonCol>
         </IonRow>
       </IonContent>
