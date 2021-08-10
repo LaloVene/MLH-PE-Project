@@ -1,39 +1,8 @@
-import { useIonAlert, IonCol, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+import { useIonAlert, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import React, { useState, useContext } from 'react';
 import ExploreContainer from '../components/ExploreContainer';
-import LRButton from '../components/LoginRegisterButton.component';
 import GlobalContext from "../utils/state/GlobalContext";
-import { Link } from 'react-router-dom';
-import styled from 'styled-components'
-
-const LoginTitle = styled.h3`
-    margin-bottom: 24px;
-    margin-top: 36px;
-`;
-
-const LoginWrapper = styled.div`
-    margin-bottom: 12px;
-`;
-
-const LoginSmall = styled.small`
-  margin-left: 10px;
-`;
-
-const LoginNew = styled.p`
-  border-top: black;
-`;
-
-const LoginLink = styled(Link)`
-  text-decoration: none;
-`
-
-const LoginCol = styled(IonCol)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  margin: 25px;
-`;
+import { LRTitle, LRWrapper, LRSmall, LRSwitch, LRLink, LRCol, LRButton } from '../components/LRStyles' 
 
 const Login: React.FC = () => {
   const { dispatch } = useContext(GlobalContext);
@@ -100,12 +69,12 @@ const Login: React.FC = () => {
         <IonRow style={{
           margin: "130px"
         }}>
-          <LoginCol>
-            <LoginTitle>
+          <LRCol>
+            <LRTitle>
               Login to DevUp
-            </LoginTitle>
+            </LRTitle>
 
-            <LoginWrapper>
+            <LRWrapper>
 
               <IonItem>
                 <IonLabel position="floating"> Username</IonLabel>
@@ -125,21 +94,21 @@ const Login: React.FC = () => {
                 />
               </IonItem>
 
-              <LoginSmall>
-                <LoginLink to="#">Forgot password?</LoginLink>
-              </LoginSmall>
+              <LRSmall>
+                <LRLink to="#">Forgot password?</LRLink>
+              </LRSmall>
 
-            </LoginWrapper>
+            </LRWrapper>
 
             <LRButton onClick={onSubmitClick}>
               Login
             </LRButton>
 
-            <LoginNew>
-              New to DevUp? <LoginLink to="/register">Create an account</LoginLink>
-            </LoginNew>
-            
-          </LoginCol>
+            <LRSwitch>
+              New to DevUp? <LRLink to="/register">Create an account</LRLink>
+            </LRSwitch>
+
+          </LRCol>
         </IonRow>
       </IonContent>
     </IonPage>
