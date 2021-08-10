@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useContext} from "react";
 import { Link } from "react-router-dom";
 import {
     IonModal,
@@ -26,6 +26,8 @@ import CategoryButton from "../components/CategoryButton.component";
 import Searchbar from '../components/Searchbar.component';
 import jsonprojects from "../utils/projects.json";
 import categories from "../utils/categories.json";
+import { useJwt } from "react-jwt";
+import GlobalContext from "../utils/state/GlobalContext";
 import './Projects.css';
 
 const Container = styled.div`
@@ -64,6 +66,9 @@ function Projects() {
     const [eDescription, setDescription] = useState("");
     const [eUrl, setUrl] = useState("");
 
+    const {state} = useContext(GlobalContext);
+    let decodedToken:any;
+    decodedToken = useJwt(state.token);
 
     const [projects, setProjects] = useState(jsonprojects);
     useEffect(() => {
@@ -81,7 +86,7 @@ function Projects() {
             'title': eTitle,
             'description': eDescription,
             'url': eUrl,
-            'owner': "mshen63"
+            'owner': decodedToken.decodeToken.username
         }
         fetch('/api/addProject', {
             method: 'post',
