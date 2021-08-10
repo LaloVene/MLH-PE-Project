@@ -17,6 +17,7 @@ import { personCircleOutline } from "ionicons/icons";
 import styled from "styled-components";
 import { URLSearchParams } from "url";
 import '../pages/Projects.css';
+import LRButton from '../components/LoginRegisterButton.component';
 
 const Card = styled(IonCard)`
   cursor: pointer;
@@ -61,23 +62,69 @@ const Description = styled.p`
   text-align: center;
 `
 
+const ProjTitle = styled.h2`
+
+  margin-top: 50px;
+
+`
+
+const Owner = styled.p`
+
+  margin: 0px;
+  padding: 0px;
+  font-size: 0.75em;
+
+`
+const TitleInput = styled(IonInput)`
+  margin: 50px;
+  margin-top:35px;
+  text-align: center;
+  font-size: 24px;
+  border-style: none;
+  line-height: 1.2;
+  padding: 15px;
+  border-radius: 2rem;
+  background: #dfe5f5;
+`
+
+const DescriptionInput = styled.textarea`
+  margin: 20px;
+  border-style: none;  
+  border-radius: 2rem;
+  background: #dfe5f5;
+  resize: none;
+  height: 60%;
+  width: 80%;
+  padding: 15px;
+  border: none;
+  outline: none
+`
+
+
 function CategoryCard(props) {
-  const [editMode, setEditMode] = useState(false);
   const { title, description, date, url, owner, id, customClick } = props;
+
+  const [editMode, setEditMode] = useState(false);
   const [showProject, setShowProject] = useState(false);
   const [eTitle, setTitle] = useState(title);
   const [eDescription, setDescription] = useState(description);
   const [eUrl, setUrl] = useState(url);
 
   function closeEdit() {
+    setShowProject(false)
     setEditMode(false)
+    // don't save changes
     setTitle(title)
     setDescription(description)
     setUrl(url)
 
   }
+
+
   function saveChanges() {
+    setShowProject(false)
     setEditMode(false)
+
     let opts = {
       "id": id,
       "title": eTitle,
@@ -102,94 +149,54 @@ function CategoryCard(props) {
           console.log(resp.error)
         }
       })
-
-
-
-
   }
 
   return (
     <IonCol size="12" size-md="4" key={id}>
       {!editMode &&
         <IonModal id="projmod" isOpen={showProject} cssClass='my-custom-class'>
-          <h2 style={{
-            marginTop: "50px"
-          }}>{title}</h2>
 
-          <p style={{
-            margin: "0px",
-            padding: "0px",
-            fontSize: "0.75em"
-          }}>Created By: {owner}</p>
-
-          <p style={{
-            fontSize: "0.75em"
-          }}>{date}</p>
-
-          <Description >   {description}</Description>
-
-          <Description >   {description}</Description>
+          <ProjTitle >{title}</ProjTitle>
+          <Owner>Created By: {owner}</Owner>
+          <Date>{date}</Date>
+          <Description >{description}</Description>
+          <LRButton onClick={() => {
+            const fullURL = eUrl.match(/^https?:/) ? eUrl : '//' + eUrl
+            window.open(fullURL)
+          }}>
+            More Information
+          </LRButton>
 
           <IonButton id="closemodal" onClick={() => setEditMode(true)}>Edit</IonButton>
-
           <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={() => setShowProject(false)}>Close</IonButton>
         </IonModal>}
 
       {editMode &&
-        <IonModal id="projmod" isOpen={showProject} cssClass='my-custom-class' style={{
-          display: "flex",
-          justifyContet: "center",
-          alignItems: "center"
-        }}>
+        <IonModal id="projmod" isOpen={showProject} cssClass='my-custom-class' >
           <IonItem>
-            <IonInput
-              style={{
-                margin: "50px",
-                textAlign: "center",
-                fontSize: "24px",
-                borderStyle: "none",
-                lineHeight: "1.2",
-                padding: "15px",
-
-                borderRadius: "2rem",
-                background: "#dfe5f5"
-              }}
+            <TitleInput
               value={eTitle}
               onIonChange={(e) => {
                 setTitle(e.target.value)
-
               }}
               type="text"
-            ></IonInput>
+            ></TitleInput>
           </IonItem>
-          <textarea id="desarea"
-            style={{
 
-              margin: "20px",
-              borderStyle: "none",
-              borderRadius: "2rem",
-              background: "#dfe5f5",
-              resize: "none",
-              height: "60%",
-              width: "80%",
-              padding: "15px",
-              border: "none",
-              outline: "none"
-
-
-            }}
+          <DescriptionInput id="desarea"
             value={eDescription}
             onChange={(e) => {
               setDescription(e.target.value)
-            }}
+            }}>
+          </DescriptionInput >
 
+          <textarea id="url"
 
+            value={eUrl}
+            onChange={(e) => setUrl(e.target.value)}
           ></textarea>
 
-
-
           <IonButton id="closemodal" onClick={saveChanges}>Save</IonButton>
-
           <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={closeEdit}>Close</IonButton>
         </IonModal>
       }

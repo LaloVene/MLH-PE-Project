@@ -35,21 +35,27 @@ const Separator = styled.div`
   margin: 3rem 0;
 `;
 
-const Card = styled(IonCard)`
-  cursor: pointer;
-  border-radius: 2rem;
-  background-color: #EEF1FA;
-  box-shadow: none;
-  
-  &:hover {
+const CreateCard = styled(IonCard)`
+    cursor: pointer;
+    border-radius: 2rem;
+    background-color: #EEF1FA;
+    box-shadow: none;
+
+    height: 93%;
+    display: flex;
+    min-height: 200px;
+
+    &:hover {
     background-color: #dfe5f5;
-  }
+    }
 `;
 
 const Icon = styled(IonIcon)`
   font-size: 2.5rem;
   margin-right: 0.5rem;
 `;
+
+
 
 function Projects() {
     const [search, setSearch] = useState('')
@@ -71,11 +77,10 @@ function Projects() {
         setShowProject(false)
         // send new project to backend missing owners
 
-
         let opts = {
             'title': eTitle,
             'description': eDescription,
-            'url': "google.com",
+            'url': eUrl,
             'owner': "mshen63"
         }
         fetch('/api/addProject', {
@@ -89,6 +94,9 @@ function Projects() {
                 console.log(resp)
 
             })
+        setTitle("")
+        setDescription("")
+        setUrl("")
     }
 
 
@@ -107,18 +115,11 @@ function Projects() {
                     </IonToolbar>
                 </IonHeader>
                 <Container>
-                    {/* Add Project
-                    <section>
-                        <SectionTitle>Add Project</SectionTitle>
-                        <Card>
-                            <Icon icon={addCircleOutline} />
-                        </Card>
-                    </section> */}
+
                     {/* Search Bar */}
                     <section>
                         <Searchbar placeholder="Search" onChange={(e: any) => setSearch(e.target.value!)} />
                     </section>
-
 
 
                     {/* Projects */}
@@ -129,13 +130,15 @@ function Projects() {
                                 <IonCol size="12" size-md="4">
                                     <IonModal id="projmod" isOpen={showProject} cssClass='my-custom-class' >
                                         <IonItem>
-                                            <IonInput id="eTitle"
+                                            <textarea id="eTitle"
                                                 placeholder="Title"
                                                 value={eTitle}
-                                                onIonChange={(e: { detail: { value: any; }; }) => setTitle(e.detail.value!)}
-
-                                                type="text"
-                                            ></IonInput>
+                                                // onIonChange={(e: { detail: { value: any; }; }) => setTitle(e.detail.value!)}
+                                                onChange={(
+                                                    ev: React.ChangeEvent<HTMLTextAreaElement>
+                                                ): void => setTitle(ev.target.value)}
+                                            // type="text"
+                                            ></textarea>
                                         </IonItem>
                                         <textarea id="desarea"
                                             placeholder="Description"
@@ -143,25 +146,24 @@ function Projects() {
                                             onChange={(
                                                 ev: React.ChangeEvent<HTMLTextAreaElement>
                                             ): void => setDescription(ev.target.value)}
-
-
-
                                         ></textarea>
 
-
+                                        <textarea id="url"
+                                            placeholder="URL"
+                                            value={eUrl}
+                                            onChange={(
+                                                ev: React.ChangeEvent<HTMLTextAreaElement>
+                                            ): void => setUrl(ev.target.value)}
+                                        ></textarea>
 
                                         <IonButton id="closemodal" onClick={saveChanges}>Save</IonButton>
-
                                         <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={() => setShowProject(false)}>Close</IonButton>
                                     </IonModal>
-                                    <Card class="ion-align-items-center ion-justify-content-center" style={{
-                                        height: "93%",
-                                        display: "flex",
-                                        minHeight: "200px"
 
-                                    }} onClick={() => setShowProject(true)}>
+                                    <CreateCard class="ion-align-items-center ion-justify-content-center"
+                                        onClick={() => setShowProject(true)}>
                                         <Icon icon={addCircleOutline} />
-                                    </Card>
+                                    </CreateCard>
                                 </IonCol>
                                 {projects ? projects.map((project, index) => {
                                     const { id, title, description, date, url, owner } = project;

@@ -10,13 +10,17 @@
 
 #eTitle {
     margin: 50px;
+    margin-top: 30px;
     text-align: center;
     font-size: 24px;
     border-style: none;
     line-height: 1.2;
     padding: 15px;
     border-radius: 2rem;
-    background: #dfe5f5
+    background: #dfe5f5;
+    height: 35%;
+    resize: none;
+    outline: none;
 }
 
 #desarea {
@@ -25,9 +29,23 @@
     border-radius: 2rem;
     background: #dfe5f5;
     resize: none;
-    height: 60%;
+    height: 50%;
     width: 80%;
     padding: 15px;
     border: none;
     outline: none
+}
+
+#url {
+    border-style: none;
+    border-radius: 2rem;
+    background: #dfe5f5;
+    resize: none;
+    height: 15%;
+    width: 80%;
+    padding: 15px;
+    border: none;
+    outline: none;
+    scroll-behavior: none;
+    margin-bottom: 30px;
 }
