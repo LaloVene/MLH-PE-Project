@@ -33,7 +33,8 @@
     width: 80%;
     padding: 15px;
     border: none;
-    outline: none
+    outline: none;
+    color: black;
 }
 
 #url {
@@ -48,4 +49,5 @@
     outline: none;
     scroll-behavior: none;
     margin-bottom: 30px;
+    color: black;
 }
