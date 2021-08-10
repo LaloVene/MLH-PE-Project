@@ -1,9 +1,10 @@
-import { useIonAlert, IonContent, IonInput, IonItem, IonLabel, IonPage, IonRow } from '@ionic/react';
+import { useIonAlert, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import React, { useState, useContext } from 'react';
 import Header from '../components/Header.component';
+
 import ExploreContainer from '../components/ExploreContainer';
 import GlobalContext from "../utils/state/GlobalContext";
-import { LRTitle, LRWrapper, LRSmall, LRSwitch, LRLink, LRCol, LRButton } from '../components/LRStyles' 
+import { LRTitle, LRWrapper, LRSmall, LRSwitch, LRLink, LRCol, LRButton } from '../components/LRStyles' ;
 
 const Login: React.FC = () => {
   const { dispatch } = useContext(GlobalContext);

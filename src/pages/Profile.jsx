@@ -1,4 +1,4 @@
-import { IonContent, IonGrid, IonPage, IonRow, } from '@ionic/react';
+import { IonContent, IonGrid, IonHeader, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components'
 import ProjectCard from "../components/ProjectCard.component";
