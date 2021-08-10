@@ -11,7 +11,8 @@ import {
   IonButton,
   IonInput,
   IonTextarea,
-  IonItem
+  IonItem,
+  useIonAlert
 } from "@ionic/react";
 import { personCircleOutline } from "ionicons/icons";
 import styled from "styled-components";
@@ -110,6 +111,8 @@ function CategoryCard(props) {
   const [eDescription, setDescription] = useState(description);
   const [eUrl, setUrl] = useState(url);
 
+  const [present] = useIonAlert();
+
   function closeEdit() {
     setShowProject(false)
     setEditMode(false)
@@ -120,6 +123,41 @@ function CategoryCard(props) {
 
   }
 
+  function handleDelete() {
+    return(
+      present({
+        cssClass: 'my-css',
+        header: 'Delete',
+        message: 'Delete project?',
+        buttons: [
+          
+          { text: 'Cancel', handler: (d) => console.log('ok pressed') },
+          
+          {text:'Confirm',handler:(d)=>deleteProject()}
+        ],
+        onDidDismiss: (e) => console.log('did dismiss'),
+      })   
+    )
+  }
+  function deleteProject() { 
+    console.log("delete it")
+    setShowProject(false)
+    setEditMode(false)
+    let opts = {
+      "id": id,
+      // "owner":JWTowner
+
+    }
+
+    fetch('/api/deleteProject', {
+      method: 'delete',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(opts)
+    }).then(r => r.json())
+      .then(resp => console.log(resp))
+  }
 
   function saveChanges() {
     setShowProject(false)
@@ -197,6 +235,7 @@ function CategoryCard(props) {
           ></textarea>
 
           <IonButton id="closemodal" onClick={saveChanges}>Save</IonButton>
+          <IonButton id="closemodal" style={{background:"red"}} onClick={handleDelete}>Delete</IonButton>
           <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={closeEdit}>Close</IonButton>
         </IonModal>
       }

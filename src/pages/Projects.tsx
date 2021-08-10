@@ -24,7 +24,7 @@ import ProjectCard from "../components/ProjectCard.component";
 import EditableProjectCard from "../components/EditableProjectCard.component";
 import CategoryButton from "../components/CategoryButton.component";
 import Searchbar from '../components/Searchbar.component';
-// import projects from "../utils/projects.json";
+import jsonprojects from "../utils/projects.json";
 import categories from "../utils/categories.json";
 import './Projects.css';
 
@@ -65,7 +65,7 @@ function Projects() {
     const [eUrl, setUrl] = useState("");
 
 
-    const [projects, setProjects] = useState([]);
+    const [projects, setProjects] = useState(jsonprojects);
     useEffect(() => {
         fetch("/api/getProjects").then(res => res.json()).then(data => {
             setProjects(data.projects)
