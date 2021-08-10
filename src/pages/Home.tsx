@@ -18,6 +18,7 @@ import SectionTitle from "../components/SectionTitle.component";
 import ProjectCard from "../components/ProjectCard.component";
 import CategoryButton from "../components/CategoryButton.component";
 import Searchbar from '../components/Searchbar.component';
+import Header from '../components/Header.component';
 import projects from "../utils/projects.json";
 import categories from "../utils/categories.json";
 import './Home.css';
@@ -37,17 +38,8 @@ function Home() {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Home</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+      <Header/>
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Home</IonTitle>
-          </IonToolbar>
-        </IonHeader>
         <Container>
           {/* Search Bar */}
           <section>

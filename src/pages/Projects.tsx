@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useContext} from "react";
 import { Link } from "react-router-dom";
 import {
     IonModal,
@@ -24,8 +24,10 @@ import ProjectCard from "../components/ProjectCard.component";
 import EditableProjectCard from "../components/EditableProjectCard.component";
 import CategoryButton from "../components/CategoryButton.component";
 import Searchbar from '../components/Searchbar.component';
-// import projects from "../utils/projects.json";
+import Header from '../components/Header.component';
 import categories from "../utils/categories.json";
+import { useJwt } from "react-jwt";
+import GlobalContext from "../utils/state/GlobalContext";
 import './Projects.css';
 
 const Container = styled.div`
@@ -64,13 +66,21 @@ function Projects() {
     const [eDescription, setDescription] = useState("");
     const [eUrl, setUrl] = useState("");
 
+    const {state} = useContext(GlobalContext);
+    let decodedToken:any;
+    decodedToken = useJwt(state.token);
 
     const [projects, setProjects] = useState([]);
     useEffect(() => {
-        fetch("/api/getProjects").then(res => res.json()).then(data => {
-            setProjects(data.projects)
+
+
+
+        fetch("/api/getProjects?searchterm="+search).then(res => res.json()).then(data => {
+            const projs=data.projects.filter((proj: { owner: any; })=>proj.owner==decodedToken?.decodedToken?.username)
+            console.log(projs)
+            setProjects(projs)
         })
-    }, [])
+    },[search])
 
 
     function saveChanges() {
@@ -81,7 +91,7 @@ function Projects() {
             'title': eTitle,
             'description': eDescription,
             'url': eUrl,
-            'owner': "mshen63"
+            'owner': decodedToken.decodedToken.username
         }
         fetch('/api/addProject', {
             method: 'post',
@@ -103,17 +113,8 @@ function Projects() {
 
     return (
         <IonPage>
-            <IonHeader>
-                <IonToolbar>
-                    <IonTitle>Home</IonTitle>
-                </IonToolbar>
-            </IonHeader>
+            <Header />
             <IonContent fullscreen>
-                <IonHeader collapse="condense">
-                    <IonToolbar>
-                        <IonTitle size="large">Home</IonTitle>
-                    </IonToolbar>
-                </IonHeader>
                 <Container>
 
                     {/* Search Bar */}
@@ -165,7 +166,7 @@ function Projects() {
                                         <Icon icon={addCircleOutline} />
                                     </CreateCard>
                                 </IonCol>
-                                {projects ? projects.map((project, index) => {
+                                {projects ? projects.map((project: any) => {
                                     const { id, title, description, date, url, owner } = project;
                                     return (
                                         <EditableProjectCard

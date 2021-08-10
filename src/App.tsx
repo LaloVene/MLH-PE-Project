@@ -45,15 +45,22 @@ import GlobalReducer, { initialState } from "./utils/state/GlobalReducer";
 
 const App: React.FC = () => {
   const [state, dispatch]: any = useReducer(GlobalReducer, initialState);
+  const [showNav, setShowNav] = useState(true);
+  const url: any = window.location.pathname.split("/").pop();
 
-  var showNav = true;
-  if (window.location.href.indexOf("Login") > -1 || window.location.href.indexOf("Register") > -1 || window.location.href.slice(-1) == "/") {
-    showNav = false;
-  }
 
   useEffect(() => {
     dispatch({ type: 'LOAD_FROM_STORAGE' });
   }, [dispatch]);
+
+  useEffect(() => {
+    if (["login", "register"].includes(url)) {
+      setShowNav(false);
+    } else {
+      setShowNav(true);
+    }
+    console.log(url);
+  }, [setShowNav, url]);
 
   return (
     <IonApp>
@@ -67,16 +74,16 @@ const App: React.FC = () => {
               <Route exact path="/projects">
                 <Projects />
               </Route>
-              <Route exact path="/Login">
+              <Route exact path="/login">
                 <Login />
               </Route>
-              <Route path="/Register">
+              <Route path="/register">
                 <Register />
               </Route>
               <Route exact path="/">
-                <Redirect to="/Login" />
+                <Redirect to="/explore" />
               </Route>
-              <Private exact path="/Profile">
+              <Private exact path="/profile">
                 <Profile />
               </Private>
               <Route exact path="/categories">
@@ -106,7 +113,7 @@ const App: React.FC = () => {
                 <IonLabel>Categories</IonLabel>
               </IonTabButton>
 
-              <IonTabButton tab="Profile" href="/Profile">
+              <IonTabButton tab="Profile" href="/profile">
                 <IonIcon icon={analyticsOutline} />
                 <IonLabel>Profile</IonLabel>
               </IonTabButton>

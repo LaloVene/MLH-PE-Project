@@ -102,6 +102,7 @@ function Category(props) {
                       url={url}
                       owner={owner}
                       id={id}
+                      key={id}
                     />
 
                   );

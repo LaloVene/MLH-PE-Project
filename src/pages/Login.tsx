@@ -1,8 +1,10 @@
 import { useIonAlert, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import React, { useState, useContext } from 'react';
+import Header from '../components/Header.component';
+
 import ExploreContainer from '../components/ExploreContainer';
 import GlobalContext from "../utils/state/GlobalContext";
-import { LRTitle, LRWrapper, LRSmall, LRSwitch, LRLink, LRCol, LRButton } from '../components/LRStyles' 
+import { LRTitle, LRWrapper, LRSmall, LRSwitch, LRLink, LRCol, LRButton } from '../components/LRStyles' ;
 
 const Login: React.FC = () => {
   const { dispatch } = useContext(GlobalContext);
@@ -11,7 +13,7 @@ const Login: React.FC = () => {
   const [present] = useIonAlert();
   console.log(window.location.href)
 
-  const onSubmitClick = async (e: { preventDefault: () => void; }) => {
+  const onSubmitClick = (e: { preventDefault: () => void; }) => {
 
     var msg = "";
     e.preventDefault()
@@ -22,7 +24,7 @@ const Login: React.FC = () => {
     }
     console.log(opts)
 
-    const finalresp = await fetch('/api/login', {
+    fetch('/api/login', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
@@ -31,7 +33,7 @@ const Login: React.FC = () => {
     }).then(r => r.json())
       .then(resp => {
         console.log(resp)
-        if (resp.status == "ok") {
+        if (resp.status === "ok") {
           dispatch({ type: "ADD_TOKEN", token: resp.token });
           window.location.href = ("/Profile")
           msg = "Successfully logged in"
@@ -54,17 +56,8 @@ const Login: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Login</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+      <Header />
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Login</IonTitle>
-          </IonToolbar>
-        </IonHeader>
         <ExploreContainer name="Login" />
         <IonRow style={{
           margin: "130px"

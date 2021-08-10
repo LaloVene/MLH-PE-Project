@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import {
   IonCard,
   IonCardHeader,
@@ -11,10 +11,13 @@ import {
   IonButton,
   IonInput,
   IonTextarea,
-  IonItem
+  IonItem,
+  useIonAlert
 } from "@ionic/react";
 import { personCircleOutline } from "ionicons/icons";
 import styled from "styled-components";
+import { useJwt } from "react-jwt";
+import GlobalContext from "../utils/state/GlobalContext";
 import { URLSearchParams } from "url";
 import '../pages/Projects.css';
 import { LRTitle, LRWrapper, LRSmall, LRSwitch, LRLink, LRCol, LRButton } from '../components/LRStyles' 
@@ -39,17 +42,20 @@ const Icon = styled(IonIcon)`
 `;
 const Username = styled(IonCardSubtitle)`
   margin: 0;
+  color: black;
 `;
 const Title = styled(IonCardTitle)`
   font-size: 1.2rem;
   font-weight: bold;
   padding-bottom: 1rem;
+  color: black;
 `;
 const Date = styled(IonCardSubtitle)`
   margin: 0;
   text-align: right;
   font-size: 0.8rem;
   font-style: italic;
+  color: black;
 `;
 const Tags = styled.p`
   padding-top: 1rem;
@@ -60,11 +66,13 @@ const Description = styled.p`
   margin: 20px;
   margin-top: 5px;
   text-align: center;
+  color: black;
 `
 
 const ProjTitle = styled.h2`
 
   margin-top: 50px;
+  color: black;
 
 `
 
@@ -73,6 +81,7 @@ const Owner = styled.p`
   margin: 0px;
   padding: 0px;
   font-size: 0.75em;
+  color: black;
 
 `
 const TitleInput = styled(IonInput)`
@@ -101,7 +110,7 @@ const DescriptionInput = styled.textarea`
 `
 
 
-function CategoryCard(props) {
+function EditableProjectCard(props) {
   const { title, description, date, url, owner, id, customClick } = props;
 
   const [editMode, setEditMode] = useState(false);
@@ -109,6 +118,10 @@ function CategoryCard(props) {
   const [eTitle, setTitle] = useState(title);
   const [eDescription, setDescription] = useState(description);
   const [eUrl, setUrl] = useState(url);
+
+  const [present] = useIonAlert();
+  const {state} = useContext(GlobalContext);
+  const {decodedToken} = useJwt(state.token);
 
   function closeEdit() {
     setShowProject(false)
@@ -120,6 +133,40 @@ function CategoryCard(props) {
 
   }
 
+  function handleDelete() {
+    return(
+      present({
+        cssClass: 'my-css',
+        header: 'Delete',
+        message: 'Delete project?',
+        buttons: [
+          
+          { text: 'Cancel', handler: (d) => console.log('ok pressed') },
+          
+          {text:'Confirm',handler:(d)=>deleteProject()}
+        ],
+        onDidDismiss: (e) => console.log('did dismiss'),
+      })   
+    )
+  }
+  function deleteProject() { 
+    setShowProject(false)
+    setEditMode(false)
+
+    let opts = {
+      "id": id,
+      "owner":decodedToken.username
+    }
+
+    fetch('/api/deleteProject', {
+      method: 'delete',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(opts)
+    }).then(r => r.json())
+      .then(resp => console.log(resp))
+  }
 
   function saveChanges() {
     setShowProject(false)
@@ -197,6 +244,7 @@ function CategoryCard(props) {
           ></textarea>
 
           <IonButton id="closemodal" onClick={saveChanges}>Save</IonButton>
+          <IonButton id="closemodal" style={{background:"red"}} onClick={handleDelete}>Delete</IonButton>
           <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={closeEdit}>Close</IonButton>
         </IonModal>
       }
@@ -219,4 +267,4 @@ function CategoryCard(props) {
   );
 }
 
-export default CategoryCard;
+export default EditableProjectCard;
