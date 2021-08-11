@@ -120,9 +120,14 @@ function CategoryCard(props) {
 
   function sendEmail() {
 
-    var msg = ""
+    
     if(!mTitle || !mMessage){
-      msg="Please fill out all the fields!"
+      return present({
+        header: "Please fill out all the fields!",
+        buttons: [
+          'Ok'
+        ]
+      })
     } else{
     fetch(`/api/getUserData?username=${owner}`).then(res => res.json()).then(data => {
       let opts = {
@@ -144,10 +149,10 @@ function CategoryCard(props) {
       .then(r => r.json())
       .then(resp => {
           console.log(resp)
-          msg="Message sent!"
+          
           
       }).then(()=>{return present({
-        header: msg,
+        header: "Message sent!",
         buttons: [
           {text:'Ok', handler:(d)=>{
             setShowContact(false)
@@ -157,8 +162,7 @@ function CategoryCard(props) {
         ]
       })})
     }
-
-      
+    
 
   }
 
