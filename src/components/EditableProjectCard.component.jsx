@@ -111,7 +111,7 @@ const DescriptionInput = styled.textarea`
 
 
 function EditableProjectCard(props) {
-  const { title, description, date, url, owner, id, customClick } = props;
+  const { title, description, date, url, owner, id, editFunc} = props;
 
   const [editMode, setEditMode] = useState(false);
   const [showProject, setShowProject] = useState(false);
@@ -149,9 +149,9 @@ function EditableProjectCard(props) {
       })   
     )
   }
+
   function deleteProject() { 
-    setShowProject(false)
-    setEditMode(false)
+    
 
     let opts = {
       "id": id,
@@ -165,12 +165,17 @@ function EditableProjectCard(props) {
       },
       body: JSON.stringify(opts)
     }).then(r => r.json())
-      .then(resp => console.log(resp))
+      .then(resp => console.log(resp)).then(()=> {
+        setShowProject(false)
+        setEditMode(false)
+        editFunc(id.toString())
+      } )
+    
+     
   }
 
   function saveChanges() {
-    setShowProject(false)
-    setEditMode(false)
+    
 
     let opts = {
       "id": id,
@@ -189,13 +194,19 @@ function EditableProjectCard(props) {
     }).then(r => r.json())
       .then(resp => {
         console.log(resp)
+        setShowProject(false)
+        setEditMode(false)
+        editFunc(eTitle)
         if (resp.status == "ok") {
-          console.log("Successfully edited")
+          console.log("Edit Successful")
         }
         else {
           console.log(resp.error)
+
         }
       })
+      
+      
   }
 
   return (

@@ -26,7 +26,7 @@ import CategoryButton from "../components/CategoryButton.component";
 import Searchbar from '../components/Searchbar.component';
 import Header from '../components/Header.component';
 import categories from "../utils/categories.json";
-import { useJwt } from "react-jwt";
+import { decodeToken, useJwt } from "react-jwt";
 import GlobalContext from "../utils/state/GlobalContext";
 import './Projects.css';
 
@@ -62,39 +62,37 @@ const Icon = styled(IonIcon)`
 function Projects() {
     const [search, setSearch] = useState('')
     const [showProject, setShowProject] = useState(false);
-    const [eTitle, setTitle] = useState("");
-    const [eDescription, setDescription] = useState("");
-    const [eUrl, setUrl] = useState("");
+    const [mTitle, setMTitle] = useState("");
+    const [mDescription, setMDescription] = useState("");
+    const [mUrl, setMUrl] = useState("");
+    const [edited,setEdited]=useState("");
+     const [projects, setProjects] = useState([]);
 
     const {state} = useContext(GlobalContext);
     let decodedToken:any;
     decodedToken = useJwt(state.token);
 
-    const [projects, setProjects] = useState([]);
     useEffect(() => {
+        if (decodedToken) {
+            fetch("/api/getProjects").then(res => res.json()).then(data => {
+                console.log(data.projects)
+                console.log(decodedToken)
+                const projs=data.projects.filter((proj: { owner: any; })=>proj.owner==decodedToken?.decodedToken?.username)
+                console.log(projs)
+                setProjects(projs)
+            })
+        }
+      }, [decodedToken.decodedToken,edited])
 
-
-
-        fetch("/api/getProjects?searchterm="+search).then(res => res.json()).then(data => {
-            const projs=data.projects.filter((proj: { owner: any; })=>proj.owner==decodedToken?.decodedToken?.username)
-            console.log(projs)
-            setProjects(projs)
-        })
-    },[search])
-
-
-    function saveChanges() {
-        setShowProject(false)
-        // send new project to backend missing owners
-
+    function saveChanges() {   
         let opts = {
-            'title': eTitle,
-            'description': eDescription,
-            'url': eUrl,
+            'title': mTitle,
+            'description': mDescription,
+            'url': mUrl,
             'owner': decodedToken.decodedToken.username
         }
         fetch('/api/addProject', {
-            method: 'post',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -102,11 +100,13 @@ function Projects() {
         }).then(r => r.json())
             .then(resp => {
                 console.log(resp)
-
+                
+                setShowProject(false)
+                setMTitle("")
+                setMDescription("")
+                setMUrl("")
+                setEdited(mTitle)
             })
-        setTitle("")
-        setDescription("")
-        setUrl("")
     }
 
 
@@ -131,30 +131,30 @@ function Projects() {
                                 <IonCol size="12" size-md="4">
                                     <IonModal id="projmod" isOpen={showProject} cssClass='my-custom-class' >
                                         <IonItem>
-                                            <textarea id="eTitle"
+                                            <textarea id="mTitle"
                                                 placeholder="Title"
-                                                value={eTitle}
-                                                // onIonChange={(e: { detail: { value: any; }; }) => setTitle(e.detail.value!)}
+                                                value={mTitle}
+                                                // onIonChange={(e: { detail: { value: any; }; }) => setMTitle(e.detail.value!)}
                                                 onChange={(
                                                     ev: React.ChangeEvent<HTMLTextAreaElement>
-                                                ): void => setTitle(ev.target.value)}
+                                                ): void => setMTitle(ev.target.value)}
                                             // type="text"
                                             ></textarea>
                                         </IonItem>
                                         <textarea id="desarea"
                                             placeholder="Description"
-                                            value={eDescription}
+                                            value={mDescription}
                                             onChange={(
                                                 ev: React.ChangeEvent<HTMLTextAreaElement>
-                                            ): void => setDescription(ev.target.value)}
+                                            ): void => setMDescription(ev.target.value)}
                                         ></textarea>
 
                                         <textarea id="url"
                                             placeholder="URL"
-                                            value={eUrl}
+                                            value={mUrl}
                                             onChange={(
                                                 ev: React.ChangeEvent<HTMLTextAreaElement>
-                                            ): void => setUrl(ev.target.value)}
+                                            ): void => setMUrl(ev.target.value)}
                                         ></textarea>
 
                                         <IonButton id="closemodal" onClick={saveChanges}>Save</IonButton>
@@ -170,12 +170,14 @@ function Projects() {
                                     const { id, title, description, date, url, owner } = project;
                                     return (
                                         <EditableProjectCard
+                                            key={id}
                                             title={title}
                                             description={description}
                                             date={date}
                                             url={url}
                                             owner={owner}
                                             id={id}
+                                            editFunc={setEdited}
                                         />
 
                                     );
