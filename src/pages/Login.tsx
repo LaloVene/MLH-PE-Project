@@ -15,19 +15,18 @@ const Login: React.FC = () => {
   const [present] = useIonAlert();
   console.log(window.location.href)
 
-  const onSubmitClick = (e: { preventDefault: () => void; }) => {
+  const onSubmitClick = async () => {
 
     var msg = "";
-    e.preventDefault()
     console.log("You pressed login")
     let opts = {
       'username': username,
       'password': password
     }
     console.log(opts)
-
-    fetch('/api/login', {
-      method: 'post',
+    
+    await fetch('/api/login', {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -37,18 +36,20 @@ const Login: React.FC = () => {
         console.log(resp)
         if (resp.status === "ok") {
           dispatch({ type: "ADD_TOKEN", token: resp.token });
-          window.location.href = ("/Profile")
-          msg = "Successfully logged in"
+          setTimeout(() => window.location.href = ("/Profile"), 3000)
+          msg = "Successfully logged in";
         }
-        else {
-          msg = resp.error
+        else if (resp.status === "bad") {
+          console.log("invalid pass");
+          msg = "Invalid password";
         }
+      }).catch(e => {
+        console.log(e);
+        msg = "Invalid username";
       })
 
     return present({
-      cssClass: 'my-css',
       header: msg,
-      message: '',
       buttons: [
         'Ok',
       ],

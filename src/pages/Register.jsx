@@ -93,7 +93,7 @@ const Register = () => {
         })
     })
 
-    const finalresp = await fetch('/api/register', {
+    await fetch('/api/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -116,9 +116,7 @@ const Register = () => {
       })
 
     return present({
-      cssClass: 'my-css',
       header: msg,
-      message: "",
       buttons: [
         'Ok',
       ],
