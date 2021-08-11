@@ -6,6 +6,8 @@ import ExploreContainer from '../components/ExploreContainer';
 import GlobalContext from "../utils/state/GlobalContext";
 import { LRTitle, LRWrapper, LRSmall, LRSwitch, LRLink, LRCol, LRButton } from '../components/LRStyles' ;
 
+import { ReactComponent as LoginPic } from "../components/LoginIcon.svg"
+
 const Login: React.FC = () => {
   const { dispatch } = useContext(GlobalContext);
   const [username, setUsername] = useState('')
@@ -63,6 +65,10 @@ const Login: React.FC = () => {
           margin: "130px"
         }}>
           <LRCol>
+          <LoginPic style={{
+                        width: "200px",
+                        height: "200px"
+                    }} />
             <LRTitle>
               Login to DevUp
             </LRTitle>
