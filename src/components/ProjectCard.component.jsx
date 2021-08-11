@@ -54,54 +54,37 @@ function CategoryCard(props) {
 
   const { title, description, date, url, owner, id, customClick } = props;
   const [showProject, setShowProject] = useState(false);
-  // const [languages, setLanguages] = useState([]);
-  // const [topics, setTopics] = useState([])
-
-  // useEffect(() => {
-  //   fetch("http://lalovene.duckdns.org:5000/api/getProjectTopics", {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify({ "projectId": id })
-  //   }).then(r => setTopics(r.json().topics))
-  // }, [setTopics]);
-
-  // useEffect(() => {
-  //   fetch("http://lalovene.duckdns.org:5000/api/getProjectLanguages", {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify({ "projectId": id })
-  //   }).then(r => setLanguages(r.json().languages))
-  // }, [setLanguages]);
 
 
   return (
     <IonCol size="12" size-md="4" key={id}>
       <IonModal id="projmod" isOpen={showProject} cssClass='my-custom-class'>
         <h2 style={{
-          marginTop: "50px"
+          marginTop: "50px",
+          color: 'black'
         }}>{title}</h2>
         <p style={{
           margin: "0px",
           padding: "0px",
-          fontSize: "0.75em"
+          fontSize: "0.75em",
+          color: 'black'
         }}>Created By: {owner}</p>
         <p style={{
-          fontSize: "0.75em"
+          fontSize: "0.75em",
+          color: 'black'
         }}>{date}</p>
         <p style={{
           margin: "20px",
           marginTop: "5px",
-          textAlign: "center"
+          textAlign: "center",
+          color: 'black'
         }}>   {description}</p>
 
         <p style={{
           margin: "20px",
           marginTop: "5px",
-          textAlign: "center"
+          textAlign: "center",
+          color: 'black'
         }}>   {description}</p>
 
         <IonButton id="closemodal">Contact</IonButton>
