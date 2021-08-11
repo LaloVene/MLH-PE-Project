@@ -103,20 +103,27 @@ const App: React.FC = () => {
                 <IonLabel>Explore</IonLabel>
               </IonTabButton>
 
-              <IonTabButton tab="Projects" href="/projects">
-                <IonIcon icon={albums} />
-                <IonLabel>Projects</IonLabel>
-              </IonTabButton>
-
               <IonTabButton tab="Categories" href="/categories">
                 <IonIcon icon={grid} />
                 <IonLabel>Categories</IonLabel>
               </IonTabButton>
 
-              <IonTabButton tab="Profile" href="/profile">
-                <IonIcon icon={analyticsOutline} />
-                <IonLabel>Profile</IonLabel>
-              </IonTabButton>
+              {
+                state.token?.length &&
+                <IonTabButton tab="Projects" href="/projects">
+                  <IonIcon icon={albums} />
+                  <IonLabel>Projects</IonLabel>
+                </IonTabButton>
+              }
+
+              {
+                state.token?.length &&
+                <IonTabButton tab="Profile" href="/profile">
+                  <IonIcon icon={analyticsOutline} />
+                  <IonLabel>Profile</IonLabel>
+                </IonTabButton>
+              }
+
             </IonTabBar>
           </IonTabs>
         </GlobalContext.Provider>
