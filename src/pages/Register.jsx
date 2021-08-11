@@ -93,7 +93,7 @@ const Register = () => {
         })
     })
 
-    const finalresp = await fetch('/api/register', {
+    await fetch('/api/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -116,17 +116,10 @@ const Register = () => {
       })
 
     return present({
-      cssClass: 'my-css',
       header: msg,
-      message: "",
       buttons: [
         'Ok',
       ],
-      onDidDismiss: () => {
-        if (msg == "Success!") {
-          window.location.href = ("/Login")
-        }
-      },
     })
   }
 
@@ -226,7 +219,7 @@ const Register = () => {
                     <IonInput
                     type="text"
                     name="github"
-                    placeholder="Github"
+                    placeholder="Github*"
                     value={formikProps.values.github}
                     onIonChange={formikProps.handleChange}
                     />
