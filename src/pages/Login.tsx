@@ -18,7 +18,6 @@ const Login: React.FC = () => {
   const onSubmitClick = async () => {
 
     var msg = "";
-    console.log("You pressed login")
     let opts = {
       'username': username,
       'password': password
@@ -40,11 +39,9 @@ const Login: React.FC = () => {
           msg = "Successfully logged in";
         }
         else if (resp.status === "bad") {
-          console.log("invalid pass");
           msg = "Invalid password";
         }
-      }).catch(e => {
-        console.log(e);
+      }).catch(() => {
         msg = "Invalid username";
       })
 
@@ -53,7 +50,6 @@ const Login: React.FC = () => {
       buttons: [
         'Ok',
       ],
-      onDidDismiss: (e) => console.log('clicked ok'),
     })
   }
 

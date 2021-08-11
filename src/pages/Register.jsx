@@ -120,11 +120,6 @@ const Register = () => {
       buttons: [
         'Ok',
       ],
-      onDidDismiss: () => {
-        if (msg == "Success!") {
-          window.location.href = ("/Login")
-        }
-      },
     })
   }
 
@@ -224,7 +219,7 @@ const Register = () => {
                     <IonInput
                     type="text"
                     name="github"
-                    placeholder="Github"
+                    placeholder="Github*"
                     value={formikProps.values.github}
                     onIonChange={formikProps.handleChange}
                     />
