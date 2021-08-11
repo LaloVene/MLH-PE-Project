@@ -4,7 +4,7 @@ import { IonCol } from '@ionic/react';
 
 const LRTitle = styled.h3`
     margin-bottom: 24px;
-    margin-top: 36px;
+    margin-top: 24px;
 `;
 
 const LRWrapper = styled.div`
@@ -37,7 +37,7 @@ const LRButton = styled.button`
     background: #86a5ff;
     color: #ffffff;
     border-radius: 1rem;
-    margin: 0.5rem;
+    margin: 1rem 2rem;
     width: 220px;
     &:hover {
         background: #5c7cdd;
