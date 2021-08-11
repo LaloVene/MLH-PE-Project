@@ -104,7 +104,6 @@ const Register = () => {
 
         if (resp.status == "ok") {
           msg = "Success!"
-          setTimeout(() => window.location.href = ("/Login"), 3000)
         }
         else if (resp.status == "1") {
           msg = "Missing Fields"
@@ -113,14 +112,20 @@ const Register = () => {
           console.log(resp)
           msg = resp.error
         }
+      }).then(()=>{
+        return present({
+          header: msg,
+          buttons: [
+            {text:'Ok', handler:(d)=>{    
+              window.location.href = ("/Login")
+            }}
+            
+          ],
+        })
       })
 
-    return present({
-      header: msg,
-      buttons: [
-        'Ok',
-      ],
-    })
+
+    
   }
 
   return (
