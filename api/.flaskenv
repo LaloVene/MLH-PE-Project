@@ -4,3 +4,6 @@ POSTGRES_USER=admin
 POSTGRES_PASSWORD=supersecretpassword
 POSTGRES_HOST=db
 POSTGRES_DB=api
+MAIL_USERNAME=devupmessaging@gmail.com
+MAIL_PASSWORD=devupmessaging
+MAIL_PORT=2525

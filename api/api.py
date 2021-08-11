@@ -4,8 +4,11 @@ from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
 from datetime import date, datetime
 from flask_cors import CORS
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 import json
 import jwt
+import smtplib
 
 # import smtplib
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -13,13 +16,20 @@ from werkzeug.security import check_password_hash, generate_password_hash
 # Database
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_mail import Mail 
 
 import time
 
 load_dotenv()
 app = Flask(__name__, static_folder="../build", static_url_path="/")
 CORS(app)
+app.config['MAIL_SERVER']='smtp.mailtrap.io'
+app.config['MAIL_PORT'] = os.getenv("MAIL_PORT")
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
 
+
+mail = Mail(app)
 app.secret_key = "development key"
 
 app.config[
@@ -36,6 +46,42 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+
+@app.route('/api/sendmessage', methods=("POST",))
+def sendMessage():
+    
+    body = request.get_json()
+    title = str(body["title"])
+    html=str(body["message"])
+    sender=str(body["sender"])
+    receiver=str(body["receiver"])
+    error = None
+
+    if not title or not html or not sender or not receiver:
+        error="Missing Data"
+        return jsonify({"status": "bad", "error": error}), 400
+    
+    else:
+        me=os.getenv("MAIL_USERNAME")
+        my_password=os.getenv("MAIL_PASSWORD")
+        you = receiver
+
+        msg = MIMEMultipart('alternative')
+        msg['Subject'] = "[DevUp Message From: "+ sender+"] "+title
+        msg['From'] = me
+        msg['To'] = you
+
+        html = '<html><body><p>'+html+'</p></body></html>'
+        part2 = MIMEText(html, 'html')
+
+        msg.attach(part2)
+        s = smtplib.SMTP_SSL('smtp.gmail.com',465)
+        s.login(me, my_password)
+
+        s.sendmail(me, you, msg.as_string())
+        s.quit()
+        return jsonify({"status": "ok"}), 200
+   
 
 # --------------- USER MODEL------------------
 
