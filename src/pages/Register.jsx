@@ -8,6 +8,8 @@ import * as yup from 'yup';
 import { Formik } from 'formik';
 import styled from "styled-components";
 
+import { ReactComponent as RegisterPic } from "../components/RegisterIcon.svg"
+
 const ErrorMsg = styled.small`
   color: red;
   margin-left: 10px;
@@ -143,7 +145,10 @@ const Register = () => {
           margin: "25px"
         }}>
           <LRCol>
-
+          <RegisterPic style={{
+                        width: "200px",
+                        height: "200px"
+                    }} />
           <LRTitle>
               Register for DevUp
           </LRTitle>
