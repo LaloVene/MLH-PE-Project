@@ -25,15 +25,15 @@ services:
     volumes:
       - mydatabase:/var/lib/postgresql/data
   
-  # Comment out the following line if you don't want to run api
-  # client:
-  #   container_name: client
-  #   restart: unless-stopped
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile.client
-  #   image: react-flask-app-client
-  #   ports:
-  #     - "3000:80"
+  Comment out the following line if you don't want to run api
+  client:
+    container_name: client
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    image: react-flask-app-client
+    ports:
+      - "80:80"
 volumes:
   mydatabase:
