@@ -1,12 +1,15 @@
 import { useState } from 'react';
-import { IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonRow, IonTitle, IonToolbar, useIonAlert, IonSelect, IonSelectOption, IonButton } from '@ionic/react';
+import { IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonRow, IonTitle, IonToolbar, useIonAlert, IonSelect, IonSelectOption } from '@ionic/react';
+import { Formik } from 'formik';
+import * as yup from 'yup';
+import styled from "styled-components";
+
+import { LRTitle, LRWrapper, LRSwitch, LRLink, LRCol, LRButton } from '../components/LRStyles' 
 import ExploreContainer from '../components/ExploreContainer';
+import Header from '../components/Header.component';
+
 import dblanguages from "../utils/languages.json";
 import dbtopics from "../utils/topics.json";
-import { LRTitle, LRWrapper, LRSwitch, LRLink, LRCol, LRButton } from '../components/LRStyles' 
-import * as yup from 'yup';
-import { Formik } from 'formik';
-import styled from "styled-components";
 
 import { ReactComponent as RegisterPic } from "../components/RegisterIcon.svg"
 
@@ -129,11 +132,7 @@ const Register = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Register</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+      <Header />
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
@@ -141,9 +140,7 @@ const Register = () => {
           </IonToolbar>
         </IonHeader>
         <ExploreContainer name="Register" />
-        <IonRow style={{
-          margin: "25px"
-        }}>
+        <IonRow>
           <LRCol>
           <RegisterPic style={{
                         width: "200px",

@@ -6,21 +6,31 @@ import {
   IonToolbar,
   IonButtons,
   IonButton,
-  IonIcon
+  IonIcon,
+  IonImg
 } from "@ionic/react";
 import { logOutOutline, logInOutline } from 'ionicons/icons';
 import styled from "styled-components";
 import { useJwt } from "react-jwt";
 import GlobalContext from "../utils/state/GlobalContext";
+import logo from '../imgs/devup.png'
 
 const Title = styled(IonTitle)`
   font-weight: 900;
   color: black;
   text-decoration: none;
 `
+
 const Icon = styled(IonIcon)`
   margin-right: 0.5rem;
 `
+
+const Logo = styled(IonImg)`
+  height: 50px;
+  width: 160px;
+  margin: 8px;
+`
+
 
 function Searchbar() {
   const {state, dispatch} = useContext(GlobalContext);
@@ -42,7 +52,7 @@ function Searchbar() {
     <IonHeader>
       <IonToolbar>
         <Link to='/explore' style={{ textDecoration: 'none' }}>
-          <Title>{user || 'DevUp'}</Title>
+          <Logo src={logo}/>
         </Link>
         <IonButtons slot="end">
           {

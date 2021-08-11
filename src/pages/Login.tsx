@@ -62,13 +62,10 @@ const Login: React.FC = () => {
       <IonContent fullscreen>
         <ExploreContainer name="Login" />
         <IonRow style={{
-          margin: "130px"
+          margin: "8vh"
         }}>
           <LRCol>
-          <LoginPic style={{
-                        width: "200px",
-                        height: "200px"
-                    }} />
+          <LoginPic style={{width: "200px", height: "200px"}} />
             <LRTitle>
               Login to DevUp
             </LRTitle>
