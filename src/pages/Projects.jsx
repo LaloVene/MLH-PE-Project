@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import {
 	IonModal,
 	IonContent,
@@ -7,30 +7,17 @@ import {
 	IonCol,
 	IonButton,
 	IonCard,
-	IonIcon,
 	IonGrid,
-	IonItem,
 	useIonAlert,
 	IonSelect,
 	IonSelectOption,
-	IonLabel
 } from "@ionic/react";
 import {
-	Card,
-	CardHeader,
 	Icon,
-	Username,
-	Title,
-	Date,
-	Description,
-	ProjTitle,
-	Owner,
-	TagText,
 	TagTitle,
 	TitleInput,
 	DescriptionInput,
 	LinkInput,
-	TagsWrapper,
 	ModalContent,
 	ModalContentView,
 	ButtonsWrapper,
@@ -56,7 +43,6 @@ const CreateCard = styled(IonCard)`
     border-radius: 2rem;
   	background-color: #D4E0FF;
     box-shadow: none;
-
     height: 93%;
     display: flex;
     min-height: 200px;
@@ -185,7 +171,7 @@ function Projects() {
 												></LinkInput>
 
 												<TagTitle>Languages</TagTitle>
-												<IonSelect style={{ height: "40px", width: "500px", marginLeft: "20px" }} value={mLanguages} multiple={true} cancelText="Close" okText="Done" placeholder="Select languages"
+												<IonSelect style={{ height: "40px", width: "500px", marginLeft: "20px" }} value={mLanguages} multiple={true} cancelText="Close" okText="Done" placeholder="Select language(s)"
 													onIonChange={e => (setMLanguages(e.target.value))}>
 													{
 														dblanguages.map(topic =>
@@ -195,8 +181,8 @@ function Projects() {
 												</IonSelect>
 
 												<TagTitle>Tags</TagTitle>
-						
-												<IonSelect style={{ height: "40px", width: "500px", marginLeft: "20px" }} value={mTopics} multiple={true} cancelText="Close" okText="Done" placeholder="Select tags"
+
+												<IonSelect style={{ height: "40px", width: "500px", marginLeft: "20px" }} value={mTopics} multiple={true} cancelText="Close" okText="Done" placeholder="Select tag(s)"
 													onIonChange={e => (setMTopics(e.target.value))}>
 													{
 														dbtopics.map(topic =>
