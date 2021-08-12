@@ -1,11 +1,11 @@
 import {
-    IonCard,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardSubtitle,
-    IonIcon,
-    IonInput,
-    IonContent,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardSubtitle,
+  IonIcon,
+  IonInput,
+  IonContent,
 } from "@ionic/react";
 import styled from "styled-components";
 
@@ -29,6 +29,11 @@ const Icon = styled(IonIcon)`
   font-size: 3rem;
   margin-right: 1rem;
 `;
+
+const SmallIcon = styled(IonIcon)`
+margin-right: 1rem;
+  font-size: 1.2rem;
+`
 
 const Username = styled(IonCardSubtitle)`
   margin: 0;
@@ -125,22 +130,23 @@ const ButtonsWrapper = styled.div`
 `
 
 export {
-    Card,
-    CardHeader,
-    Icon,
-    Username,
-    Title,
-    Date,
-    Description,
-    ProjTitle,
-    Owner,
-    TagText,
-    TagTitle,
-    TitleInput,
-    DescriptionInput,
-    LinkInput,
-    TagsWrapper,
-    ModalContent,
-    ModalContentView,
-    ButtonsWrapper
+  Card,
+  CardHeader,
+  Icon,
+  SmallIcon,
+  Username,
+  Title,
+  Date,
+  Description,
+  ProjTitle,
+  Owner,
+  TagText,
+  TagTitle,
+  TitleInput,
+  DescriptionInput,
+  LinkInput,
+  TagsWrapper,
+  ModalContent,
+  ModalContentView,
+  ButtonsWrapper
 };

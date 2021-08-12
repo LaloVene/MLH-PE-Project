@@ -21,6 +21,7 @@ import {
 	ModalContent,
 	ModalContentView,
 	ButtonsWrapper,
+	SmallIcon
 } from '../components/ProjectCardStyles';
 import styled from "styled-components";
 import { addCircleOutline } from "ionicons/icons";
@@ -33,6 +34,7 @@ import GlobalContext from "../utils/state/GlobalContext";
 import './Projects.css';
 import dbtopics from "../utils/topics.json";
 import dblanguages from "../utils/languages.json";
+import { checkmark, close } from 'ionicons/icons';
 
 const Container = styled.div`
   padding: 1rem;
@@ -120,7 +122,6 @@ function Projects() {
 					})
 				})
 		}
-
 	}
 
 
@@ -192,8 +193,14 @@ function Projects() {
 												</IonSelect>
 
 												<ButtonsWrapper>
-													<IonButton color="success" id="closemodal" onClick={saveChanges}>Save</IonButton>
-													<IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={() => setShowProject(false)}>Close</IonButton>
+													<IonButton color="success" id="closemodal" onClick={saveChanges}>
+														<SmallIcon slot="start" icon={checkmark} />
+														Save
+													</IonButton>
+													<IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={() => setShowProject(false)}>
+														<SmallIcon slot="start" icon={close} />
+														Close
+													</IonButton>
 												</ButtonsWrapper>
 											</ModalContentView>
 
