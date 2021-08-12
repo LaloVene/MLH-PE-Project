@@ -133,7 +133,7 @@ function EditableProjectCard(props) {
   const ProjectTags = ({ title, tagType, limit }) => {
     var showTags = tagType;
     var hiddenTagCount = 0;
-
+    console.log(tagType)
     if (limit) {
       showTags = tagType.slice(0, 3);
       hiddenTagCount = (tagType.length - 3)
@@ -141,9 +141,9 @@ function EditableProjectCard(props) {
     return (
       <TagText>
         <strong>{title}: </strong><br />
-        {showTags.map((item) => (
+        {showTags != "" ? showTags.map((item) => (
           <IonChip key={item} style={{ backgroundColor: "#acc1f8" }}>{item}</IonChip>
-        ))}
+        )) : <i>None listed</i>}
         {(limit & (hiddenTagCount > 0)) ? ("+ " + parseInt(hiddenTagCount) + " more") : ""}
       </TagText>
     )
