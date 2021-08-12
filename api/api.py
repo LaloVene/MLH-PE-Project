@@ -1,12 +1,10 @@
 import os
 from flask import Flask, request, jsonify
-from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
-from datetime import date, datetime
+from datetime import datetime
 from flask_cors import CORS
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-import json
 import jwt
 import smtplib
 
@@ -269,7 +267,7 @@ def index():
     return "Im here"
 
 
-########### LOGIN ##############
+#------------ LOGIN ##############
 
 
 @app.route("/api/register", methods=("POST",))
@@ -300,7 +298,7 @@ def register():
         else:
             return jsonify({"status": "bad", "error": error}), 400
 
-    except:
+    except: # noqa: E722
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 
@@ -328,7 +326,7 @@ def login():
     #     return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 
-########### USER DATA ##############
+#------------ USER DATA ##############
 @app.route("/api/getUserData", methods=("GET",))
 def getUserData():
     # try:
@@ -366,7 +364,7 @@ def getUserData():
     #     return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 
-########### TOPICS ##############
+#------------ TOPICS ##############
 
 
 @app.route("/api/addTopic", methods=("POST",))
@@ -390,7 +388,7 @@ def addTopic():
         else:
             return jsonify({"status": "bad", "error": error}), 400
 
-    except:
+    except: # noqa: E722
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 
@@ -402,7 +400,7 @@ def getTopics():
         for item in response:
             topics.append({"name": item.name})
         return jsonify({"topics": topics}), 200
-    except:
+    except: # noqa: E722
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 
@@ -426,11 +424,11 @@ def deleteTopic():
         else:
             return jsonify({"status": "bad", "error": error}), 400
 
-    except:
+    except: # noqa: E722
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 
-########### USER TOPICS ##############
+#------------ USER TOPICS ##############
 
 
 @app.route("/api/addUserTopic", methods=("POST",))
@@ -460,7 +458,7 @@ def addUserTopic():
         else:
             return jsonify({"status": "bad", "error": error}), 400
 
-    except:
+    except: # noqa: E722
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 
@@ -482,7 +480,7 @@ def getUserTopics():
             return jsonify({"topics": topics}), 200
         else:
             return jsonify({"status": "bad", "error": error}), 400
-    except:
+    except: # noqa: E722
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 
@@ -506,11 +504,11 @@ def deleteUserTopic():
         else:
             return jsonify({"status": "bad", "error": error}), 400
 
-    except:
+    except: # noqa: E722
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 
-########### LANGUAGES ##############
+#------------ LANGUAGES ##############
 
 
 @app.route("/api/addLanguage", methods=("POST",))
@@ -534,7 +532,7 @@ def addLanguage():
         else:
             return jsonify({"status": "bad", "error": error}), 400
 
-    except:
+    except: # noqa: E722
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 
@@ -546,7 +544,7 @@ def getLanguages():
         for item in response:
             languages.append({"name": item.name})
         return jsonify({"languages": languages}), 200
-    except:
+    except: # noqa: E722
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 
@@ -570,11 +568,11 @@ def deleteLanguage():
         else:
             return jsonify({"status": "bad", "error": error}), 400
 
-    except:
+    except: # noqa: E722
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 
-########### USER LANGUAGES ##############
+#------------ USER LANGUAGES ##############
 
 
 @app.route("/api/addUserLanguage", methods=("POST",))
@@ -606,7 +604,7 @@ def addUserLanguage():
         else:
             return jsonify({"status": "bad", "error": error}), 400
 
-    except:
+    except: # noqa: E722
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 
@@ -628,7 +626,7 @@ def getUserLanguages():
             return jsonify({"languages": languages}), 200
         else:
             return jsonify({"status": "bad", "error": error}), 400
-    except:
+    except: # noqa: E722
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 
@@ -652,11 +650,11 @@ def deleteUserLanguage():
         else:
             return jsonify({"status": "bad", "error": error}), 400
 
-    except:
+    except: # noqa: E722
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 
-########### PROJECTS ##############
+#------------ PROJECTS ##############
 
 
 @app.route("/api/addProject", methods=("POST",))
@@ -683,7 +681,7 @@ def addProject():
         else:
             return jsonify({"status": "bad", "error": error}), 400
 
-    except:
+    except: # noqa: E722
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 
@@ -713,7 +711,7 @@ def editProject():
         else:
             return jsonify({"status": "bad", "error": error}), 400
 
-    except:
+    except: # noqa: E722
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 
@@ -863,11 +861,11 @@ def deleteProject():
         else:
             return jsonify({"status": "bad", "error": error}), 400
 
-    except:
+    except: # noqa: E722
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 
-########### USER IN PROJECTS ##############
+#------------ USER IN PROJECTS ##############
 
 
 @app.route("/api/addUserInProject", methods=("POST",))
@@ -901,7 +899,7 @@ def addUserInProject():
         else:
             return jsonify({"status": "bad", "error": error}), 400
 
-    except:
+    except: # noqa: E722
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 
@@ -923,7 +921,7 @@ def getUsersInProject():
             return jsonify({"users": users}), 200
         else:
             return jsonify({"status": "bad", "error": error}), 400
-    except:
+    except: # noqa: E722
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 
@@ -957,11 +955,11 @@ def deleteUserInProject():
         else:
             return jsonify({"status": "bad", "error": error}), 400
 
-    except:
+    except: # noqa: E722
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 
-########### USER FAVORITE PROJECTS ##############
+#------------ USER FAVORITE PROJECTS ##############
 
 
 @app.route("/api/addUserFavProject", methods=("POST",))
@@ -995,7 +993,7 @@ def addUserFavProject():
         else:
             return jsonify({"status": "bad", "error": error}), 400
 
-    except:
+    except: # noqa: E722
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 
@@ -1017,7 +1015,7 @@ def getUsersFavProject():
             return jsonify({"users": users}), 200
         else:
             return jsonify({"status": "bad", "error": error}), 400
-    except:
+    except: # noqa: E722
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 
@@ -1049,11 +1047,11 @@ def deleteUserFavProject():
         else:
             return jsonify({"status": "bad", "error": error}), 400
 
-    except:
+    except: # noqa: E722
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 
-########### TOPIC PROJECTS ##############
+#------------ TOPIC PROJECTS ##############
 
 
 @app.route("/api/addProjectTopic", methods=("POST",))
@@ -1087,7 +1085,7 @@ def addProjectTopic():
         else:
             return jsonify({"status": "bad", "error": error}), 400
 
-    except:
+    except: # noqa: E722
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 
@@ -1109,7 +1107,7 @@ def getProjectTopics():
             return jsonify({"topics": topics}), 200
         else:
             return jsonify({"status": "bad", "error": error}), 400
-    except:
+    except: # noqa: E722
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 
@@ -1137,11 +1135,11 @@ def deleteProjectTopic():
         else:
             return jsonify({"status": "bad", "error": error}), 400
 
-    except:
+    except: # noqa: E722
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 
-########### LANGUAGE PROJECTS ##############
+#------------ LANGUAGE PROJECTS ##############
 
 
 @app.route("/api/addProjectLanguage", methods=("POST",))
@@ -1175,7 +1173,7 @@ def addProjectLanguage():
         else:
             return jsonify({"status": "bad", "error": error}), 400
 
-    except:
+    except: # noqa: E722
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 
@@ -1197,7 +1195,7 @@ def getProjectLanguages():
             return jsonify({"languages": languages}), 200
         else:
             return jsonify({"status": "bad", "error": error}), 400
-    except:
+    except: # noqa: E722
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 
@@ -1231,11 +1229,11 @@ def deleteProjectLanguage():
         else:
             return jsonify({"status": "bad", "error": error}), 400
 
-    except:
+    except: # noqa: E722
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 
-########### FILL DB ##############
+#------------ FILL DB ##############
 
 
 @app.route("/api/filldb")
@@ -1302,7 +1300,7 @@ def filldb():
 
         db.session.commit()
         return "db filled"
-    except:
+    except: # noqa: E722
         return "db not filled"
 
 
@@ -1343,7 +1341,7 @@ def fillusers():
             db.session.add(add_user)
         db.session.commit()
         return "db filled"
-    except:
+    except: # noqa: E722
         return "db not filled"
 
 
@@ -1380,7 +1378,7 @@ def fillprojects():
             db.session.add(add_project)
         db.session.commit()
         return "db filled"
-    except:
+    except: # noqa: E722
         return "db not filled"
 
 
