@@ -34,7 +34,7 @@ import {
   ButtonsWrapper
 } from './ProjectCardStyles';
 import ProjectTags from './ProjectTags';
-import { personCircleOutline } from "ionicons/icons";
+import { personCircleOutline, send, close, open } from "ionicons/icons";
 import styled from "styled-components";
 import { useJwt } from "react-jwt";
 import GlobalContext from "../utils/state/GlobalContext";
@@ -92,7 +92,6 @@ function CategoryCard(props) {
         .then(resp => {
           console.log(resp)
 
-
         }).then(() => {
           return present({
             header: "Message sent!",
@@ -111,46 +110,70 @@ function CategoryCard(props) {
   }
 
   return (
-
     <IonCol size="12" size-md="4" key={id}>
       {!showContact &&
-        <IonModal id="projmod" isOpen={showProject} cssClass='my-custom-class'>
+        <IonModal id="projmod" isOpen={showProject}>
+          <ModalContent>
+            <ModalContentView>
+              <ProjTitle >{title}</ProjTitle>
+              <Owner>Created By: {owner}</Owner>
+              <Date>{date}</Date>
+              <Description >{description}</Description>
+              <LRButton onClick={() => {
+                const fullURL = url.match(/^https?:/) ? url : '//' + url
+                window.open(fullURL)
+              }}>
+                <SmallIcon slot="start" icon={open} />
+                More Information
+              </LRButton>
 
-          <ProjTitle >{title}</ProjTitle>
-          <Owner>Created By: {owner}</Owner>
-          <Date>{date}</Date>
-          <Description >{description}</Description>
-          <LRButton onClick={() => {
-            const fullURL = url.match(/^https?:/) ? url : '//' + url
-            window.open(fullURL)
-          }}>
-            More Information
-          </LRButton>
+              <ButtonsWrapper>
+                <IonButton id="closemodal" color="tertiary" onClick={() => setShowContact(true)}>
+                  <SmallIcon slot="start" icon={send} />
+                  Contact
+                </IonButton>
+                <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={() => setShowProject(false)}>
+                  <SmallIcon slot="start" icon={close} />
+                  Close
+                </IonButton>
+              </ButtonsWrapper>
 
-          <IonButton id="closemodal" onClick={() => setShowContact(true)}>Contact</IonButton>
-          <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={() => setShowProject(false)}>Close</IonButton>
+            </ModalContentView>
+          </ModalContent>
         </IonModal>
       }
       {showContact &&
-        <IonModal id="projmod" isOpen={showProject} cssClass='my-custom-class' >
-          <IonItem>
-            <textarea id="mTitle"
-              placeholder="Title"
-              value={mTitle}
-              onChange={(e) => setMTitle(e.target.value)}
-            ></textarea>
-          </IonItem>
-          <textarea id="desarea"
-            placeholder="Message"
-            value={mMessage}
-            onChange={(e) => setMMessage(e.target.value)}
-          ></textarea>
+        <IonModal id="projmod" isOpen={showProject}>
+          <ModalContent>
 
-          <IonButton id="closemodal" onClick={sendEmail}>Send</IonButton>
-          <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={() => setShowContact(false)}>Close</IonButton>
+            <TitleInput
+              value={mTitle}
+              placeholder="Subject"
+              onChange={(e) => setMTitle(e.target.value)}
+            ></TitleInput>
+            <DescriptionInput
+              value={mMessage}
+              placeholder="Message"
+              onChange={(e) => setMMessage(e.target.value)}
+            ></DescriptionInput>
+            <ButtonsWrapper>
+
+              <IonButton id="closemodal" color="secondary" onClick={sendEmail}>
+                <SmallIcon slot="start" icon={send} />
+                Send
+              </IonButton>
+              <IonButton
+                style={{ marginBottom: "50px" }}
+                id="closemodal"
+                onClick={() => setShowContact(false)}
+              >
+                Close
+              </IonButton>
+            </ButtonsWrapper>
+
+          </ModalContent>
         </IonModal>
       }
-
 
       <Card onClick={() => setShowProject(true)}>
         <CardHeader>
@@ -167,9 +190,7 @@ function CategoryCard(props) {
 
         </IonCardContent>
       </Card>
-
     </IonCol>
-
   );
 }
 

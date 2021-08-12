@@ -167,7 +167,6 @@ function EditableProjectCard(props) {
                 </IonButton>
               </ButtonsWrapper>
             </ModalContentView>
-
           </ModalContent>
 
         </IonModal>}
@@ -250,9 +249,7 @@ function EditableProjectCard(props) {
 
         </IonCardContent>
       </Card>
-
     </IonCol >
-
   );
 }
 
