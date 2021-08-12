@@ -16,17 +16,17 @@ from werkzeug.security import check_password_hash, generate_password_hash
 # Database
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from flask_mail import Mail 
+from flask_mail import Mail
 
 import time
 
 load_dotenv()
 app = Flask(__name__, static_folder="../build", static_url_path="/")
 CORS(app)
-app.config['MAIL_SERVER']='smtp.mailtrap.io'
-app.config['MAIL_PORT'] = os.getenv("MAIL_PORT")
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USE_SSL'] = False
+app.config["MAIL_SERVER"] = "smtp.mailtrap.io"
+app.config["MAIL_PORT"] = os.getenv("MAIL_PORT")
+app.config["MAIL_USE_TLS"] = True
+app.config["MAIL_USE_SSL"] = False
 
 
 mail = Mail(app)
@@ -47,41 +47,42 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-@app.route('/api/sendmessage', methods=("POST",))
+
+@app.route("/api/sendmessage", methods=("POST",))
 def sendMessage():
-    
+
     body = request.get_json()
     title = str(body["title"])
-    html=str(body["message"])
-    sender=str(body["sender"])
-    receiver=str(body["receiver"])
+    html = str(body["message"])
+    sender = str(body["sender"])
+    receiver = str(body["receiver"])
     error = None
 
     if not title or not html or not sender or not receiver:
-        error="Missing Data"
+        error = "Missing Data"
         return jsonify({"status": "bad", "error": error}), 400
-    
+
     else:
-        me=os.getenv("MAIL_USERNAME")
-        my_password=os.getenv("MAIL_PASSWORD")
+        me = os.getenv("MAIL_USERNAME")
+        my_password = os.getenv("MAIL_PASSWORD")
         you = receiver
 
-        msg = MIMEMultipart('alternative')
-        msg['Subject'] = "[DevUp Message From: "+ sender+"] "+title
-        msg['From'] = me
-        msg['To'] = you
+        msg = MIMEMultipart("alternative")
+        msg["Subject"] = "[DevUp Message From: " + sender + "] " + title
+        msg["From"] = me
+        msg["To"] = you
 
-        html = '<html><body><p>'+html+'</p></body></html>'
-        part2 = MIMEText(html, 'html')
+        html = "<html><body><p>" + html + "</p></body></html>"
+        part2 = MIMEText(html, "html")
 
         msg.attach(part2)
-        s = smtplib.SMTP_SSL('smtp.gmail.com',465)
+        s = smtplib.SMTP_SSL("smtp.gmail.com", 465)
         s.login(me, my_password)
 
         s.sendmail(me, you, msg.as_string())
         s.quit()
         return jsonify({"status": "ok"}), 200
-   
+
 
 # --------------- USER MODEL------------------
 
