@@ -4,7 +4,6 @@ import { IonChip } from '@ionic/react';
 const ProjectTags = ({ title, tagType, limit }) => {
     var showTags = tagType;
     var hiddenTagCount = 0;
-    console.log(tagType)
     if (limit) {
         showTags = tagType.slice(0, 3);
         hiddenTagCount = (tagType.length - 3)

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext,useEffect } from "react";
 import {
   IonCard,
   IonCardHeader,
@@ -52,9 +52,47 @@ function CategoryCard(props) {
   const [showContact, setShowContact] = useState(false);
   const [mTitle, setMTitle] = useState("");
   const [mMessage, setMMessage] = useState("");
+  const [languages, setLanguages]=useState([])
+  const [topics, setTopics]=useState([])
 
-  const languages = ["Python", "JavaScript"]
-  const topics = ["ML", "CV"]
+  // const languages = ["Python", "JavaScript"]
+  // const topics = ["ML", "CV"]
+  useEffect(() => {
+		
+    fetch('/api/getProjectLanguages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({"projectId":id})
+    }).then(r => r.json()).then(resp=> {
+      console.log(resp)
+      const languages = []
+      for (var language in resp.languages){
+        languages.push(language.language)
+      }
+      setLanguages(languages)
+    })
+
+    fetch('/api/getProjectTopics', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({"projectId":id})
+    }).then(r => r.json()).then(resp=> {
+      const topics = []
+      for (var topic in resp.topics){
+        topics.push(topic.topic)
+      }
+      setTopics(topics)
+    })
+    
+		
+	}, [])
+  
+
+  
 
   const { state } = useContext(GlobalContext);
   const { decodedToken } = useJwt(state.token);
@@ -184,6 +222,7 @@ function CategoryCard(props) {
           <Title>{title}</Title>
           <Description>{description}</Description>
           <Date style={{ textAlign: "right" }}>{date}</Date>
+
 
           <ProjectTags title="Languages" tagType={languages} limit={true} />
           <ProjectTags title="Tags" tagType={topics} limit={true} />
