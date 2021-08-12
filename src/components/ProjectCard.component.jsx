@@ -68,8 +68,8 @@ function CategoryCard(props) {
     }).then(r => r.json()).then(resp=> {
       console.log(resp)
       const languages = []
-      for (var language in resp.languages){
-        languages.push(language.language)
+      for (var lang in resp.languages){
+        languages.push(lang.language)
       }
       setLanguages(languages)
     })
@@ -82,8 +82,8 @@ function CategoryCard(props) {
       body: JSON.stringify({"projectId":id})
     }).then(r => r.json()).then(resp=> {
       const topics = []
-      for (var topic in resp.topics){
-        topics.push(topic.topic)
+      for (var top in resp.topics){
+        topics.push(top.topic)
       }
       setTopics(topics)
     })
