@@ -94,7 +94,7 @@ class UserModel(db.Model):
     name = db.Column(db.String())
     email = db.Column(db.String())
     github = db.Column(db.String())
-    reset_token = db.Column(db.String())
+    reset_token = db.Column(db.String(), default=str(uuid4()))
 
     def __init__(self, username, password, name, email, github):
         self.username = username
@@ -356,7 +356,7 @@ def request_password_reset():
 
             url = f"http://localhost:8100/reset/{username}?token={token}"
 
-            html = f"<html><body><a>{url}</a></body></html>"
+            html = f"<html><body><p>Go to this URL to reset your password. If you didn't request this just ignore it.</p></br><a>{url}</a></body></html>"
             part2 = MIMEText(html, "html")
 
             msg.attach(part2)
