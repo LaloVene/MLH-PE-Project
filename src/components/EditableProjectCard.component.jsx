@@ -118,6 +118,7 @@ function EditableProjectCard(props) {
     }).then(r => r.json())
       .then(resp => {
         console.log(resp)
+        console.log(opts)
         console.log(eTopics)
         console.log(eLanguages)
         setShowProject(false)
@@ -181,20 +182,29 @@ function EditableProjectCard(props) {
                 setTitle(e.target.value)
               }}
               type="text"
+              maxlength={35}
             ></TitleInput>
 
             <DescriptionInput
               value={eDescription}
               placeholder="Description"
-              onChange={(e) => {
+              onIonChange={(e) => {
                 setDescription(e.target.value)
-              }}>
+              }}
+              type="text"
+              rows={10}
+              maxlength={470}
+            >
             </DescriptionInput >
 
             <LinkInput
               placeholder="Link"
               value={eUrl}
-              onChange={(e) => setUrl(e.target.value)}
+              onIonChange={(e) => setUrl(e.target.value)}
+              type="text"
+              rows={1}
+              maxlength={47}
+
             ></LinkInput>
 
             <TagTitle>Languages</TagTitle>

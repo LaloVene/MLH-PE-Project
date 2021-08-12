@@ -149,12 +149,12 @@ function CategoryCard(props) {
             <TitleInput
               value={mTitle}
               placeholder="Subject"
-              onChange={(e) => setMTitle(e.target.value)}
+              onIonChange={(e) => setMTitle(e.target.value)}
             ></TitleInput>
             <DescriptionInput
               value={mMessage}
               placeholder="Message"
-              onChange={(e) => setMMessage(e.target.value)}
+              onIonChange={(e) => setMMessage(e.target.value)}
             ></DescriptionInput>
             <ButtonsWrapper>
 
