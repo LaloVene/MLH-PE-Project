@@ -39,17 +39,17 @@ const Container = styled.div`
 `;
 
 const CreateCard = styled(IonCard)`
-    cursor: pointer;
-    border-radius: 2rem;
+	cursor: pointer;
+	border-radius: 2rem;
   	background-color: #D4E0FF;
-    box-shadow: none;
-    height: 93%;
-    display: flex;
-    min-height: 200px;
+	box-shadow: none;
+	height: 93%;
+	display: flex;
+	min-height: 200px;
 
-    &:hover {
-    background-color: #c2d0f3;
-    }
+	&:hover {
+	background-color: #c2d0f3;
+	}
 `;
 
 function Projects() {
@@ -90,7 +90,7 @@ function Projects() {
 				'title': mTitle,
 				'description': mDescription,
 				'url': mUrl,
-				'owner': decodedToken.decodedToken.username
+				'owner': decodedToken.username
 			}
 			fetch('/api/addProject', {
 				method: 'POST',

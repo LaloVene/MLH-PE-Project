@@ -32,7 +32,7 @@ function Categories() {
   // Fetch categories from /api/getTopics
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch("http://lalovene.duckdns.org:5000/api/getTopics");
+      const response = await fetch("/api/getTopics");
       const data = await response.json();
       setCategories(data.topics)
       setFilteredCategories(data.topics)
