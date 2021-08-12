@@ -2,15 +2,15 @@ import React from "react";
 import styled from "styled-components";
 
 const Button = styled.button`
-  font-size: 1.2rem;
-  padding: 1.5rem 1rem;
-  background: hsl(0, 0%, 95%);
+  font-size: 1rem;
+  padding: 1.3rem 1.1rem;
+  background: #fbd09e;
   color: black;
   border-radius: 2rem;
   margin: 0.5rem;
 
   &:hover {
-    background: hsl(0, 0%, 90%);
+    background: #e2b684;
   }
 `;
 
