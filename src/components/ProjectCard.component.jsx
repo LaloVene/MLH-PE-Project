@@ -54,6 +54,10 @@ function CategoryCard(props) {
   const [mMessage, setMMessage] = useState("");
 
   
+    console.log(languages)
+    console.log(topics)
+  
+  
 
   const { state } = useContext(GlobalContext);
   const { decodedToken } = useJwt(state.token);

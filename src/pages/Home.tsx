@@ -26,17 +26,17 @@ function Home() {
   const [projectList, setProjectList]: any = useState([]);
   const [categories, setCategories]: any = useState([]);
   const [filteredProjects, setFilteredProjects]: any = useState([]);
-  const [tops, setTops]:any=useState([])
-  const [langs, setLangs]:any=useState([])
+  const [tops, setTops]:any=useState(new Map<number,any[]>())
+  const [langs, setLangs]:any=useState(new Map<number,any[]>())
 
   useEffect(() => {
     fetch('/api/getProjects').then(res => res.json()).then(async data => {
       setProjectList(data.projects);
       console.log(data.projects);
-      var langdict=new Map<any,any[]>();
-      var topdict=new Map<any,any[]>();
+      var langdict=new Map<number,any[]>();
+      var topdict=new Map<number,any[]>();
       for (var proj in data.projects) {
-        let id: string;
+        let id: number;
         id=data.projects[proj].id;
         await Promise.all([
               fetch('/api/getProjectLanguages', {
@@ -70,6 +70,7 @@ function Home() {
               
             })
       }
+
       setTops(topdict)
       setLangs(langdict)
     
@@ -136,20 +137,20 @@ function Home() {
               {filteredProjects.map((project: any) => {
                   const { id, title, description, date, url, owner } = project;
                   
+          
                   
-                  console.log(langs)
-                    console.log(tops)
+          
                     return (
-                      <ProjectCard
-                        title={title}
-                        description={description}
-                        date={date}
-                        url={url}
-                        owner={owner}
-                        id={id}
-                        // languages={}
-                        // topics={tops}
-                      />
+                      // <ProjectCard
+                      //   title={title}
+                      //   description={description}
+                      //   date={date}
+                      //   url={url}
+                      //   owner={owner}
+                      //   id={id}
+                      //   languages={langs.get(id)}
+                      //   topics={tops.get(id)}
+                      // />
                     );
               })}
 

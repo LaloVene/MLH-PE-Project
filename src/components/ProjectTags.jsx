@@ -12,7 +12,7 @@ const ProjectTags = ({ title, tagType, limit }) => {
     return (
         <TagText>
             <strong>{title}: </strong><br />
-            {showTags != "" ? showTags.map((item) => (
+            {showTags ? showTags.map((item) => (
                 <IonChip key={item} style={{ backgroundColor: "#acc1f8" }}>{item}</IonChip>
             )) : <i>None listed</i>}
             {(limit & (hiddenTagCount > 0)) ? ("+ " + parseInt(hiddenTagCount) + " more") : ""}
