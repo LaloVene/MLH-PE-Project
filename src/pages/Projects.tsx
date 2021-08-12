@@ -15,7 +15,8 @@ import {
     IonCard,
     IonIcon,
     IonGrid,
-    IonItem
+    IonItem,
+    useIonAlert
 } from "@ionic/react";
 import styled from "styled-components";
 import { addCircleOutline } from "ionicons/icons";
@@ -71,6 +72,7 @@ function Projects() {
     const { state } = useContext(GlobalContext);
     let decodedToken: any;
     decodedToken = useJwt(state.token);
+    const [present] = useIonAlert()
 
     useEffect(() => {
         if (decodedToken) {
@@ -84,29 +86,46 @@ function Projects() {
         }
     }, [decodedToken.decodedToken, edited])
 
-    function saveChanges() {
-        let opts = {
-            'title': mTitle,
-            'description': mDescription,
-            'url': mUrl,
-            'owner': decodedToken.decodedToken.username
+    function saveChanges() {  
+        if (!mTitle || !mDescription||!mUrl){
+            return present({
+                header: "Please fill out all the fields!",
+                buttons: [
+                  'Ok'
+                ]
+              })
+        } else{
+            let opts = {
+                'title': mTitle,
+                'description': mDescription,
+                'url': mUrl,
+                'owner': decodedToken.decodedToken.username
+            }
+            fetch('/api/addProject', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(opts)
+            }).then(r => r.json())
+                .then(resp => {
+                    console.log(resp)
+                    
+                    
+                }).then(()=>{return present({
+                    header: "Project created!",
+                    buttons: [
+                      {text:'Ok', handler:(d)=>{
+                        setShowProject(false)
+                        setMTitle("")
+                        setMDescription("")
+                        setMUrl("")
+                        setEdited(mTitle)
+                      }}
+                    ]
+                  })})
         }
-        fetch('/api/addProject', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(opts)
-        }).then(r => r.json())
-            .then(resp => {
-                console.log(resp)
-
-                setShowProject(false)
-                setMTitle("")
-                setMDescription("")
-                setMUrl("")
-                setEdited(mTitle)
-            })
+        
     }
 
 

@@ -35,7 +35,6 @@ const Login: React.FC = () => {
         console.log(resp)
         if (resp.status === "ok") {
           dispatch({ type: "ADD_TOKEN", token: resp.token });
-          setTimeout(() => window.location.href = ("/Profile"), 3000)
           msg = "Successfully logged in";
         }
         else if (resp.status === "bad") {
@@ -43,14 +42,19 @@ const Login: React.FC = () => {
         }
       }).catch(() => {
         msg = "Invalid username";
+      }).then(()=>{
+        return present({
+          header: msg,
+          buttons: [
+            {text:'Ok', handler:(d)=>{    
+              window.location.href = ("/Profile")
+            }}
+            
+          ],
+        })
       })
 
-    return present({
-      header: msg,
-      buttons: [
-        'Ok',
-      ],
-    })
+    
   }
 
   return (

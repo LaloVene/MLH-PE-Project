@@ -22,3 +22,4 @@ SQLAlchemy==1.4.18
 typing-extensions==3.10.0.0
 Werkzeug==2.0.1
 zipp==3.4.1
+Flask-Mail==0.9.1
