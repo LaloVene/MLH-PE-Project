@@ -7,6 +7,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import jwt
 import smtplib
+from uuid import uuid4
 
 # import smtplib
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -93,6 +94,7 @@ class UserModel(db.Model):
     name = db.Column(db.String())
     email = db.Column(db.String())
     github = db.Column(db.String())
+    reset_token = db.Column(db.String())
 
     def __init__(self, username, password, name, email, github):
         self.username = username
@@ -324,6 +326,52 @@ def login():
 
     # except:
     #     return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
+
+@app.route("/api/request_reset", methods=("POST",))
+def request_password_reset():
+    try:
+        body = request.get_json()
+        username = str(body["username"])
+        error = None
+
+        if not username:
+            error = "Missing Data"
+            return jsonify({"status": "1"}), 400
+        user = UserModel.query.filter_by(username=username).first()
+        if user is None:
+            error = f"User {username} does not exists"
+
+        if error is None:
+            token = str(uuid4())
+            user.reset_password_token = token
+            db.session.commit()
+            me = os.getenv("MAIL_USERNAME")
+            my_password = os.getenv("MAIL_PASSWORD")
+            you = user.email
+
+            msg = MIMEMultipart("alternative")
+            msg["Subject"] = "Password Reset"
+            msg["From"] = me
+            msg["To"] = you
+
+            url = f"http://localhost:8100/reset/{username}?token={token}"
+
+            html = f"<html><body><a>{url}</a></body></html>"
+            part2 = MIMEText(html, "html")
+
+            msg.attach(part2)
+            s = smtplib.SMTP_SSL("smtp.gmail.com", 465)
+            s.login(me, my_password)
+
+            s.sendmail(me, you, msg.as_string())
+            s.quit()
+            message = f"User {username} created successfully"
+            return jsonify({"status": "ok", "message": url}), 200
+        else:
+            return jsonify({"status": "bad", "error": error}), 400
+
+    except:  # noqa: E722
+        return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 
 # ------------ USER DATA ##############
