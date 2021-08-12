@@ -26,6 +26,8 @@ function Home() {
   const [projectList, setProjectList]: any = useState([]);
   const [categories, setCategories]: any = useState([]);
   const [filteredProjects, setFilteredProjects]: any = useState([]);
+  const [tops, setTops]:any=useState([])
+  const [langs, setLangs]:any=useState([])
 
   useEffect(() => {
     fetch('/api/getProjects').then(res => res.json()).then(data => {
@@ -33,6 +35,43 @@ function Home() {
       console.log(data.projects);
     })
   }, [setProjectList])
+
+  // useEffect(()=>{
+  //   for (var proj in projectList){
+  //     const{id}=proj
+  //   }
+  //   Promise.all([
+  //     fetch('/api/getProjectLanguages', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify({"projectId":id})
+  //     }),
+  //     fetch('/api/getProjectTopics', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify({"projectId":id})
+  //     })
+  //   ]).then(responses =>
+  //     Promise.all(responses.map(response => response.json()))
+  //   ).then(data =>{
+  //     const languages = []
+  //     for (var lang in data[0].languages){
+  //       languages.push(data[0].languages[lang].language)
+  //     }
+  //     setLanguages(languages)
+  
+  //     const topics = []
+  //     for (var top in data[0].topics){
+  //       topics.push(data[0].topics[top].topic)
+  //     }
+  //     setTopics(topics)
+      
+  //   })
+  // },[projectList])
 
   useEffect(() => {
     let filteredProjects = projectList;
@@ -43,6 +82,8 @@ function Home() {
     }
     setFilteredProjects(filteredProjects);
   }, [search, projectList]);
+
+  
 
   useEffect(() => {
     async function fetchData() {
@@ -90,38 +131,10 @@ function Home() {
             <IonRow>
               {filteredProjects.map((project: any) => {
                   const { id, title, description, date, url, owner } = project;
-                  fetch('/api/getProjectLanguages', {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({"projectId":id})
-                  }).then(r => r.json()).then(resp=> {
-                    
-                    const languages = []
-                    for (var lang in resp.languages){
-                      languages.push(resp.languages[lang].language)
-                    }
-                   
-                    return languages
-                  }).then((languages)=>{
-                   
-                    return fetch('/api/getProjectTopics', {
-                      method: 'POST',
-                      headers: {
-                        'Content-Type': 'application/json'
-                      },
-                      body: JSON.stringify({"projectId":id})
-                    }).then(r => r.json()).then(resp=> {
-                      const topics = []
-                      for (var top in resp.topics){
-                        topics.push(resp.topics[top].topic)
-                      }
-                      return topics
-                    }).then((data)=>{
-                      
-                      console.log(data)
-                      console.log(languages)
+                  
+                  
+                  console.log(langs)
+                  console.log(tops)
                     return (
                       <ProjectCard
                         title={title}
@@ -130,15 +143,12 @@ function Home() {
                         url={url}
                         owner={owner}
                         id={id}
-                        languages={languages}
-                        topics={data}
+                        // languages={langs}
+                        // topics={tops}
                       />
                     );
-                  })})
-              
-                  
-                  
-                })}
+              })}
+
             </IonRow>
             {!filteredProjects.length && <NotFound title="No match"/>}
           </section>
