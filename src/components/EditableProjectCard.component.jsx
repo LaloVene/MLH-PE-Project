@@ -17,6 +17,7 @@ import {
   IonLabel,
   IonSelect,
   IonSelectOption,
+  IonContent,
 } from "@ionic/react";
 import { personCircleOutline } from "ionicons/icons";
 import styled from "styled-components";
@@ -31,11 +32,11 @@ import dblanguages from "../utils/languages.json";
 const Card = styled(IonCard)`
   cursor: pointer;
   border-radius: 2rem;
-  background-color: #EEF1FA;
-  box-shadow: none;
-  
+  padding: 10px;
+  background-color: #D4E0FF;
+  box-shadow: none;  
   &:hover {
-    background-color: #dfe5f5;
+    background-color: #c2d0f3;
   }
 `;
 
@@ -45,8 +46,8 @@ const CardHeader = styled(IonCardHeader)`
 `;
 
 const Icon = styled(IonIcon)`
-  font-size: 2.5rem;
-  margin-right: 0.5rem;
+  font-size: 3rem;
+  margin-right: 1rem;
 `;
 
 const Username = styled(IonCardSubtitle)`
@@ -62,7 +63,6 @@ const Title = styled(IonCardTitle)`
 `;
 
 const Date = styled(IonCardSubtitle)`
-  margin: 0;
   text-align: right;
   font-size: 0.8rem;
   font-style: italic;
@@ -70,9 +70,6 @@ const Date = styled(IonCardSubtitle)`
 `;
 
 const Description = styled.p`
-  margin: 20px;
-  margin-top: 5px;
-  text-align: center;
   color: black;
 `
 
@@ -100,13 +97,12 @@ const TagTitle = styled.p`
 
 const TitleInput = styled(IonInput)`
   margin: 50px;
-  margin-top:35px;
+  margin-top: 0px;
   text-align: center;
   font-size: 24px;
   border-style: none;
   line-height: 1.2;
   padding: 15px;
-  border-radius: 2rem;
   background: #dfe5f5;
 `
 
@@ -243,73 +239,77 @@ function EditableProjectCard(props) {
     <IonCol size="12" size-md="4" key={id}>
       {!editMode &&
         <IonModal id="projmod" isOpen={showProject}>
+          <IonContent>
 
-          <ProjTitle >{title}</ProjTitle>
-          <Owner>Created By: {owner}</Owner>
-          <Date>{date}</Date>
-          <Description >{description}</Description>
-          <TagsWrapper>
-            <ProjectTags title="Languages" tagType={eLanguages} />
-            <ProjectTags title="Tags" tagType={eTopics} />
+            <ProjTitle >{title}</ProjTitle>
+            <Owner>Created By: {owner}</Owner>
+            <Date>{date}</Date>
+            <Description >{description}</Description>
+            <TagsWrapper>
+              <ProjectTags title="Languages" tagType={eLanguages} />
+              <ProjectTags title="Tags" tagType={eTopics} />
 
-          </TagsWrapper>
-          <LRButton onClick={() => {
-            const fullURL = eUrl.match(/^https?:/) ? eUrl : '//' + eUrl
-            window.open(fullURL)
-          }}>
-            More Information
-          </LRButton>
+            </TagsWrapper>
+            <LRButton onClick={() => {
+              const fullURL = eUrl.match(/^https?:/) ? eUrl : '//' + eUrl
+              window.open(fullURL)
+            }}>
+              More Information
+            </LRButton>
 
-          <IonButton id="closemodal" onClick={() => setEditMode(true)}>Edit</IonButton>
-          <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={() => setShowProject(false)}>Close</IonButton>
+            <IonButton id="closemodal" onClick={() => setEditMode(true)}>Edit</IonButton>
+            <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={() => setShowProject(false)}>Close</IonButton>
+          </IonContent>
         </IonModal>}
 
       {editMode &&
         <IonModal id="projmod" isOpen={showProject}>
-          <IonItem>
-            <TitleInput
-              value={eTitle}
-              onIonChange={(e) => {
-                setTitle(e.target.value)
-              }}
-              type="text"
-            ></TitleInput>
-          </IonItem>
+          <IonContent>
+            <IonItem>
+              <TitleInput
+                value={eTitle}
+                onIonChange={(e) => {
+                  setTitle(e.target.value)
+                }}
+                type="text"
+              ></TitleInput>
+            </IonItem>
 
-          <DescriptionInput id="desarea"
-            value={eDescription}
-            onChange={(e) => {
-              setDescription(e.target.value)
-            }}>
-          </DescriptionInput >
+            <DescriptionInput id="desarea"
+              value={eDescription}
+              onChange={(e) => {
+                setDescription(e.target.value)
+              }}>
+            </DescriptionInput >
 
-          <textarea id="url"
-            value={eUrl}
-            onChange={(e) => setUrl(e.target.value)}
-          ></textarea>
+            <textarea id="url"
+              value={eUrl}
+              onChange={(e) => setUrl(e.target.value)}
+            ></textarea>
 
-          <TagTitle>Languages</TagTitle>
-          <IonSelect style={{ height: "100px", width: "500px" }} value={eLanguages} multiple={true} cancelText="Close" okText="Done"
-            onIonChange={e => (setLanguages(e.target.value))}>
-            {
-              dblanguages.map(topic =>
-                <IonSelectOption value={topic}>{topic}</IonSelectOption>
-              )
-            }
-          </IonSelect>
-          <TagTitle>Tags</TagTitle>
-          <IonSelect style={{ height: "100px", width: "500px" }} value={eTopics} multiple={true} cancelText="Close" okText="Done"
-            onIonChange={e => (setTopics(e.target.value))}>
-            {
-              dbtopics.map(topic =>
-                <IonSelectOption value={topic}>{topic}</IonSelectOption>
-              )
-            }
-          </IonSelect>
+            <TagTitle>Languages</TagTitle>
+            <IonSelect style={{ height: "100px", width: "500px" }} value={eLanguages} multiple={true} cancelText="Close" okText="Done"
+              onIonChange={e => (setLanguages(e.target.value))}>
+              {
+                dblanguages.map(topic =>
+                  <IonSelectOption value={topic}>{topic}</IonSelectOption>
+                )
+              }
+            </IonSelect>
+            <TagTitle>Tags</TagTitle>
+            <IonSelect style={{ height: "100px", width: "500px" }} value={eTopics} multiple={true} cancelText="Close" okText="Done"
+              onIonChange={e => (setTopics(e.target.value))}>
+              {
+                dbtopics.map(topic =>
+                  <IonSelectOption value={topic}>{topic}</IonSelectOption>
+                )
+              }
+            </IonSelect>
 
-          <IonButton id="closemodal" onClick={saveChanges}>Save</IonButton>
-          <IonButton id="closemodal" style={{ background: "red" }} onClick={handleDelete}>Delete</IonButton>
-          <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={closeEdit}>Close</IonButton>
+            <IonButton id="closemodal" onClick={saveChanges}>Save</IonButton>
+            <IonButton id="closemodal" style={{ background: "red" }} onClick={handleDelete}>Delete</IonButton>
+            <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={closeEdit}>Close</IonButton>
+          </IonContent>
         </IonModal>
       }
 
@@ -320,7 +320,7 @@ function EditableProjectCard(props) {
         </CardHeader>
         <IonCardContent>
           <Title>{title}</Title>
-          <p>{description}</p>
+          <Description>{description}</Description>
           <Date>{date}</Date>
           <ProjectTags title="Languages" tagType={eLanguages} limit={true} />
           <ProjectTags title="Tags" tagType={eTopics} limit={true} />
