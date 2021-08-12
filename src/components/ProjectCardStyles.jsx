@@ -6,6 +6,7 @@ import {
   IonIcon,
   IonInput,
   IonContent,
+  IonTextarea,
 } from "@ionic/react";
 import styled from "styled-components";
 
@@ -94,21 +95,24 @@ const TitleInput = styled(IonInput)`
   margin-left: 55px;
 `
 
-const DescriptionInput = styled.textarea`
+const DescriptionInput = styled(IonTextarea)`
   margin-top: 24px;
+  margin-left: 55px;
   border-style: none;  
   border-radius: 1rem;
   font-size: 14px;
   background: #d8e3ff;
-  height: 40%;
   width: 80%;
   padding: 24px;
   border: none;
   outline: none;
+  text-align: left;
 `
-const LinkInput = styled(DescriptionInput)`
-  height: 15%;
-  resize: none;
+const LinkInput = styled(TitleInput)`
+  margin-top: 24px;
+  font-size: 14px;
+  text-align: left;
+  padding-left: 24px !important;
 `
 
 const TagsWrapper = styled.div`

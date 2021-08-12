@@ -68,12 +68,11 @@ function EditableProjectCard(props) {
   function handleDelete() {
     return (
       present({
-        cssClass: 'my-css',
         header: 'Delete',
         message: 'Delete project?',
         buttons: [
-          { text: 'Cancel', handler: (d) => console.log('ok pressed') },
-          { text: 'Confirm', handler: (d) => deleteProject() }
+          { text: 'Cancel', handler: () => console.log('ok pressed') },
+          { text: 'Confirm', handler: () => deleteProject() }
         ],
         onDidDismiss: () => console.log('did dismiss'),
       })
@@ -94,7 +93,8 @@ function EditableProjectCard(props) {
       },
       body: JSON.stringify(opts)
     }).then(r => r.json())
-      .then(resp => console.log(resp)).then(() => {
+      .then(resp => console.log(resp))
+      .then(() => {
         setShowProject(false)
         setEditMode(false)
         editFunc(id.toString())
@@ -117,9 +117,6 @@ function EditableProjectCard(props) {
       body: JSON.stringify(opts)
     }).then(r => r.json())
       .then(resp => {
-        console.log(resp)
-        console.log(eTopics)
-        console.log(eLanguages)
         setShowProject(false)
         setEditMode(false)
         editFunc(eTitle)
@@ -181,21 +178,28 @@ function EditableProjectCard(props) {
                 setTitle(e.target.value)
               }}
               type="text"
-            ></TitleInput>
+              maxlength={30}
+            />
 
             <DescriptionInput
               value={eDescription}
               placeholder="Description"
-              onChange={(e) => {
+              onIonChange={(e) => {
                 setDescription(e.target.value)
-              }}>
-            </DescriptionInput >
+              }}
+              type="text"
+              rows={10}
+              maxlength={470}
+            />
 
             <LinkInput
               placeholder="Link"
               value={eUrl}
-              onChange={(e) => setUrl(e.target.value)}
-            ></LinkInput>
+              onIonChange={(e) => setUrl(e.target.value)}
+              type="text"
+              rows={1}
+              maxlength={47}
+            />
 
             <TagTitle>Languages</TagTitle>
             <IonSelect style={{ height: "40px", width: "500px", marginLeft: "20px" }} value={eLanguages} multiple={true} cancelText="Close" okText="Done" placeholder="Select language(s)"
