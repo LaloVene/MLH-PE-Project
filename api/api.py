@@ -306,7 +306,6 @@ def register():
 
 @app.route("/api/login", methods=("POST",))
 def login():
-    # try:
     body = request.get_json()
     username = str(body["username"])
     password = str(body["password"])
@@ -324,8 +323,6 @@ def login():
     else:
         return jsonify({"status": "bad", "error": error}), 418
 
-    # except:
-    #     return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
 @app.route("/api/requestReset", methods=("POST",))
 def request_password_reset():
@@ -356,7 +353,10 @@ def request_password_reset():
 
             url = f"http://localhost:8100/reset/{username}?token={token}"
 
-            html = f"<html><body><p>Go to this URL to reset your password. If you didn't request this just ignore it.</p></br><a>{url}</a></body></html>"
+            html = f"<html><body><p>\
+                Go to this URL to reset your password.\
+                If you didn't request this just ignore it.\
+                </p></br><a>{url}</a></body></html>"
             part2 = MIMEText(html, "html")
 
             msg.attach(part2)
@@ -372,6 +372,7 @@ def request_password_reset():
 
     except:  # noqa: E722
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
+
 
 @app.route("/api/resetPassword", methods=("POST",))
 def reset_password():
@@ -398,6 +399,7 @@ def reset_password():
         return jsonify({"status": "ok", "message": message}), 200
     else:
         return jsonify({"status": "bad", "error": error}), 400
+
 
 # ------------ USER DATA ##############
 @app.route("/api/getUserData", methods=("GET",))
