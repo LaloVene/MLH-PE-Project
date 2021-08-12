@@ -17,7 +17,7 @@ const Card = styled(IonCard)`
   border-radius: 1rem;
   height: 10rem;
   /* width: 10rem; */
-  background-color: #EEF1FA;
+  background-color: #ffe1be;
   /* box-shadow: 0 0.3px 2.2px rgba(0, 0, 0, 0.02),
   0 0.8px 5.3px rgba(0, 0, 0, 0.028), 0 1.5px 10px rgba(0, 0, 0, 0.035),
   0 2.7px 17.9px rgba(0, 0, 0, 0.042), 0 5px 33.4px rgba(0, 0, 0, 0.05),
@@ -25,12 +25,14 @@ const Card = styled(IonCard)`
   box-shadow: none;
   
   &:hover {
-    border: 1px solid hsl(0, 0%, 80%);
+    border: 4px solid hsl(32.14285714285714, 59.15492957746478%, 72.15686274509804%);
   }
 `;
+
 const Icon = styled(IonIcon)`
   font-size: 3rem;
 `;
+
 const Title = styled(IonCardTitle)`
   font-size: 1.2rem;
 `;
