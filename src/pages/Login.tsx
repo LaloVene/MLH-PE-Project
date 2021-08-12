@@ -1,4 +1,4 @@
-import { useIonAlert, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+import { useIonAlert, IonContent, IonInput, IonItem, IonLabel, IonPage, IonRow } from '@ionic/react';
 import React, { useState, useContext } from 'react';
 import Header from '../components/Header.component';
 

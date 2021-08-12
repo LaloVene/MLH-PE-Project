@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from "react";
 import {
-  IonModal,
   IonContent,
   IonHeader,
   IonPage,
   IonTitle,
   IonToolbar,
   IonRow,
-  IonCol,
-  IonInput,
-  IonSearchbar,
-  IonButton,
   IonButtons,
   IonBackButton
 } from "@ionic/react";
@@ -39,7 +34,6 @@ function Category(props) {
   const [state, changeUrl] = useProjects();
   const [searchText, setSearchText] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const [showProject, setShowProject] = useState(false);
   const categoryName = props.match.params.id;
 
   // Fetch categories from /api/getTopics

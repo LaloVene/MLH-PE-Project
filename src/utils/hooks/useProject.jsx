@@ -1,6 +1,5 @@
   
 import { useState, useEffect, useReducer } from 'react';
-import Data from '../projects.json'
 
 const BASE_URL = '/api/getProjects';
 
