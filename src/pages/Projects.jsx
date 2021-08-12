@@ -62,6 +62,7 @@ function Projects() {
 	const [mUrl, setMUrl] = useState("");
 	const [mTopics, setMTopics] = useState([""]);
 	const [mLanguages, setMLanguages] = useState([""]);
+	const [mCollaborators, setMCollaborators] = useState([""]);
 
 	const [edited, setEdited] = useState("");
 	const [projects, setProjects] = useState([]);
@@ -146,66 +147,76 @@ function Projects() {
 								<IonCol size="12" size-md="4">
 									<IonModal id="projmod" isOpen={showProject}>
 										<ModalContent>
-												<TitleInput
-													value={mTitle}
-													placeholder="Title"
-													onIonChange={(e) => {
-														setMTitle(e.target.value)
-													}}
-													type="text"
-													maxlength={30}
-												/>
-												<DescriptionInput
-													value={mDescription}
-													placeholder="Description"
-													onIonChange={(e) => {
-														setMDescription(e.target.value)
-													}}
-													rows={10}
-													maxlength={470}
-												/>
+											<TitleInput
+												value={mTitle}
+												placeholder="Title"
+												onIonChange={(e) => {
+													setMTitle(e.target.value)
+												}}
+												type="text"
+												maxlength={30}
+											/>
+											<DescriptionInput
+												value={mDescription}
+												placeholder="Description"
+												onIonChange={(e) => {
+													setMDescription(e.target.value)
+												}}
+												rows={10}
+												maxlength={470}
+											/>
 
-												<LinkInput
-													placeholder="URL"
-													value={mUrl}
-													onIonChange={(e) => {
-														setMUrl(e.target.value)
-													}}
-													rows={1}
-													maxlength={47}
-												/>
+											<LinkInput
+												placeholder="URL"
+												value={mUrl}
+												onIonChange={(e) => {
+													setMUrl(e.target.value)
+												}}
+												rows={1}
+												maxlength={47}
+											/>
 
-												<TagTitle>Languages</TagTitle>
-												<IonSelect style={{ height: "40px", width: "500px", marginLeft: "20px" }} value={mLanguages} multiple={true} cancelText="Close" okText="Done" placeholder="Select language(s)"
-													onIonChange={e => (setMLanguages(e.target.value))}>
-													{
-														dblanguages.map(topic =>
-															<IonSelectOption key={topic} value={topic}>{topic}</IonSelectOption>
-														)
-													}
-												</IonSelect>
+											<TagTitle>Languages</TagTitle>
+											<IonSelect style={{ height: "40px", width: "500px", marginLeft: "20px" }} value={mLanguages} multiple={true} cancelText="Close" okText="Done" placeholder="Select language(s)"
+												onIonChange={e => (setMLanguages(e.target.value))}>
+												{
+													dblanguages.map(topic =>
+														<IonSelectOption key={topic} value={topic}>{topic}</IonSelectOption>
+													)
+												}
+											</IonSelect>
 
-												<TagTitle>Tags</TagTitle>
+											<TagTitle>Tags</TagTitle>
+											<IonSelect style={{ height: "40px", width: "500px", marginLeft: "20px" }} value={mTopics} multiple={true} cancelText="Close" okText="Done" placeholder="Select tag(s)"
+												onIonChange={e => (setMTopics(e.target.value))}>
+												{
+													dbtopics.map(topic =>
+														<IonSelectOption key={topic} value={topic}>{topic}</IonSelectOption>
+													)
+												}
+											</IonSelect>
 
-												<IonSelect style={{ height: "40px", width: "500px", marginLeft: "20px" }} value={mTopics} multiple={true} cancelText="Close" okText="Done" placeholder="Select tag(s)"
-													onIonChange={e => (setMTopics(e.target.value))}>
-													{
-														dbtopics.map(topic =>
-															<IonSelectOption key={topic} value={topic}>{topic}</IonSelectOption>
-														)
-													}
-												</IonSelect>
+											<TagTitle>Collaborators</TagTitle>
+											<IonSelect style={{ height: "40px", width: "500px", marginLeft: "20px" }} value={mCollaborators} multiple={true} cancelText="Close" okText="Done" placeholder="Manage collaborator(s)"
+												onIonChange={e => (setMCollaborators(e.target.value))}>
+												{/* CHANGE THIS to users */}
+												{
+													dbtopics.map(topic =>
+														<IonSelectOption value={topic}>{topic}</IonSelectOption>
+													)
+												}
+											</IonSelect>
 
-												<ButtonsWrapper>
-													<IonButton color="success" id="closemodal" onClick={saveChanges}>
-														<SmallIcon slot="start" icon={checkmark} />
-														Save
-													</IonButton>
-													<IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={() => setShowProject(false)}>
-														<SmallIcon slot="start" icon={close} />
-														Close
-													</IonButton>
-												</ButtonsWrapper>
+											<ButtonsWrapper>
+												<IonButton color="success" id="closemodal" onClick={saveChanges}>
+													<SmallIcon slot="start" icon={checkmark} />
+													Save
+												</IonButton>
+												<IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={() => setShowProject(false)}>
+													<SmallIcon slot="start" icon={close} />
+													Close
+												</IonButton>
+											</ButtonsWrapper>
 
 										</ModalContent>
 									</IonModal>
