@@ -97,29 +97,34 @@ const TagTitle = styled.p`
 `
 
 const TitleInput = styled(IonInput)`
-  margin: 50px;
-  margin-top: 0px;
+  margin-top: 40px;
   text-align: center;
-  font-size: 24px;
+  font-size: 22px;
+  line-height: 40px;
   border-style: none;
-  line-height: 1.2;
-  padding: 15px;
-  background: #dfe5f5;
+  padding: 24px;
+  background: #d8e3ff;
+  border-radius: 1rem;
+  width: 80%;
+  margin-left: 55px;
 `
 
 const DescriptionInput = styled.textarea`
-  margin: 20px;
+  margin-top: 24px;
   border-style: none;  
-  border-radius: 2rem;
-  background: #dfe5f5;
-  resize: none;
-  height: 60%;
+  border-radius: 1rem;
+  font-size: 14px;
+  background: #d8e3ff;
+  height: 40%;
   width: 80%;
-  padding: 15px;
+  padding: 24px;
   border: none;
   outline: none;
 `
-
+const LinkInput = styled(DescriptionInput)`
+  height: 15%;
+  resize: none;
+`
 const TagsWrapper = styled.div`
   margin: 0px 40px;
 `
@@ -128,8 +133,13 @@ const ModalContent = styled(IonContent)`
   align-items: center;
   text-align: center;
 `
-const ButtonsWrapper = styled(IonCol)`
 
+const ModalContentView = styled.div`
+padding: 24px;
+`
+
+const ButtonsWrapper = styled.div`
+  margin-top: 24px;
 `
 
 function EditableProjectCard(props) {
@@ -237,7 +247,7 @@ function EditableProjectCard(props) {
       <TagText>
         <strong>{title}: </strong><br />
         {showTags.map((item) => (
-          <IonChip>{item}</IonChip>
+          <IonChip style={{ backgroundColor: "#acc1f8" }}>{item}</IonChip>
         ))}
         {(limit & (hiddenTagCount > 0)) ? ("+ " + parseInt(hiddenTagCount) + " more") : ""}
       </TagText>
@@ -249,59 +259,63 @@ function EditableProjectCard(props) {
       {!editMode &&
         <IonModal id="projmod" isOpen={showProject}>
           <ModalContent>
+            <ModalContentView>
 
-            <ProjTitle >{title}</ProjTitle>
-            <Owner>Created by: {owner}</Owner>
-            <Date>{date}</Date>
-            <Description >{description}</Description>
-            <TagsWrapper>
-              <ProjectTags title="Languages" tagType={eLanguages} />
-              <ProjectTags title="Tags" tagType={eTopics} />
+              <ProjTitle >{title}</ProjTitle>
+              <Owner>Created by: {owner}</Owner>
+              <Date>{date}</Date>
+              <Description >{description}</Description>
+              <TagsWrapper>
+                <ProjectTags title="Languages" tagType={eLanguages} />
+                <ProjectTags title="Tags" tagType={eTopics} />
 
-            </TagsWrapper>
-            <ButtonsWrapper>
+              </TagsWrapper>
+              <ButtonsWrapper>
 
-              <LRButton onClick={() => {
-                const fullURL = eUrl.match(/^https?:/) ? eUrl : '//' + eUrl
-                window.open(fullURL)
-              }}>
-                More Information
-              </LRButton>
+                <LRButton onClick={() => {
+                  const fullURL = eUrl.match(/^https?:/) ? eUrl : '//' + eUrl
+                  window.open(fullURL)
+                }}>
+                  More Information
+                </LRButton>
 
-              <IonButton id="closemodal" onClick={() => setEditMode(true)}>Edit</IonButton>
-              <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={() => setShowProject(false)}>Close</IonButton>
-            </ButtonsWrapper>
+                <IonButton id="closemodal" onClick={() => setEditMode(true)}>Edit</IonButton>
+                <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={() => setShowProject(false)}>Close</IonButton>
+              </ButtonsWrapper>
+            </ModalContentView>
+
           </ModalContent>
 
         </IonModal>}
 
       {editMode &&
         <IonModal id="projmod" isOpen={showProject}>
-          <IonContent>
-            <IonItem>
-              <TitleInput
-                value={eTitle}
-                onIonChange={(e) => {
-                  setTitle(e.target.value)
-                }}
-                type="text"
-              ></TitleInput>
-            </IonItem>
+          <ModalContent>
+            <TitleInput
+              value={eTitle}
+              placeholder="Title"
+              onIonChange={(e) => {
+                setTitle(e.target.value)
+              }}
+              type="text"
+            ></TitleInput>
 
-            <DescriptionInput id="desarea"
+            <DescriptionInput
               value={eDescription}
+              placeholder="Description"
               onChange={(e) => {
                 setDescription(e.target.value)
               }}>
             </DescriptionInput >
 
-            <textarea id="url"
+            <LinkInput
+              placeholder="Link"
               value={eUrl}
               onChange={(e) => setUrl(e.target.value)}
-            ></textarea>
+            ></LinkInput>
 
             <TagTitle>Languages</TagTitle>
-            <IonSelect style={{ height: "100px", width: "500px" }} value={eLanguages} multiple={true} cancelText="Close" okText="Done"
+            <IonSelect style={{ height: "40px", width: "500px", marginLeft: "20px" }} value={eLanguages} multiple={true} cancelText="Close" okText="Done"
               onIonChange={e => (setLanguages(e.target.value))}>
               {
                 dblanguages.map(topic =>
@@ -309,8 +323,9 @@ function EditableProjectCard(props) {
                 )
               }
             </IonSelect>
+
             <TagTitle>Tags</TagTitle>
-            <IonSelect style={{ height: "100px", width: "500px" }} value={eTopics} multiple={true} cancelText="Close" okText="Done"
+            <IonSelect style={{ height: "40px", width: "500px", marginLeft: "20px" }} value={eTopics} multiple={true} cancelText="Close" okText="Done"
               onIonChange={e => (setTopics(e.target.value))}>
               {
                 dbtopics.map(topic =>
@@ -318,11 +333,12 @@ function EditableProjectCard(props) {
                 )
               }
             </IonSelect>
-
-            <IonButton id="closemodal" onClick={saveChanges}>Save</IonButton>
-            <IonButton id="closemodal" style={{ background: "red" }} onClick={handleDelete}>Delete</IonButton>
-            <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={closeEdit}>Close</IonButton>
-          </IonContent>
+            <ButtonsWrapper>
+              <IonButton color="success" id="closemodal" onClick={saveChanges}>Save</IonButton>
+              <IonButton color="danger" id="closemodal" style={{ background: "red" }} onClick={handleDelete}>Delete</IonButton>
+              <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={closeEdit}>Close</IonButton>
+            </ButtonsWrapper>
+          </ModalContent>
         </IonModal>
       }
 
