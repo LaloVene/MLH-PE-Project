@@ -46,8 +46,8 @@ function EditableProjectCard(props) {
   const [eTitle, setTitle] = useState(title);
   const [eDescription, setDescription] = useState(description);
   const [eUrl, setUrl] = useState(url);
-  const [eTopics, setTopics] = useState(["Machine Learning"]);
-  const [eLanguages, setLanguages] = useState(["Python", "JavaScript"]);
+  const [eTopics, setTopics] = useState([""]);
+  const [eLanguages, setLanguages] = useState([""]);
 
 
   const [present] = useIonAlert();

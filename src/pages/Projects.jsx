@@ -10,7 +10,10 @@ import {
 	IonIcon,
 	IonGrid,
 	IonItem,
-	useIonAlert
+	useIonAlert,
+	IonSelect,
+	IonSelectOption,
+	IonLabel
 } from "@ionic/react";
 import {
 	Card,
@@ -30,7 +33,7 @@ import {
 	TagsWrapper,
 	ModalContent,
 	ModalContentView,
-	ButtonsWrapper
+	ButtonsWrapper,
 } from '../components/ProjectCardStyles';
 import styled from "styled-components";
 import { addCircleOutline } from "ionicons/icons";
@@ -41,6 +44,8 @@ import Header from '../components/Header.component';
 import { useJwt } from "react-jwt";
 import GlobalContext from "../utils/state/GlobalContext";
 import './Projects.css';
+import dbtopics from "../utils/topics.json";
+import dblanguages from "../utils/languages.json";
 
 const Container = styled.div`
   padding: 1rem;
@@ -67,6 +72,9 @@ function Projects() {
 	const [mTitle, setMTitle] = useState("");
 	const [mDescription, setMDescription] = useState("");
 	const [mUrl, setMUrl] = useState("");
+	const [mTopics, setMTopics] = useState([""]);
+	const [mLanguages, setMLanguages] = useState([""]);
+
 	const [edited, setEdited] = useState("");
 	const [projects, setProjects] = useState([]);
 
@@ -175,6 +183,28 @@ function Projects() {
 														setMUrl(e.target.value)
 													}}
 												></LinkInput>
+
+												<TagTitle>Languages</TagTitle>
+												<IonSelect style={{ height: "40px", width: "500px", marginLeft: "20px" }} value={mLanguages} multiple={true} cancelText="Close" okText="Done" placeholder="Select languages"
+													onIonChange={e => (setMLanguages(e.target.value))}>
+													{
+														dblanguages.map(topic =>
+															<IonSelectOption value={topic}>{topic}</IonSelectOption>
+														)
+													}
+												</IonSelect>
+
+												<TagTitle>Tags</TagTitle>
+						
+												<IonSelect style={{ height: "40px", width: "500px", marginLeft: "20px" }} value={mTopics} multiple={true} cancelText="Close" okText="Done" placeholder="Select tags"
+													onIonChange={e => (setMTopics(e.target.value))}>
+													{
+														dbtopics.map(topic =>
+															<IonSelectOption value={topic}>{topic}</IonSelectOption>
+														)
+													}
+												</IonSelect>
+
 												<ButtonsWrapper>
 													<IonButton color="success" id="closemodal" onClick={saveChanges}>Save</IonButton>
 													<IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={() => setShowProject(false)}>Close</IonButton>
