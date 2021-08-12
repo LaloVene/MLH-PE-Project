@@ -76,20 +76,24 @@ const Description = styled.p`
 `
 
 const ProjTitle = styled.h2`
-
   margin-top: 50px;
   color: black;
-
 `
 
 const Owner = styled.p`
-
   margin: 0px;
   padding: 0px;
   font-size: 0.75em;
   color: black;
-
 `
+
+const TagText = styled.div`
+  margin: 16px 0px;
+  padding: 0px;
+  font-size: 1em;
+  color: black;
+`
+
 const TitleInput = styled(IonInput)`
   margin: 50px;
   margin-top:35px;
@@ -219,12 +223,12 @@ function EditableProjectCard(props) {
   const ProjectTags = ({ title, tagType }) => {
     return (
       <>
-        <Owner>
+        <TagText>
           <strong>{title}: </strong>
           {tagType.map((item) => (
             <IonChip>{item}</IonChip>
           ))}
-        </Owner>
+        </TagText>
       </>
     )
   }
@@ -308,7 +312,9 @@ function EditableProjectCard(props) {
           <Title>{title}</Title>
           <p>{description}</p>
           <Date>{date}</Date>
-          <Tags>{'Tags: Python, ML/AI, Web Dev'}</Tags>
+          <ProjectTags title="Languages" tagType={eLanguages} />
+          <ProjectTags title="Tags" tagType={eTopics} />
+
         </IonCardContent>
       </Card>
 
