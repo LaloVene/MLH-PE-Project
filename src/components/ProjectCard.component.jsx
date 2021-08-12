@@ -53,9 +53,7 @@ function CategoryCard(props) {
   const [mTitle, setMTitle] = useState("");
   const [mMessage, setMMessage] = useState("");
 
-  
-    console.log(languages)
-    console.log(topics)
+
   
   
 
@@ -111,38 +109,7 @@ function CategoryCard(props) {
     }
   }
 
-  // Promise.all([
-  //   fetch('/api/getProjectLanguages', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify({"projectId":id})
-  //   }),
-  //   fetch('/api/getProjectTopics', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify({"projectId":id})
-  //   })
-  // ]).then(responses =>
-  //   Promise.all(responses.map(response => response.json()))
-  // ).then(data =>{
-  //   const languages = []
-  //   for (var lang in data[0].languages){
-  //     languages.push(data[0].languages[lang].language)
-  //   }
-  //   setLanguages(languages)
 
-  //   const topics = []
-  //   for (var top in data[0].topics){
-  //     topics.push(data[0].topics[top].topic)
-  //   }
-  //   setTopics(topics)
-    
-  // })
-  // if (topics && languages){
     return (
       <IonCol size="12" size-md="4" key={id}>
         {!showContact &&

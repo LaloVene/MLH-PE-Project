@@ -4,6 +4,7 @@ import { IonChip } from '@ionic/react';
 const ProjectTags = ({ title, tagType, limit }) => {
     var showTags = tagType;
     console.log(showTags)
+    console.log(showTags)
     var hiddenTagCount = 0;
     if (limit && showTags) {
         showTags = tagType.slice(0, 3);
@@ -12,10 +13,10 @@ const ProjectTags = ({ title, tagType, limit }) => {
     return (
         <TagText>
             <strong>{title}: </strong><br />
-            {showTags ? showTags.map((item) => (
+            {showTags && showTags.length!=0? showTags.map((item) => (
                 <IonChip key={item} style={{ backgroundColor: "#acc1f8" }}>{item}</IonChip>
             )) : <i>None listed</i>}
-            {(limit & (hiddenTagCount > 0)) ? ("+ " + parseInt(hiddenTagCount) + " more") : ""}
+            {/* {(limit & (hiddenTagCount > 0)) ? ("+ " + parseInt(hiddenTagCount) + " more") : ""} */}
         </TagText>
     )
 }

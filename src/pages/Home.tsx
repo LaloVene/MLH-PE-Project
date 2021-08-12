@@ -141,16 +141,16 @@ function Home() {
                   
           
                     return (
-                      // <ProjectCard
-                      //   title={title}
-                      //   description={description}
-                      //   date={date}
-                      //   url={url}
-                      //   owner={owner}
-                      //   id={id}
-                      //   languages={langs.get(id)}
-                      //   topics={tops.get(id)}
-                      // />
+                      <ProjectCard
+                        title={title}
+                        description={description}
+                        date={date}
+                        url={url}
+                        owner={owner}
+                        id={id}
+                        languages={langs.get(id)}
+                        topics={tops.get(id)}
+                      />
                     );
               })}
 
