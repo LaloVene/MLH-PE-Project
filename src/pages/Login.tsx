@@ -62,23 +62,24 @@ const Login: React.FC = () => {
       <Header />
       <IonContent fullscreen>
         <ExploreContainer name="Login" />
-        <IonRow style={{
-          margin: "8vh"
-        }}>
+        <IonRow
+          style={{
+            margin: "8vh",
+          }}
+        >
           <LRCol>
-          <LoginPic style={{width: "200px", height: "200px"}} />
-            <LRTitle>
-              Login to DevUp
-            </LRTitle>
+            <LoginPic style={{ width: "200px", height: "200px" }} />
+            <LRTitle>Login to DevUp</LRTitle>
 
             <LRWrapper>
-
               <IonItem>
                 <IonLabel position="floating"> Username</IonLabel>
                 <IonInput
                   type="text"
                   value={username}
-                  onIonChange={(e: { detail: { value: any; }; }) => setUsername(e.detail.value!)}
+                  onIonChange={(e: { detail: { value: any } }) =>
+                    setUsername(e.detail.value!)
+                  }
                 />
               </IonItem>
 
@@ -87,24 +88,20 @@ const Login: React.FC = () => {
                 <IonInput
                   type="password"
                   value={password}
-                  onIonChange={(e: { detail: { value: any; }; }) => setPassword(e.detail.value!)}
+                  onIonChange={(e: { detail: { value: any } }) =>
+                    setPassword(e.detail.value!)
+                  }
                 />
               </IonItem>
 
               <LRSmall>
-                <LRLink to="#">Forgot password?</LRLink>
+                <LRLink to="/reset">Forgot password?</LRLink>
               </LRSmall>
-
             </LRWrapper>
-
-            <LRButton onClick={onSubmitClick}>
-              Login
-            </LRButton>
-
+            <LRButton onClick={onSubmitClick}>Login</LRButton>
             <LRSwitch>
               New to DevUp? <LRLink to="/register">Create an account</LRLink>
             </LRSwitch>
-
           </LRCol>
         </IonRow>
       </IonContent>

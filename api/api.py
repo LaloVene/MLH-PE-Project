@@ -353,10 +353,10 @@ def request_password_reset():
 
             url = f"http://localhost:8100/reset/{username}?token={token}"
 
-            html = f"<html><body><p>\
+            html = f'<html><body><p>\
                 Go to this URL to reset your password.\
-                If you didn't request this just ignore it.\
-                </p></br><a>{url}</a></body></html>"
+                If you did not request this, just ignore it.\
+                </p></br><a href="{url}">Reset Password</a></body></html>'
             part2 = MIMEText(html, "html")
 
             msg.attach(part2)
