@@ -46,8 +46,8 @@ function EditableProjectCard(props) {
   const [eTitle, setTitle] = useState(title);
   const [eDescription, setDescription] = useState(description);
   const [eUrl, setUrl] = useState(url);
-  const [eTopics, setTopics] = useState(["Machine Learning"]);
-  const [eLanguages, setLanguages] = useState(["Python", "JavaScript"]);
+  const [eTopics, setTopics] = useState([""]);
+  const [eLanguages, setLanguages] = useState([""]);
 
 
   const [present] = useIonAlert();
@@ -210,7 +210,7 @@ function EditableProjectCard(props) {
             ></LinkInput>
 
             <TagTitle>Languages</TagTitle>
-            <IonSelect style={{ height: "40px", width: "500px", marginLeft: "20px" }} value={eLanguages} multiple={true} cancelText="Close" okText="Done"
+            <IonSelect style={{ height: "40px", width: "500px", marginLeft: "20px" }} value={eLanguages} multiple={true} cancelText="Close" okText="Done" placeholder="Select language(s)"
               onIonChange={e => (setLanguages(e.target.value))}>
               {
                 dblanguages.map(topic =>
@@ -220,7 +220,7 @@ function EditableProjectCard(props) {
             </IonSelect>
 
             <TagTitle>Tags</TagTitle>
-            <IonSelect style={{ height: "40px", width: "500px", marginLeft: "20px" }} value={eTopics} multiple={true} cancelText="Close" okText="Done"
+            <IonSelect style={{ height: "40px", width: "500px", marginLeft: "20px" }} value={eTopics} multiple={true} cancelText="Close" okText="Done" placeholder="Select tag(s)"
               onIonChange={e => (setTopics(e.target.value))}>
               {
                 dbtopics.map(topic =>

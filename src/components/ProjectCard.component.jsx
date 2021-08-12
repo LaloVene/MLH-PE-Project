@@ -178,8 +178,6 @@ function CategoryCard(props) {
               onChange={(e)=>setMMessage(e.target.value)}
           ></textarea>
 
-    
-
           <IonButton id="closemodal" onClick={sendEmail}>Send</IonButton>
           <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={() => setShowContact(false)}>Close</IonButton>
          </IonModal>
