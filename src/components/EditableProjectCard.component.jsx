@@ -30,6 +30,7 @@ import {
   ModalContentView,
   ButtonsWrapper
 } from './ProjectCardStyles'
+import ProjectTags from './ProjectTags'
 import { personCircleOutline } from "ionicons/icons";
 import { useJwt } from "react-jwt";
 import GlobalContext from "../utils/state/GlobalContext";
@@ -129,25 +130,6 @@ function EditableProjectCard(props) {
           console.log(resp.error)
         }
       })
-  }
-
-  const ProjectTags = ({ title, tagType, limit }) => {
-    var showTags = tagType;
-    var hiddenTagCount = 0;
-    console.log(tagType)
-    if (limit) {
-      showTags = tagType.slice(0, 3);
-      hiddenTagCount = (tagType.length - 3)
-    }
-    return (
-      <TagText>
-        <strong>{title}: </strong><br />
-        {showTags != "" ? showTags.map((item) => (
-          <IonChip key={item} style={{ backgroundColor: "#acc1f8" }}>{item}</IonChip>
-        )) : <i>None listed</i>}
-        {(limit & (hiddenTagCount > 0)) ? ("+ " + parseInt(hiddenTagCount) + " more") : ""}
-      </TagText>
-    )
   }
 
   return (
