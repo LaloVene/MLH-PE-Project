@@ -38,7 +38,6 @@ function Home() {
       for (var proj in data.projects) {
         let id: string;
         id=data.projects[proj].id;
-        console.log(id)
         await Promise.all([
               fetch('/api/getProjectLanguages', {
                 method: 'POST',
@@ -64,8 +63,8 @@ function Home() {
               langdict.set(id,languages)
           
               const topics = []
-              for (var top in data[0].topics){
-                topics.push(data[0].topics[top].topic)
+              for (var top in data[1].topics){
+                topics.push(data[1].topics[top].topic)
               }
               topdict.set(id,topics)
               
@@ -76,42 +75,6 @@ function Home() {
     
     })})
 
-  // useEffect(()=>{
-  //   for (var proj in projectList){
-  //     const{id}=proj
-  //   }
-  //   Promise.all([
-  //     fetch('/api/getProjectLanguages', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify({"projectId":id})
-  //     }),
-  //     fetch('/api/getProjectTopics', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify({"projectId":id})
-  //     })
-  //   ]).then(responses =>
-  //     Promise.all(responses.map(response => response.json()))
-  //   ).then(data =>{
-  //     const languages = []
-  //     for (var lang in data[0].languages){
-  //       languages.push(data[0].languages[lang].language)
-  //     }
-  //     setLanguages(languages)
-  
-  //     const topics = []
-  //     for (var top in data[0].topics){
-  //       topics.push(data[0].topics[top].topic)
-  //     }
-  //     setTopics(topics)
-      
-  //   })
-  // },[projectList])
 
   useEffect(() => {
     let filteredProjects = projectList;
@@ -169,12 +132,13 @@ function Home() {
               {search ? "Search Results" : "Recommended for You"}
             </SectionTitle>
             <IonRow>
+              
               {filteredProjects.map((project: any) => {
                   const { id, title, description, date, url, owner } = project;
                   
                   
                   console.log(langs)
-                  console.log(tops)
+                    console.log(tops)
                     return (
                       <ProjectCard
                         title={title}
@@ -183,8 +147,8 @@ function Home() {
                         url={url}
                         owner={owner}
                         id={id}
-                        languages={langs[id]}
-                        topics={tops[id]}
+                        // languages={}
+                        // topics={tops}
                       />
                     );
               })}

@@ -5,7 +5,7 @@ const ProjectTags = ({ title, tagType, limit }) => {
     var showTags = tagType;
     console.log(showTags)
     var hiddenTagCount = 0;
-    if (limit) {
+    if (limit && showTags) {
         showTags = tagType.slice(0, 3);
         hiddenTagCount = (tagType.length - 3)
     }
