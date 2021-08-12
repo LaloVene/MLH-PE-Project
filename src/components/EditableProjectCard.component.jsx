@@ -50,7 +50,7 @@ function EditableProjectCard(props) {
   const [eUrl, setUrl] = useState(url);
   const [eTopics, setTopics] = useState([""]);
   const [eLanguages, setLanguages] = useState([""]);
-
+  const [eCollaborators, setCollaborators] = useState([""]);
 
   const [present] = useIonAlert();
   const { state } = useContext(GlobalContext);
@@ -142,6 +142,7 @@ function EditableProjectCard(props) {
               <TagsWrapper>
                 <ProjectTags title="Languages" tagType={eLanguages} />
                 <ProjectTags title="Tags" tagType={eTopics} />
+                <ProjectTags title="Collaborators" tagType={eCollaborators} />
 
               </TagsWrapper>
               <ButtonsWrapper>
@@ -220,6 +221,19 @@ function EditableProjectCard(props) {
                 )
               }
             </IonSelect>
+
+            <TagTitle>Collaborators</TagTitle>
+            <IonSelect style={{ height: "40px", width: "500px", marginLeft: "20px" }} value={eCollaborators} multiple={true} cancelText="Close" okText="Done" placeholder="Manage collaborator(s)"
+              onIonChange={e => (setCollaborators(e.target.value))}>
+              {/* CHANGE THIS to users */}
+              {
+                dbtopics.map(topic =>
+                  <IonSelectOption value={topic}>{topic}</IonSelectOption>
+                )
+              }
+            </IonSelect>
+
+
             <ButtonsWrapper>
               <IonButton color="success" id="closemodal" onClick={saveChanges}>
                 <SmallIcon slot="start" icon={checkmark} />
@@ -250,6 +264,7 @@ function EditableProjectCard(props) {
 
           <ProjectTags title="Languages" tagType={eLanguages} limit={true} />
           <ProjectTags title="Tags" tagType={eTopics} limit={true} />
+          <ProjectTags title="Collaborators" tagType={eCollaborators} limit={true} />
 
         </IonCardContent>
       </Card>
