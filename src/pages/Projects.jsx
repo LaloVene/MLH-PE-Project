@@ -88,6 +88,7 @@ function Projects() {
 				]
 			})
 		} else {
+			
 			let opts = {
 				'title': mTitle,
 				'description': mDescription,
@@ -119,6 +120,50 @@ function Projects() {
 								}
 							}
 						]
+					})
+				})
+			mlanguages.forEach(function (lang) {
+				fetch('/api/addProjectLanguage', {
+					method: 'POST',
+					headers: {
+					'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+					// 'projectId': ,
+					'language': lang
+					})
+				}).then(r => r.json())
+					.then(resp => {
+			
+					if (resp.status === "ok") {
+						console.log(resp.message)
+					}
+					else {
+						console.log(resp.error)
+					}
+					})
+				})
+			
+			mtopics.forEach(function (topic) {
+				fetch('/api/addProjectTopic', {
+					method: 'POST',
+					headers: {
+					'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+					// 'projectId': ,
+					'topic': topic
+					})
+				}).then(r => r.json())
+					.then(resp => {
+			
+					console.log(topic)
+					if (resp.status === "ok") {
+						console.log(resp.message)
+					}
+					else {
+						console.log(resp.error)
+					}
 					})
 				})
 		}
