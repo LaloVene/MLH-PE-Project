@@ -90,16 +90,54 @@ function Home() {
             <IonRow>
               {filteredProjects.map((project: any) => {
                   const { id, title, description, date, url, owner } = project;
-                  return (
-                    <ProjectCard
-                      title={title}
-                      description={description}
-                      date={date}
-                      url={url}
-                      owner={owner}
-                      id={id}
-                    />
-                  );
+                  fetch('/api/getProjectLanguages', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({"projectId":id})
+                  }).then(r => r.json()).then(resp=> {
+                    
+                    const languages = []
+                    for (var lang in resp.languages){
+                      languages.push(resp.languages[lang].language)
+                    }
+                   
+                    return languages
+                  }).then((languages)=>{
+                   
+                    return fetch('/api/getProjectTopics', {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json'
+                      },
+                      body: JSON.stringify({"projectId":id})
+                    }).then(r => r.json()).then(resp=> {
+                      const topics = []
+                      for (var top in resp.topics){
+                        topics.push(resp.topics[top].topic)
+                      }
+                      return topics
+                    }).then((data)=>{
+                      
+                      console.log(data)
+                      console.log(languages)
+                    return (
+                      <ProjectCard
+                        title={title}
+                        description={description}
+                        date={date}
+                        url={url}
+                        owner={owner}
+                        id={id}
+                        languages={languages}
+                        topics={data}
+                      />
+                    );
+                  })})
+              
+                  
+                  
                 })}
             </IonRow>
             {!filteredProjects.length && <NotFound title="No match"/>}
