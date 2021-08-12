@@ -18,6 +18,8 @@ import Register from './pages/Register.jsx';
 import Profile from './pages/Profile.jsx';
 import Projects from './pages/Projects.jsx'
 import Private from './pages/Private.page';
+import ResetPassword from './pages/ResetPassword.page';
+import ForgotPassword from './pages/ForgotPassword.page';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -54,12 +56,11 @@ const App: React.FC = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (["login", "register"].includes(url)) {
+    if (["login", "register", "reset"].includes(url)) {
       setShowNav(false);
     } else {
       setShowNav(true);
     }
-    console.log(url);
   }, [setShowNav, url]);
 
   return (
@@ -89,6 +90,14 @@ const App: React.FC = () => {
               <Route exact path="/categories">
                 <Categories />
               </Route>
+              <Route exact path="/reset">
+                <ForgotPassword />
+              </Route>
+              <Route
+                exact
+                path="/reset/:user"
+                render={(props: any) => <ResetPassword {...props} />}
+              />
               <Route
                 exact
                 path="/category/:id"
