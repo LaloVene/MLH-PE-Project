@@ -25,7 +25,7 @@ services:
     volumes:
       - mydatabase:/var/lib/postgresql/data
   
-  # Comment out the following line if you don't want to run api
+  # Comment out the following line if you don't want to run client
   # client:
   #   container_name: client
   #   restart: unless-stopped
@@ -35,5 +35,6 @@ services:
   #   image: react-flask-app-client
   #   ports:
   #     - "80:80"
+
 volumes:
   mydatabase:
