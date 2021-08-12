@@ -63,14 +63,15 @@ const Title = styled(IonCardTitle)`
 `;
 
 const Date = styled(IonCardSubtitle)`
-  text-align: right;
   font-size: 0.8rem;
   font-style: italic;
   color: black;
+  margin-right: 10px;
 `;
 
 const Description = styled.p`
   color: black;
+  margin-bottom: 24px;
 `
 
 const ProjTitle = styled.h2`
@@ -121,6 +122,14 @@ const DescriptionInput = styled.textarea`
 
 const TagsWrapper = styled.div`
   margin: 0px 40px;
+`
+const ModalContent = styled(IonContent)`
+  width: 585px;
+  align-items: center;
+  text-align: center;
+`
+const ButtonsWrapper = styled(IonCol)`
+
 `
 
 function EditableProjectCard(props) {
@@ -226,7 +235,7 @@ function EditableProjectCard(props) {
     }
     return (
       <TagText>
-        <strong>{title}: </strong>
+        <strong>{title}: </strong><br />
         {showTags.map((item) => (
           <IonChip>{item}</IonChip>
         ))}
@@ -239,10 +248,10 @@ function EditableProjectCard(props) {
     <IonCol size="12" size-md="4" key={id}>
       {!editMode &&
         <IonModal id="projmod" isOpen={showProject}>
-          <IonContent>
+          <ModalContent>
 
             <ProjTitle >{title}</ProjTitle>
-            <Owner>Created By: {owner}</Owner>
+            <Owner>Created by: {owner}</Owner>
             <Date>{date}</Date>
             <Description >{description}</Description>
             <TagsWrapper>
@@ -250,16 +259,20 @@ function EditableProjectCard(props) {
               <ProjectTags title="Tags" tagType={eTopics} />
 
             </TagsWrapper>
-            <LRButton onClick={() => {
-              const fullURL = eUrl.match(/^https?:/) ? eUrl : '//' + eUrl
-              window.open(fullURL)
-            }}>
-              More Information
-            </LRButton>
+            <ButtonsWrapper>
 
-            <IonButton id="closemodal" onClick={() => setEditMode(true)}>Edit</IonButton>
-            <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={() => setShowProject(false)}>Close</IonButton>
-          </IonContent>
+              <LRButton onClick={() => {
+                const fullURL = eUrl.match(/^https?:/) ? eUrl : '//' + eUrl
+                window.open(fullURL)
+              }}>
+                More Information
+              </LRButton>
+
+              <IonButton id="closemodal" onClick={() => setEditMode(true)}>Edit</IonButton>
+              <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={() => setShowProject(false)}>Close</IonButton>
+            </ButtonsWrapper>
+          </ModalContent>
+
         </IonModal>}
 
       {editMode &&
@@ -321,7 +334,8 @@ function EditableProjectCard(props) {
         <IonCardContent>
           <Title>{title}</Title>
           <Description>{description}</Description>
-          <Date>{date}</Date>
+          <Date style={{ textAlign: "right" }}>{date}</Date>
+
           <ProjectTags title="Languages" tagType={eLanguages} limit={true} />
           <ProjectTags title="Tags" tagType={eTopics} limit={true} />
 
