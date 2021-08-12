@@ -175,7 +175,7 @@ function Projects() {
 													onIonChange={e => (setMLanguages(e.target.value))}>
 													{
 														dblanguages.map(topic =>
-															<IonSelectOption value={topic}>{topic}</IonSelectOption>
+															<IonSelectOption key={topic} value={topic}>{topic}</IonSelectOption>
 														)
 													}
 												</IonSelect>
@@ -186,7 +186,7 @@ function Projects() {
 													onIonChange={e => (setMTopics(e.target.value))}>
 													{
 														dbtopics.map(topic =>
-															<IonSelectOption value={topic}>{topic}</IonSelectOption>
+															<IonSelectOption key={topic} value={topic}>{topic}</IonSelectOption>
 														)
 													}
 												</IonSelect>

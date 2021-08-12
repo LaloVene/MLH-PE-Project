@@ -142,7 +142,7 @@ function EditableProjectCard(props) {
       <TagText>
         <strong>{title}: </strong><br />
         {showTags.map((item) => (
-          <IonChip style={{ backgroundColor: "#acc1f8" }}>{item}</IonChip>
+          <IonChip key={item} style={{ backgroundColor: "#acc1f8" }}>{item}</IonChip>
         ))}
         {(limit & (hiddenTagCount > 0)) ? ("+ " + parseInt(hiddenTagCount) + " more") : ""}
       </TagText>
