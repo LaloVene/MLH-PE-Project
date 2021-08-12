@@ -47,83 +47,11 @@ const Tags = styled.p`
 
 function CategoryCard(props) {
 
-  const { title, description, date, url, owner, id} = props;
+  const { title, description, date, url, owner, id,languages,topics} = props;
   const [showProject, setShowProject] = useState(false);
   const [showContact, setShowContact] = useState(false);
   const [mTitle, setMTitle] = useState("");
   const [mMessage, setMMessage] = useState("");
-  const [languages, setLanguages]=useState([])
-  const [topics, setTopics]=useState([])
-
-  // const languages = ["Python", "JavaScript"]
-  // const topics = ["ML", "CV"]
-  // useEffect(() => {
-		
-  //   fetch('/api/getProjectLanguages', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify({"projectId":id})
-  //   }).then(r => r.json()).then(resp=> {
-  //     console.log(resp)
-  //     const languages = []
-  //     for (var lang in resp.languages){
-  //       languages.push(lang.language)
-  //     }
-  //     setLanguages(languages)
-  //   })
-
-  //   fetch('/api/getProjectTopics', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify({"projectId":id})
-  //   }).then(r => r.json()).then(resp=> {
-  //     const topics = []
-  //     for (var top in resp.topics){
-  //       topics.push(top.topic)
-  //     }
-  //     setTopics(topics)
-  //   })
-    
-		
-	// }, [])
-  
-
-  
-  
-
-  // const lang = fetch('/api/getProjectLanguages', {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json'
-  //   },
-  //   body: JSON.stringify({"projectId":id})
-  // }).then(r => r.json()).then(resp=> {
-    
-  //   const languages = []
-  //   for (var lang in resp.languages){
-  //     languages.push(resp.languages[lang].language)
-  //   }
-   
-  //   setLangs(languages)
-  // })
-  // const tops = fetch('/api/getProjectTopics', {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json'
-  //   },
-  //   body: JSON.stringify({"projectId":id})
-  // }).then(r => r.json()).then(resp=> {
-  //   const topics = []
-  //   for (var top in resp.topics){
-  //     topics.push(resp.topics[top].topic)
-  //   }
-  //   setTops(topics)
-  // })
-  
 
   
 

@@ -30,11 +30,51 @@ function Home() {
   const [langs, setLangs]:any=useState([])
 
   useEffect(() => {
-    fetch('/api/getProjects').then(res => res.json()).then(data => {
+    fetch('/api/getProjects').then(res => res.json()).then(async data => {
       setProjectList(data.projects);
       console.log(data.projects);
-    })
-  }, [setProjectList])
+      var langdict=new Map<any,any[]>();
+      var topdict=new Map<any,any[]>();
+      for (var proj in data.projects) {
+        let id: string;
+        id=data.projects[proj].id;
+        console.log(id)
+        await Promise.all([
+              fetch('/api/getProjectLanguages', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({"projectId":id})
+              }),
+              fetch('/api/getProjectTopics', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({"projectId":id})
+              })
+            ]).then(responses =>
+              Promise.all(responses.map(response => response.json()))
+            ).then(data =>{
+              const languages = []
+              for (var lang in data[0].languages){
+                languages.push(data[0].languages[lang].language)
+              }
+              langdict.set(id,languages)
+          
+              const topics = []
+              for (var top in data[0].topics){
+                topics.push(data[0].topics[top].topic)
+              }
+              topdict.set(id,topics)
+              
+            })
+      }
+      setTops(topdict)
+      setLangs(langdict)
+    
+    })})
 
   // useEffect(()=>{
   //   for (var proj in projectList){
@@ -143,8 +183,8 @@ function Home() {
                         url={url}
                         owner={owner}
                         id={id}
-                        // languages={langs}
-                        // topics={tops}
+                        languages={langs[id]}
+                        topics={tops[id]}
                       />
                     );
               })}
