@@ -7,6 +7,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import jwt
 import smtplib
+from uuid import uuid4
 
 # import smtplib
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -93,6 +94,7 @@ class UserModel(db.Model):
     name = db.Column(db.String())
     email = db.Column(db.String())
     github = db.Column(db.String())
+    reset_token = db.Column(db.String(), default=str(uuid4()))
 
     def __init__(self, username, password, name, email, github):
         self.username = username
@@ -304,7 +306,6 @@ def register():
 
 @app.route("/api/login", methods=("POST",))
 def login():
-    # try:
     body = request.get_json()
     username = str(body["username"])
     password = str(body["password"])
@@ -322,8 +323,82 @@ def login():
     else:
         return jsonify({"status": "bad", "error": error}), 418
 
-    # except:
-    #     return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
+
+@app.route("/api/requestReset", methods=("POST",))
+def request_password_reset():
+    try:
+        body = request.get_json()
+        username = str(body["username"])
+        error = None
+
+        if not username:
+            error = "Missing Data"
+            return jsonify({"status": "1"}), 400
+        user = UserModel.query.filter_by(username=username).first()
+        if user is None:
+            error = f"User {username} does not exists"
+
+        if error is None:
+            token = str(uuid4())
+            user.reset_token = token
+            db.session.commit()
+            me = os.getenv("MAIL_USERNAME")
+            my_password = os.getenv("MAIL_PASSWORD")
+            you = user.email
+
+            msg = MIMEMultipart("alternative")
+            msg["Subject"] = "Password Reset"
+            msg["From"] = me
+            msg["To"] = you
+
+            url = f"http://localhost:8100/reset/{username}?token={token}"
+
+            html = f"<html><body><p>\
+                Go to this URL to reset your password.\
+                If you didn't request this just ignore it.\
+                </p></br><a>{url}</a></body></html>"
+            part2 = MIMEText(html, "html")
+
+            msg.attach(part2)
+            s = smtplib.SMTP_SSL("smtp.gmail.com", 465)
+            s.login(me, my_password)
+
+            s.sendmail(me, you, msg.as_string())
+            s.quit()
+            message = f"User {username} request password change successfully"
+            return jsonify({"status": "ok", "message": message}), 200
+        else:
+            return jsonify({"status": "bad", "error": error}), 400
+
+    except:  # noqa: E722
+        return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
+
+
+@app.route("/api/resetPassword", methods=("POST",))
+def reset_password():
+    body = request.get_json()
+    username = str(body["username"])
+    password = str(body["password"])
+    token = str(body["token"])
+    error = None
+
+    if not username or not password or not token:
+        error = "Missing Data"
+        return jsonify({"status": "1"}), 400
+    user = UserModel.query.filter_by(username=username).first()
+    if user is None:
+        error = f"User {username} does not exists"
+    if token != user.reset_token:
+        error = "Invalid Token"
+    if error is None:
+        token = str(uuid4())
+        user.reset_token = token
+        user.password = generate_password_hash(password)
+        db.session.commit()
+        message = f"User {username} changed password successfully"
+        return jsonify({"status": "ok", "message": message}), 200
+    else:
+        return jsonify({"status": "bad", "error": error}), 400
 
 
 # ------------ USER DATA ##############
