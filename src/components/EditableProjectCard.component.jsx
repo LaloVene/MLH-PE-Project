@@ -68,12 +68,11 @@ function EditableProjectCard(props) {
   function handleDelete() {
     return (
       present({
-        cssClass: 'my-css',
         header: 'Delete',
         message: 'Delete project?',
         buttons: [
-          { text: 'Cancel', handler: (d) => console.log('ok pressed') },
-          { text: 'Confirm', handler: (d) => deleteProject() }
+          { text: 'Cancel', handler: () => console.log('ok pressed') },
+          { text: 'Confirm', handler: () => deleteProject() }
         ],
         onDidDismiss: () => console.log('did dismiss'),
       })
@@ -94,7 +93,8 @@ function EditableProjectCard(props) {
       },
       body: JSON.stringify(opts)
     }).then(r => r.json())
-      .then(resp => console.log(resp)).then(() => {
+      .then(resp => console.log(resp))
+      .then(() => {
         setShowProject(false)
         setEditMode(false)
         editFunc(id.toString())
@@ -117,10 +117,6 @@ function EditableProjectCard(props) {
       body: JSON.stringify(opts)
     }).then(r => r.json())
       .then(resp => {
-        console.log(resp)
-        console.log(opts)
-        console.log(eTopics)
-        console.log(eLanguages)
         setShowProject(false)
         setEditMode(false)
         editFunc(eTitle)

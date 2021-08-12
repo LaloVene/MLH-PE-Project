@@ -108,8 +108,11 @@ const DescriptionInput = styled(IonTextarea)`
   outline: none;
   text-align: left;
 `
-const LinkInput = styled(DescriptionInput)`
-  resize: none;
+const LinkInput = styled(TitleInput)`
+  margin-top: 24px;
+  font-size: 14px;
+  text-align: left;
+  padding-left: 24px !important;
 `
 
 const TagsWrapper = styled.div`
