@@ -1,4 +1,4 @@
-import React, { useEffect, useState ,useContext} from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import {
     IonModal,
@@ -65,11 +65,11 @@ function Projects() {
     const [mTitle, setMTitle] = useState("");
     const [mDescription, setMDescription] = useState("");
     const [mUrl, setMUrl] = useState("");
-    const [edited,setEdited]=useState("");
-     const [projects, setProjects] = useState([]);
+    const [edited, setEdited] = useState("");
+    const [projects, setProjects] = useState([]);
 
-    const {state} = useContext(GlobalContext);
-    let decodedToken:any;
+    const { state } = useContext(GlobalContext);
+    let decodedToken: any;
     decodedToken = useJwt(state.token);
 
     useEffect(() => {
@@ -77,14 +77,14 @@ function Projects() {
             fetch("/api/getProjects").then(res => res.json()).then(data => {
                 console.log(data.projects)
                 console.log(decodedToken)
-                const projs=data.projects.filter((proj: { owner: any; })=>proj.owner==decodedToken?.decodedToken?.username)
+                const projs = data.projects.filter((proj: { owner: any; }) => proj.owner == decodedToken?.decodedToken?.username)
                 console.log(projs)
                 setProjects(projs)
             })
         }
-      }, [decodedToken.decodedToken,edited])
+    }, [decodedToken.decodedToken, edited])
 
-    function saveChanges() {   
+    function saveChanges() {
         let opts = {
             'title': mTitle,
             'description': mDescription,
@@ -100,7 +100,7 @@ function Projects() {
         }).then(r => r.json())
             .then(resp => {
                 console.log(resp)
-                
+
                 setShowProject(false)
                 setMTitle("")
                 setMDescription("")
