@@ -1,4 +1,4 @@
-import React, { useState,useContext } from "react";
+import React, { useState, useContext } from "react";
 import {
   IonCard,
   IonCardHeader,
@@ -12,7 +12,11 @@ import {
   IonInput,
   IonTextarea,
   IonItem,
-  useIonAlert
+  useIonAlert,
+  IonChip,
+  IonLabel,
+  IonSelect,
+  IonSelectOption,
 } from "@ionic/react";
 import { personCircleOutline } from "ionicons/icons";
 import styled from "styled-components";
@@ -20,7 +24,9 @@ import { useJwt } from "react-jwt";
 import GlobalContext from "../utils/state/GlobalContext";
 import { URLSearchParams } from "url";
 import '../pages/Projects.css';
-import { LRTitle, LRWrapper, LRSmall, LRSwitch, LRLink, LRCol, LRButton } from '../components/LRStyles' 
+import { LRTitle, LRWrapper, LRSmall, LRSwitch, LRLink, LRCol, LRButton } from '../components/LRStyles'
+import dbtopics from "../utils/topics.json";
+import dblanguages from "../utils/languages.json";
 
 const Card = styled(IonCard)`
   cursor: pointer;
@@ -106,22 +112,25 @@ const DescriptionInput = styled.textarea`
   width: 80%;
   padding: 15px;
   border: none;
-  outline: none
+  outline: none;
 `
 
 
 function EditableProjectCard(props) {
-  const { title, description, date, url, owner, id, editFunc} = props;
+  const { title, description, date, url, owner, id, editFunc } = props;
 
   const [editMode, setEditMode] = useState(false);
   const [showProject, setShowProject] = useState(false);
   const [eTitle, setTitle] = useState(title);
   const [eDescription, setDescription] = useState(description);
   const [eUrl, setUrl] = useState(url);
+  const [eTopics, setTopics] = useState(["ML", "CV"]);
+  const [eLanguages, setLanguages] = useState(["Python", "JavaScript"]);
+
 
   const [present] = useIonAlert();
-  const {state} = useContext(GlobalContext);
-  const {decodedToken} = useJwt(state.token);
+  const { state } = useContext(GlobalContext);
+  const { decodedToken } = useJwt(state.token);
 
   function closeEdit() {
     setShowProject(false)
@@ -134,28 +143,28 @@ function EditableProjectCard(props) {
   }
 
   function handleDelete() {
-    return(
+    return (
       present({
         cssClass: 'my-css',
         header: 'Delete',
         message: 'Delete project?',
         buttons: [
-          
+
           { text: 'Cancel', handler: (d) => console.log('ok pressed') },
-          
-          {text:'Confirm',handler:(d)=>deleteProject()}
+
+          { text: 'Confirm', handler: (d) => deleteProject() }
         ],
         onDidDismiss: (e) => console.log('did dismiss'),
-      })   
+      })
     )
   }
 
-  function deleteProject() { 
-    
+  function deleteProject() {
+
 
     let opts = {
       "id": id,
-      "owner":decodedToken.username
+      "owner": decodedToken.username
     }
 
     fetch('/api/deleteProject', {
@@ -165,28 +174,27 @@ function EditableProjectCard(props) {
       },
       body: JSON.stringify(opts)
     }).then(r => r.json())
-      .then(resp => console.log(resp)).then(()=> {
+      .then(resp => console.log(resp)).then(() => {
         setShowProject(false)
         setEditMode(false)
         editFunc(id.toString())
-      } )
-    
-     
+      })
+
+
   }
 
   function saveChanges() {
-    
+
 
     let opts = {
       "id": id,
       "title": eTitle,
       "description": eDescription,
-      "url": eUrl
-
+      "url": eUrl,
     }
 
     fetch('/api/editProject', {
-      method: 'put',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -194,6 +202,8 @@ function EditableProjectCard(props) {
     }).then(r => r.json())
       .then(resp => {
         console.log(resp)
+        console.log(eTopics)
+        console.log(eLanguages)
         setShowProject(false)
         setEditMode(false)
         editFunc(eTitle)
@@ -202,13 +212,22 @@ function EditableProjectCard(props) {
         }
         else {
           console.log(resp.error)
-
         }
       })
-      
-      
   }
 
+  const ProjectTags = ({ title, tagType }) => {
+    return (
+      <>
+        <Owner>
+          <strong>{title}: </strong>
+          {tagType.map((item) => (
+            <IonChip>{item}</IonChip>
+          ))}
+        </Owner>
+      </>
+    )
+  }
   return (
     <IonCol size="12" size-md="4" key={id}>
       {!editMode &&
@@ -218,6 +237,8 @@ function EditableProjectCard(props) {
           <Owner>Created By: {owner}</Owner>
           <Date>{date}</Date>
           <Description >{description}</Description>
+          <ProjectTags title="Languages" tagType={eLanguages} />
+          <ProjectTags title="Tags" tagType={eTopics} />
           <LRButton onClick={() => {
             const fullURL = eUrl.match(/^https?:/) ? eUrl : '//' + eUrl
             window.open(fullURL)
@@ -249,13 +270,31 @@ function EditableProjectCard(props) {
           </DescriptionInput >
 
           <textarea id="url"
-
             value={eUrl}
             onChange={(e) => setUrl(e.target.value)}
           ></textarea>
 
+          <IonLabel>Languages</IonLabel>
+          <IonSelect style={{ height: "100px", width: "800px" }} value={eLanguages} multiple={true} cancelText="Close" okText="Done"
+            onIonChange={e => (setLanguages(e.target.value))}>
+            {
+              dblanguages.map(topic =>
+                <IonSelectOption value={topic}>{topic}</IonSelectOption>
+              )
+            }
+          </IonSelect>
+          <IonLabel>Tags</IonLabel>
+          <IonSelect style={{ height: "100px", width: "800px" }} value={eTopics} multiple={true} cancelText="Close" okText="Done"
+            onIonChange={e => (setTopics(e.target.value))}>
+            {
+              dbtopics.map(topic =>
+                <IonSelectOption value={topic}>{topic}</IonSelectOption>
+              )
+            }
+          </IonSelect>
+
           <IonButton id="closemodal" onClick={saveChanges}>Save</IonButton>
-          <IonButton id="closemodal" style={{background:"red"}} onClick={handleDelete}>Delete</IonButton>
+          <IonButton id="closemodal" style={{ background: "red" }} onClick={handleDelete}>Delete</IonButton>
           <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={closeEdit}>Close</IonButton>
         </IonModal>
       }
