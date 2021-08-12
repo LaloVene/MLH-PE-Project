@@ -13,6 +13,7 @@ import {
   Card,
   CardHeader,
   Icon,
+  SmallIcon,
   Username,
   Title,
   Date,
@@ -36,7 +37,7 @@ import '../pages/Projects.css';
 import { LRButton } from '../components/LRStyles'
 import dbtopics from "../utils/topics.json";
 import dblanguages from "../utils/languages.json";
-
+import { open, checkmark, create, trash, close } from 'ionicons/icons';
 
 function EditableProjectCard(props) {
   const { title, description, date, url, owner, id, editFunc } = props;
@@ -155,7 +156,6 @@ function EditableProjectCard(props) {
         <IonModal id="projmod" isOpen={showProject}>
           <ModalContent>
             <ModalContentView>
-
               <ProjTitle >{title}</ProjTitle>
               <Owner>Created by: {owner}</Owner>
               <Date>{date}</Date>
@@ -171,11 +171,18 @@ function EditableProjectCard(props) {
                   const fullURL = eUrl.match(/^https?:/) ? eUrl : '//' + eUrl
                   window.open(fullURL)
                 }}>
+                  <SmallIcon slot="start" icon={open} />
                   More Information
                 </LRButton>
 
-                <IonButton id="closemodal" onClick={() => setEditMode(true)}>Edit</IonButton>
-                <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={() => setShowProject(false)}>Close</IonButton>
+                <IonButton id="closemodal" color="secondary" onClick={() => setEditMode(true)}>
+                  <SmallIcon slot="start" icon={create} />
+                  Edit
+                </IonButton>
+                <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={() => setShowProject(false)}>
+                  <SmallIcon slot="start" icon={close} />
+                  Close
+                </IonButton>
               </ButtonsWrapper>
             </ModalContentView>
 
@@ -229,9 +236,18 @@ function EditableProjectCard(props) {
               }
             </IonSelect>
             <ButtonsWrapper>
-              <IonButton color="success" id="closemodal" onClick={saveChanges}>Save</IonButton>
-              <IonButton color="danger" id="closemodal" style={{ background: "red" }} onClick={handleDelete}>Delete</IonButton>
-              <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={closeEdit}>Close</IonButton>
+              <IonButton color="success" id="closemodal" onClick={saveChanges}>
+                <SmallIcon slot="start" icon={checkmark} />
+                Save
+              </IonButton>
+              <IonButton color="danger" id="closemodal" style={{ background: "red" }} onClick={handleDelete}>
+                <SmallIcon slot="start" icon={trash} />
+                Delete
+              </IonButton>
+              <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={closeEdit}>
+                <SmallIcon slot="start" icon={close} />
+                Close
+              </IonButton>
             </ButtonsWrapper>
           </ModalContent>
         </IonModal>
