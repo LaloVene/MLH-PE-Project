@@ -146,7 +146,6 @@ function Projects() {
 								<IonCol size="12" size-md="4">
 									<IonModal id="projmod" isOpen={showProject}>
 										<ModalContent>
-											<ModalContentView>
 												<TitleInput
 													value={mTitle}
 													placeholder="Title"
@@ -154,22 +153,27 @@ function Projects() {
 														setMTitle(e.target.value)
 													}}
 													type="text"
-												></TitleInput>
+													maxlength={30}
+												/>
 												<DescriptionInput
-													placeholder="Description"
 													value={mDescription}
-													onChange={(e) => {
+													placeholder="Description"
+													onIonChange={(e) => {
 														setMDescription(e.target.value)
 													}}
-												></DescriptionInput>
+													rows={10}
+													maxlength={470}
+												/>
 
 												<LinkInput
 													placeholder="URL"
 													value={mUrl}
-													onChange={(e) => {
+													onIonChange={(e) => {
 														setMUrl(e.target.value)
 													}}
-												></LinkInput>
+													rows={1}
+													maxlength={47}
+												/>
 
 												<TagTitle>Languages</TagTitle>
 												<IonSelect style={{ height: "40px", width: "500px", marginLeft: "20px" }} value={mLanguages} multiple={true} cancelText="Close" okText="Done" placeholder="Select language(s)"
@@ -202,7 +206,6 @@ function Projects() {
 														Close
 													</IonButton>
 												</ButtonsWrapper>
-											</ModalContentView>
 
 										</ModalContent>
 									</IonModal>

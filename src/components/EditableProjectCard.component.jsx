@@ -182,8 +182,8 @@ function EditableProjectCard(props) {
                 setTitle(e.target.value)
               }}
               type="text"
-              maxlength={35}
-            ></TitleInput>
+              maxlength={30}
+            />
 
             <DescriptionInput
               value={eDescription}
@@ -194,8 +194,7 @@ function EditableProjectCard(props) {
               type="text"
               rows={10}
               maxlength={470}
-            >
-            </DescriptionInput >
+            />
 
             <LinkInput
               placeholder="Link"
@@ -204,8 +203,7 @@ function EditableProjectCard(props) {
               type="text"
               rows={1}
               maxlength={47}
-
-            ></LinkInput>
+            />
 
             <TagTitle>Languages</TagTitle>
             <IonSelect style={{ height: "40px", width: "500px", marginLeft: "20px" }} value={eLanguages} multiple={true} cancelText="Close" okText="Done" placeholder="Select language(s)"
