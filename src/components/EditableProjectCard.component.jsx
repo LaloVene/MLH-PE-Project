@@ -38,34 +38,35 @@ const Card = styled(IonCard)`
     background-color: #dfe5f5;
   }
 `;
+
 const CardHeader = styled(IonCardHeader)`
   display: flex;
   align-items: center;
 `;
+
 const Icon = styled(IonIcon)`
   font-size: 2.5rem;
   margin-right: 0.5rem;
 `;
+
 const Username = styled(IonCardSubtitle)`
   margin: 0;
   color: black;
 `;
+
 const Title = styled(IonCardTitle)`
   font-size: 1.2rem;
   font-weight: bold;
   padding-bottom: 1rem;
   color: black;
 `;
+
 const Date = styled(IonCardSubtitle)`
   margin: 0;
   text-align: right;
   font-size: 0.8rem;
   font-style: italic;
   color: black;
-`;
-const Tags = styled.p`
-  padding-top: 1rem;
-  color: #B4B5B8;
 `;
 
 const Description = styled.p`
@@ -93,6 +94,9 @@ const TagText = styled.div`
   font-size: 1em;
   color: black;
 `
+const TagTitle = styled.p`
+  font-weight: bold;
+`
 
 const TitleInput = styled(IonInput)`
   margin: 50px;
@@ -119,6 +123,9 @@ const DescriptionInput = styled.textarea`
   outline: none;
 `
 
+const TagsWrapper = styled.div`
+  margin: 0px 40px;
+`
 
 function EditableProjectCard(props) {
   const { title, description, date, url, owner, id, editFunc } = props;
@@ -128,7 +135,7 @@ function EditableProjectCard(props) {
   const [eTitle, setTitle] = useState(title);
   const [eDescription, setDescription] = useState(description);
   const [eUrl, setUrl] = useState(url);
-  const [eTopics, setTopics] = useState(["ML", "CV"]);
+  const [eTopics, setTopics] = useState(["Machine Learning"]);
   const [eLanguages, setLanguages] = useState(["Python", "JavaScript"]);
 
 
@@ -153,18 +160,15 @@ function EditableProjectCard(props) {
         header: 'Delete',
         message: 'Delete project?',
         buttons: [
-
           { text: 'Cancel', handler: (d) => console.log('ok pressed') },
-
           { text: 'Confirm', handler: (d) => deleteProject() }
         ],
-        onDidDismiss: (e) => console.log('did dismiss'),
+        onDidDismiss: () => console.log('did dismiss'),
       })
     )
   }
 
   function deleteProject() {
-
 
     let opts = {
       "id": id,
@@ -183,13 +187,9 @@ function EditableProjectCard(props) {
         setEditMode(false)
         editFunc(id.toString())
       })
-
-
   }
 
   function saveChanges() {
-
-
     let opts = {
       "id": id,
       "title": eTitle,
@@ -220,29 +220,39 @@ function EditableProjectCard(props) {
       })
   }
 
-  const ProjectTags = ({ title, tagType }) => {
+  const ProjectTags = ({ title, tagType, limit }) => {
+    var showTags = tagType;
+    var hiddenTagCount = 0;
+
+    if (limit) {
+      showTags = tagType.slice(0, 3);
+      hiddenTagCount = (tagType.length - 3)
+    }
     return (
-      <>
-        <TagText>
-          <strong>{title}: </strong>
-          {tagType.map((item) => (
-            <IonChip>{item}</IonChip>
-          ))}
-        </TagText>
-      </>
+      <TagText>
+        <strong>{title}: </strong>
+        {showTags.map((item) => (
+          <IonChip>{item}</IonChip>
+        ))}
+        {(limit & (hiddenTagCount > 0)) ? ("+ " + parseInt(hiddenTagCount) + " more") : ""}
+      </TagText>
     )
   }
+
   return (
     <IonCol size="12" size-md="4" key={id}>
       {!editMode &&
-        <IonModal id="projmod" isOpen={showProject} cssClass='my-custom-class'>
+        <IonModal id="projmod" isOpen={showProject}>
 
           <ProjTitle >{title}</ProjTitle>
           <Owner>Created By: {owner}</Owner>
           <Date>{date}</Date>
           <Description >{description}</Description>
-          <ProjectTags title="Languages" tagType={eLanguages} />
-          <ProjectTags title="Tags" tagType={eTopics} />
+          <TagsWrapper>
+            <ProjectTags title="Languages" tagType={eLanguages} />
+            <ProjectTags title="Tags" tagType={eTopics} />
+
+          </TagsWrapper>
           <LRButton onClick={() => {
             const fullURL = eUrl.match(/^https?:/) ? eUrl : '//' + eUrl
             window.open(fullURL)
@@ -255,7 +265,7 @@ function EditableProjectCard(props) {
         </IonModal>}
 
       {editMode &&
-        <IonModal id="projmod" isOpen={showProject} cssClass='my-custom-class' >
+        <IonModal id="projmod" isOpen={showProject}>
           <IonItem>
             <TitleInput
               value={eTitle}
@@ -278,8 +288,8 @@ function EditableProjectCard(props) {
             onChange={(e) => setUrl(e.target.value)}
           ></textarea>
 
-          <IonLabel>Languages</IonLabel>
-          <IonSelect style={{ height: "100px", width: "800px" }} value={eLanguages} multiple={true} cancelText="Close" okText="Done"
+          <TagTitle>Languages</TagTitle>
+          <IonSelect style={{ height: "100px", width: "500px" }} value={eLanguages} multiple={true} cancelText="Close" okText="Done"
             onIonChange={e => (setLanguages(e.target.value))}>
             {
               dblanguages.map(topic =>
@@ -287,8 +297,8 @@ function EditableProjectCard(props) {
               )
             }
           </IonSelect>
-          <IonLabel>Tags</IonLabel>
-          <IonSelect style={{ height: "100px", width: "800px" }} value={eTopics} multiple={true} cancelText="Close" okText="Done"
+          <TagTitle>Tags</TagTitle>
+          <IonSelect style={{ height: "100px", width: "500px" }} value={eTopics} multiple={true} cancelText="Close" okText="Done"
             onIonChange={e => (setTopics(e.target.value))}>
             {
               dbtopics.map(topic =>
@@ -312,8 +322,8 @@ function EditableProjectCard(props) {
           <Title>{title}</Title>
           <p>{description}</p>
           <Date>{date}</Date>
-          <ProjectTags title="Languages" tagType={eLanguages} />
-          <ProjectTags title="Tags" tagType={eTopics} />
+          <ProjectTags title="Languages" tagType={eLanguages} limit={true} />
+          <ProjectTags title="Tags" tagType={eTopics} limit={true} />
 
         </IonCardContent>
       </Card>
