@@ -9,7 +9,6 @@ import {
   IonCol,
   IonModal,
   IonButton,
-  IonInput,
   IonItem,
   useIonAlert
 } from "@ionic/react";
@@ -17,7 +16,7 @@ import { personCircleOutline } from "ionicons/icons";
 import styled from "styled-components";
 import { useJwt } from "react-jwt";
 import GlobalContext from "../utils/state/GlobalContext";
-import { LRTitle, LRWrapper, LRSmall, LRSwitch, LRLink, LRCol, LRButton } from '../components/LRStyles'
+import { LRButton } from '../components/LRStyles'
 
 
 const Card = styled(IonCard)`
@@ -82,33 +81,10 @@ const Owner = styled.p`
   color: black;
 
 `
-const TitleInput = styled(IonInput)`
-  margin: 50px;
-  margin-top:35px;
-  text-align: center;
-  font-size: 24px;
-  border-style: none;
-  line-height: 1.2;
-  padding: 15px;
-  border-radius: 2rem;
-  background: #dfe5f5;
-`
 
-const DescriptionInput = styled.textarea`
-  margin: 20px;
-  border-style: none;  
-  border-radius: 2rem;
-  background: #dfe5f5;
-  resize: none;
-  height: 60%;
-  width: 80%;
-  padding: 15px;
-  border: none;
-  outline: none
-`
 function CategoryCard(props) {
 
-  const { title, description, date, url, owner, id, customClick } = props;
+  const { title, description, date, url, owner, id } = props;
   const [showProject, setShowProject] = useState(false);
   const [showContact,setShowContact]=useState(false);
   const [mTitle, setMTitle] = useState("");

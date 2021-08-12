@@ -10,11 +10,9 @@ import {
   IonModal,
   IonButton,
   IonInput,
-  IonTextarea,
   IonItem,
   useIonAlert,
   IonChip,
-  IonLabel,
   IonSelect,
   IonSelectOption,
 } from "@ionic/react";
@@ -22,9 +20,8 @@ import { personCircleOutline } from "ionicons/icons";
 import styled from "styled-components";
 import { useJwt } from "react-jwt";
 import GlobalContext from "../utils/state/GlobalContext";
-import { URLSearchParams } from "url";
 import '../pages/Projects.css';
-import { LRTitle, LRWrapper, LRSmall, LRSwitch, LRLink, LRCol, LRButton } from '../components/LRStyles'
+import { LRButton } from '../components/LRStyles'
 import dbtopics from "../utils/topics.json";
 import dblanguages from "../utils/languages.json";
 
@@ -211,7 +208,7 @@ function EditableProjectCard(props) {
         setShowProject(false)
         setEditMode(false)
         editFunc(eTitle)
-        if (resp.status == "ok") {
+        if (resp.status === "ok") {
           console.log("Edit Successful")
         }
         else {

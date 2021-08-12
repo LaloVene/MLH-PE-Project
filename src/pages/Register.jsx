@@ -61,7 +61,7 @@ const Register = () => {
       }).then(r => r.json())
         .then(resp => {
 
-          if (resp.status == "ok") {
+          if (resp.status === "ok") {
             console.log(resp.message)
           }
           else {
@@ -84,7 +84,7 @@ const Register = () => {
         .then(resp => {
 
           console.log(topic)
-          if (resp.status == "ok") {
+          if (resp.status === "ok") {
             console.log(resp.message)
           }
           else {
@@ -102,10 +102,10 @@ const Register = () => {
     }).then(r => r.json())
       .then(resp => {
 
-        if (resp.status == "ok") {
+        if (resp.status === "ok") {
           msg = "Success!"
         }
-        else if (resp.status == "1") {
+        else if (resp.status === "1") {
           msg = "Missing Fields"
         }
         else {

@@ -2,7 +2,6 @@ import React, {useState, useEffect, useContext} from "react";
 import { Link } from "react-router-dom";
 import {
   IonHeader,
-  IonTitle,
   IonToolbar,
   IonButtons,
   IonButton,
@@ -14,12 +13,6 @@ import styled from "styled-components";
 import { useJwt } from "react-jwt";
 import GlobalContext from "../utils/state/GlobalContext";
 import logo from '../imgs/devup.png'
-
-const Title = styled(IonTitle)`
-  font-weight: 900;
-  color: black;
-  text-decoration: none;
-`
 
 const Icon = styled(IonIcon)`
   margin-right: 0.5rem;

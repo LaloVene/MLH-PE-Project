@@ -1,16 +1,10 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Link } from "react-router-dom";
 import {
     IonModal,
     IonContent,
-    IonHeader,
     IonPage,
-    IonTitle,
-    IonToolbar,
     IonRow,
     IonCol,
-    IonInput,
-    IonSearchbar,
     IonButton,
     IonCard,
     IonIcon,
@@ -21,21 +15,15 @@ import {
 import styled from "styled-components";
 import { addCircleOutline } from "ionicons/icons";
 import SectionTitle from "../components/SectionTitle.component";
-import ProjectCard from "../components/ProjectCard.component";
 import EditableProjectCard from "../components/EditableProjectCard.component";
-import CategoryButton from "../components/CategoryButton.component";
 import Searchbar from '../components/Searchbar.component';
 import Header from '../components/Header.component';
-import categories from "../utils/categories.json";
-import { decodeToken, useJwt } from "react-jwt";
+import { useJwt } from "react-jwt";
 import GlobalContext from "../utils/state/GlobalContext";
 import './Projects.css';
 
 const Container = styled.div`
   padding: 1rem;
-`;
-const Separator = styled.div`
-  margin: 3rem 0;
 `;
 
 const CreateCard = styled(IonCard)`
@@ -70,21 +58,17 @@ function Projects() {
     const [projects, setProjects] = useState([]);
 
     const { state } = useContext(GlobalContext);
-    let decodedToken: any;
-    decodedToken = useJwt(state.token);
+    const { decodedToken } : {decodedToken: any} = useJwt(state.token);
     const [present] = useIonAlert()
 
     useEffect(() => {
         if (decodedToken) {
             fetch("/api/getProjects").then(res => res.json()).then(data => {
-                console.log(data.projects)
-                console.log(decodedToken)
-                const projs = data.projects.filter((proj: { owner: any; }) => proj.owner == decodedToken?.decodedToken?.username)
-                console.log(projs)
+                const projs = data.projects.filter((proj: { owner: any; }) => proj.owner === decodedToken?.username)
                 setProjects(projs)
             })
         }
-    }, [decodedToken.decodedToken, edited])
+    }, [decodedToken, edited])
 
     function saveChanges() {  
         if (!mTitle || !mDescription||!mUrl){

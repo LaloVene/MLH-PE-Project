@@ -32,7 +32,7 @@ jobs:
         with:
           black: true
           flake8: true
-          flake8_args: app/ --max-line-length=120
+          flake8_args: api/ --max-line-length=120
   
   client-linters:
     name: Client Linters
@@ -43,6 +43,6 @@ jobs:
     - name: Install modules
 
       run: yarn
-      
+
     - name: Run ESLint
       run: eslint . --ext .js,.jsx,.ts,.tsx
