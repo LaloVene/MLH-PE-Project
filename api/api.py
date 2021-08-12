@@ -726,7 +726,8 @@ def getProjects():
     # If searchterm and topic and language
     if searchterm and topic and language:
         # join ProjectModel, RelProjectTopic and RelProjectLanguage on projectId
-        # where ProjectModel.id == RelProjectTopic.projectId and RelProjectTopic.projectId == RelProjectLanguage.projectId
+        # where ProjectModel.id == RelProjectTopic.projectId
+        # and RelProjectTopic.projectId == RelProjectLanguage.projectId
         # and query for projects that match the search term and topic and language
         # and return the results
         response = (
@@ -747,7 +748,8 @@ def getProjects():
     # If searchterm and topic
     elif searchterm and topic:
         # join ProjectModel, RelProjectTopic on projectId
-        # where ProjectModel.id == RelProjectTopic.projectId and RelProjectTopic.topicId == topic
+        # where ProjectModel.id == RelProjectTopic.projectId
+        # and RelProjectTopic.topicId == topic
         # and query for projects that match the search term and topic
         # and return the results
         response = (
@@ -763,7 +765,8 @@ def getProjects():
     # If searchterm and language
     elif searchterm and language:
         # join ProjectModel, RelProjectLanguage on projectId
-        # where ProjectModel.id == RelProjectLanguage.projectId and RelProjectLanguage.languageId == language
+        # where ProjectModel.id == RelProjectLanguage.projectId
+        # and RelProjectLanguage.languageId == language
         # and query for projects that match the search term and language
         # and return the results
         response = (
@@ -779,7 +782,8 @@ def getProjects():
     # If topic and language
     elif topic and language:
         # join ProjectModel, RelProjectLanguage on projectId
-        # where ProjectModel.id == RelProjectLanguage.projectId and RelProjectLanguage.languageId == language
+        # where ProjectModel.id == RelProjectLanguage.projectId
+        # and RelProjectLanguage.languageId == language
         # and query for projects that match the topic and language
         # and return the results
         response = (
@@ -807,7 +811,9 @@ def getProjects():
         )
     # If language
     elif language:
-        # join ProjectModel and RelProjectLanguage where ProjectModel.id == RelProjectLanguage.projectId and query for projects that match the language
+        # join ProjectModel and RelProjectLanguage
+        # where ProjectModel.id == RelProjectLanguage.projectId and
+        # query for projects that match the language
         response = (
             ProjectModel.query.join(
                 RelProjectLanguage, ProjectModel.id == RelProjectLanguage.projectId
