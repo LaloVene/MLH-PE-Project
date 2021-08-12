@@ -16,7 +16,7 @@ import Category from './pages/Category.page';
 import Login from './pages/Login';
 import Register from './pages/Register.jsx';
 import Profile from './pages/Profile.jsx';
-import Projects from './pages/Projects'
+import Projects from './pages/Projects.jsx'
 import Private from './pages/Private.page';
 
 /* Core CSS required for Ionic components to work properly */
