@@ -17,6 +17,7 @@ import { useProjects } from "../utils/hooks/useProject";
 import './Home.css';
 import Header from '../components/Header.component';
 import SectionTitle from "../components/SectionTitle.component";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   padding: 1rem;
@@ -62,7 +63,13 @@ function Category(props) {
       <Header />
       <IonContent fullscreen>
         <Container>
-          <SectionTitle>{categoryName}</SectionTitle>
+          <SectionTitle>
+            <Link to="/categories" style={{ textDecoration: "none", color: "black" }}>
+              Categories
+            </Link>
+            &nbsp;&gt;&nbsp;
+            {categoryName}
+          </SectionTitle>
           <SearchBarContainer>
             <Searchbar placeholder="Search" onChange={onChange} onSubmit={Search} />
           </SearchBarContainer>
