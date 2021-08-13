@@ -200,7 +200,7 @@ function EditableProjectCard(props) {
                   window.open(fullURL)
                 }}>
                   <SmallIcon slot="start" icon={open} />
-                  More Information
+                  Github
                 </LRButton>
 
                 <IonButton id="closemodal" color="secondary" onClick={() => setEditMode(true)}>
@@ -242,7 +242,7 @@ function EditableProjectCard(props) {
             />
 
             <LinkInput
-              placeholder="Link"
+              placeholder="Github Link"
               value={eUrl}
               onIonChange={(e) => setUrl(e.target.value)}
               type="text"

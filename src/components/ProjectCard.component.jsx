@@ -125,7 +125,7 @@ function CategoryCard(props) {
                   window.open(fullURL)
                 }}>
                   <SmallIcon slot="start" icon={open} />
-                  More Information
+                  Github
                 </LRButton>
   
                 <ButtonsWrapper>
