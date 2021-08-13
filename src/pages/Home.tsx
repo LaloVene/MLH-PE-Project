@@ -30,6 +30,7 @@ function Home() {
   const [filteredProjects, setFilteredProjects]: any = useState([]);
   const [tops, setTops]:any=useState(new Map<number,any[]>())
   const [langs, setLangs]:any=useState(new Map<number,any[]>())
+  const [users, setUsers]:any=useState(new Map<number,any[]>())
 
   const { state } = useContext(GlobalContext);
   var decodedToken:any;
@@ -51,6 +52,7 @@ function Home() {
       console.log(data.projects);
       var langdict=new Map<number,any[]>();
       var topdict=new Map<number,any[]>();
+      var userdict=new Map<number,any[]>();
       for (var proj in data.projects) {
         let id: number;
         id=data.projects[proj].id;
@@ -68,6 +70,13 @@ function Home() {
                   'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({"projectId":id})
+              }),
+              fetch('/api/getUsersInProject', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({"projectId":id})
               })
             ]).then(responses =>
               Promise.all(responses.map(response => response.json()))
@@ -83,12 +92,19 @@ function Home() {
                 topics.push(data[1].topics[top].topic)
               }
               topdict.set(id,topics)
+
+              const users = []
+              for (var us in data[2].users){
+                users.push(data[2].users[us].username)
+              }
+              userdict.set(id,users)
               
             })
       }
 
       setTops(topdict)
       setLangs(langdict)
+      setUsers(userdict)
     
     })},[])
 
@@ -163,6 +179,7 @@ function Home() {
                         id={id}
                         languages={langs.get(id)}
                         topics={tops.get(id)}
+                        collabs={users.get(id)}
                       />
                     );
               })}
