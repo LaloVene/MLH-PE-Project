@@ -1,7 +1,7 @@
 import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle } from '@ionic/react';
 import React from 'react';
 import styled from 'styled-components'
-import { ReactComponent as ProfPic } from "../components/ProfileIcon.svg"
+import { ReactComponent as ProfPic } from "../imgs/ProfileIcon.svg"
 
 interface ContainerProps {
     name: string;

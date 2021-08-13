@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { LRTitle, LRWrapper, LRCol, LRButton } from '../components/LRStyles' 
 import Header from '../components/Header.component';
 
-import { ReactComponent as RegisterPic } from "../components/RegisterIcon.svg"
+import { ReactComponent as RegisterPic } from "../imgs/RegisterIcon.svg"
 
 const ErrorMsg = styled.small`
   color: red;

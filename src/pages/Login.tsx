@@ -6,7 +6,7 @@ import ExploreContainer from '../components/ExploreContainer';
 import GlobalContext from "../utils/state/GlobalContext";
 import { LRTitle, LRWrapper, LRSmall, LRSwitch, LRLink, LRCol, LRButton } from '../components/LRStyles' ;
 
-import { ReactComponent as LoginPic } from "../components/LoginIcon.svg"
+import { ReactComponent as LoginPic } from "../imgs/LoginIcon.svg"
 
 const Login: React.FC = () => {
   const { dispatch } = useContext(GlobalContext);
