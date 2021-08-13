@@ -9,7 +9,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.api
-    image: react-flask-app-api
+    image: dev-up-api
     volumes:
       - .:/api
     depends_on:
@@ -32,7 +32,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.client
-    image: react-flask-app-client
+    image: dev-up-client
     ports:
       - "80:80"
 
