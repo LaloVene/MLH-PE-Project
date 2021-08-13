@@ -38,10 +38,16 @@ function Home() {
   useEffect(() => {
     fetch('/api/getProjects').then(res => res.json()).then(async data => {
       
+      // console.log(decodedToken.decodedToken.username)
+      if (decodedToken?.decodedToken?.username){
+        setProjectList(data.projects.filter((p: any) => {
+          return (p.owner.toLowerCase()!=decodedToken.decodedToken.username);
+        }));
+      }
+      else {
+        setProjectList(data.projects)
+      }
       
-      setProjectList(projectList.filter((p: any) => {
-        return (p.owner.toLowerCase()!=decodedToken.decodedToken.username);
-      }));
       console.log(data.projects);
       var langdict=new Map<number,any[]>();
       var topdict=new Map<number,any[]>();
