@@ -74,7 +74,7 @@ function Home() {
       setTops(topdict)
       setLangs(langdict)
     
-    })})
+    })},[])
 
 
   useEffect(() => {
@@ -98,7 +98,7 @@ function Home() {
       setCategories(data.topics);
     }
     fetchData();
-  }, [setCategories]);
+  }, []);
 
   return (
     <IonPage>
@@ -137,9 +137,6 @@ function Home() {
               {filteredProjects.map((project: any) => {
                   const { id, title, description, date, url, owner } = project;
                   
-          
-                  
-          
                     return (
                       <ProjectCard
                         title={title}
