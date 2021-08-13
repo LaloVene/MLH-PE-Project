@@ -351,7 +351,7 @@ def request_password_reset():
             msg["From"] = me
             msg["To"] = you
 
-            url = f"http://localhost:8100/reset/{username}?token={token}"
+            url = f"https://dev-up.tech/reset/{username}?token={token}"
 
             html = f'<html><body><p>\
                 Go to this URL to reset your password.\
