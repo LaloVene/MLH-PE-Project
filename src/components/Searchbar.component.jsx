@@ -5,7 +5,7 @@ const Form = styled.form`
 `;
 const Input = styled.input`
   width: 100%;
-  background-color: hsl(0, 0%, 95%);
+  background-color: hsl(0, 0%, 91.37254901960785%);
   padding: 0.5rem 1rem;
   border: none;
   border-radius: 2rem;

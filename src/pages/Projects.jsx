@@ -41,6 +41,12 @@ const Container = styled.div`
   padding: 1rem;
 `;
 
+const SearchBarContainer = styled.h1`
+  max-width: 20rem;
+  font-size: 1rem;
+  padding-left: 1rem;
+`;
+
 const CreateCard = styled(IonCard)`
 	cursor: pointer;
 	border-radius: 2rem;
@@ -56,7 +62,8 @@ const CreateCard = styled(IonCard)`
 `;
 
 function Projects() {
-	const [search, setSearch] = useState('')
+	const [searchText, setSearchText] = useState("");
+	const [searchQuery, setSearchQuery] = useState("");
 	const [showProject, setShowProject] = useState(false);
 	const [mTitle, setMTitle] = useState("");
 	const [mDescription, setMDescription] = useState("");
@@ -224,7 +231,14 @@ function Projects() {
 		}
 	}
 
-
+	const onChange = (event) => {
+		const query = event.target.value;
+		setSearchText(query)
+	}
+	const Search = (event) => {
+		event.preventDefault();
+		setSearchQuery(searchText)
+	}
 
 	return (
 		<IonPage>
@@ -232,16 +246,15 @@ function Projects() {
 			<IonContent fullscreen>
 				<Container>
 
-					{/* Search Bar */}
-					<section>
-						<Searchbar placeholder="Search" onChange={e => setSearch(e.target.value)} />
-					</section>
 
 
 					{/* Projects */}
 					<section>
 						<SectionTitle>Your Projects</SectionTitle>
-						<IonGrid>
+						{/* Search Bar */}
+						<SearchBarContainer>
+							<Searchbar placeholder="Search" onChange={onChange} onSubmit={Search} />
+						</SearchBarContainer>
 							<IonRow>
 								<IonCol size="12" size-md="4">
 									<IonModal id="projmod" isOpen={showProject}>
@@ -345,7 +358,6 @@ function Projects() {
 								}) : <div></div>}
 
 							</IonRow>
-						</IonGrid>
 					</section>
 				</Container>
 			</IonContent>
