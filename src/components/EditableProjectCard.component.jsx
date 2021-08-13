@@ -41,13 +41,14 @@ import dblanguages from "../utils/languages.json";
 import { open, checkmark, create, trash, close } from 'ionicons/icons';
 
 function EditableProjectCard(props) {
-  const { title, description, date, url, owner, id, editFunc } = props;
+  const { title, description, date, url, owner, id, editFunc,languages,topics } = props;
 
   const [editMode, setEditMode] = useState(false);
   const [showProject, setShowProject] = useState(false);
   const [eTitle, setTitle] = useState(title);
   const [eDescription, setDescription] = useState(description);
   const [eUrl, setUrl] = useState(url);
+
   const [eTopics, setTopics] = useState([""]);
   const [eLanguages, setLanguages] = useState([""]);
   const [eCollaborators, setCollaborators] = useState([""]);
@@ -109,24 +110,69 @@ function EditableProjectCard(props) {
       "url": eUrl,
     }
 
-    fetch('/api/editProject', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(opts)
-    }).then(r => r.json())
-      .then(resp => {
-        setShowProject(false)
-        setEditMode(false)
-        editFunc(eTitle)
-        if (resp.status === "ok") {
-          console.log("Edit Successful")
-        }
-        else {
-          console.log(resp.error)
-        }
+
+      eLanguages.forEach(function (lang) {
+        fetch('/api/addProjectLanguage', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            'language': lang,
+            'projectId': id
+          })
+        }).then(r => r.json())
+          .then(resp => {
+  
+            if (resp.status === "ok") {
+              console.log(resp.message)
+            }
+            else {
+              console.log(resp.error)
+            }
+          })
       })
+  
+      eTopics.forEach(function (topic) {
+        fetch('/api/addProjectTopic', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            'topic': topic,
+            'projectId': id
+          })
+        }).then(r => r.json())
+          .then(resp => {
+  
+            console.log(topic)
+            if (resp.status === "ok") {
+              console.log(resp.message)
+            }
+            else {
+              console.log(resp.error)
+            }
+          })
+      })
+      fetch('/api/editProject', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(opts)
+      }).then(r => r.json())
+        .then(resp => {
+          setShowProject(false)
+          setEditMode(false)
+          editFunc(eTitle)
+          if (resp.status === "ok") {
+            console.log("Edit Successful")
+          }
+          else {
+            console.log(resp.error)
+          }
+        })
   }
 
   return (
@@ -140,9 +186,11 @@ function EditableProjectCard(props) {
               <Date>{date}</Date>
               <Description >{description}</Description>
               <TagsWrapper>
-                <ProjectTags title="Languages" tagType={eLanguages} />
-                <ProjectTags title="Tags" tagType={eTopics} />
+
+                <ProjectTags title="Languages" tagType={languages} />
+                <ProjectTags title="Tags" tagType={topics} />
                 <ProjectTags title="Collaborators" tagType={eCollaborators} />
+
 
               </TagsWrapper>
               <ButtonsWrapper>
@@ -206,8 +254,8 @@ function EditableProjectCard(props) {
             <IonSelect style={{ height: "40px", width: "500px", marginLeft: "20px" }} value={eLanguages} multiple={true} cancelText="Close" okText="Done" placeholder="Select language(s)"
               onIonChange={e => (setLanguages(e.target.value))}>
               {
-                dblanguages.map(topic =>
-                  <IonSelectOption value={topic}>{topic}</IonSelectOption>
+                dblanguages.map(lang =>
+                  <IonSelectOption value={lang}>{lang}</IonSelectOption>
                 )
               }
             </IonSelect>
@@ -262,9 +310,11 @@ function EditableProjectCard(props) {
           <Description>{description}</Description>
           <Date style={{ textAlign: "right" }}>{date}</Date>
 
-          <ProjectTags title="Languages" tagType={eLanguages} limit={true} />
-          <ProjectTags title="Tags" tagType={eTopics} limit={true} />
+          <ProjectTags title="Languages" tagType={languages} limit={true} />
+          <ProjectTags title="Tags" tagType={topics} limit={true} />
+
           <ProjectTags title="Collaborators" tagType={eCollaborators} limit={true} />
+
 
         </IonCardContent>
       </Card>

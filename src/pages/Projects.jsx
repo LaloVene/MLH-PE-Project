@@ -35,6 +35,7 @@ import './Projects.css';
 import dbtopics from "../utils/topics.json";
 import dblanguages from "../utils/languages.json";
 import { checkmark, close } from 'ionicons/icons';
+import React from "react";
 
 const Container = styled.div`
   padding: 1rem;
@@ -62,7 +63,11 @@ function Projects() {
 	const [mUrl, setMUrl] = useState("");
 	const [mTopics, setMTopics] = useState([""]);
 	const [mLanguages, setMLanguages] = useState([""]);
+
+	const [tops, setTops]=useState({})
+  	const [langs, setLangs]=useState({})
 	const [mCollaborators, setMCollaborators] = useState([""]);
+
 
 	const [edited, setEdited] = useState("");
 	const [projects, setProjects] = useState([]);
@@ -73,12 +78,53 @@ function Projects() {
 
 	useEffect(() => {
 		if (decodedToken) {
-			fetch("/api/getProjects").then(res => res.json()).then(data => {
+			fetch("/api/getProjects").then(res => res.json()).then(async data => {
 				const projs = data.projects.filter((proj) => proj.owner === decodedToken?.username)
 				setProjects(projs)
-			})
-		}
-	}, [decodedToken, edited])
+				var langdict={}
+				var topdict={}
+				for (var proj in data.projects) {
+					
+					let id=data.projects[proj].id;
+					await Promise.all([
+						fetch('/api/getProjectLanguages', {
+							method: 'POST',
+							headers: {
+							'Content-Type': 'application/json'
+							},
+							body: JSON.stringify({"projectId":id})
+						}),
+						fetch('/api/getProjectTopics', {
+							method: 'POST',
+							headers: {
+							'Content-Type': 'application/json'
+							},
+							body: JSON.stringify({"projectId":id})
+						})
+						]).then(responses =>
+						Promise.all(responses.map(response => response.json()))
+						).then(data =>{
+						const languages = []
+						for (var lang in data[0].languages){
+							languages.push(data[0].languages[lang].language)
+						}
+						langdict[id]=languages
+          
+						const topics = []
+						for (var top in data[1].topics){
+							topics.push(data[1].topics[top].topic)
+						}
+						topdict[id]=topics
+						
+						})
+					}
+
+					setTops(topdict)
+					setLangs(langdict)
+					
+							})
+						}
+					}, [decodedToken, edited])
 
 	function saveChanges() {
 		if (!mTitle || !mDescription || !mUrl) {
@@ -89,6 +135,7 @@ function Projects() {
 				]
 			})
 		} else {
+			
 			let opts = {
 				'title': mTitle,
 				'description': mDescription,
@@ -122,6 +169,50 @@ function Projects() {
 						]
 					})
 				})
+			// mLanguages.forEach(function (lang) {
+			// 	fetch('/api/addProjectLanguage', {
+			// 		method: 'POST',
+			// 		headers: {
+			// 		'Content-Type': 'application/json'
+			// 		},
+			// 		body: JSON.stringify({
+			// 		// 'projectId': ,
+			// 		'language': lang
+			// 		})
+			// 	}).then(r => r.json())
+			// 		.then(resp => {
+			
+			// 		if (resp.status === "ok") {
+			// 			console.log(resp.message)
+			// 		}
+			// 		else {
+			// 			console.log(resp.error)
+			// 		}
+			// 		})
+			// 	})
+			
+			// mTopics.forEach(function (topic) {
+			// 	fetch('/api/addProjectTopic', {
+			// 		method: 'POST',
+			// 		headers: {
+			// 		'Content-Type': 'application/json'
+			// 		},
+			// 		body: JSON.stringify({
+			// 		// 'projectId': ,
+			// 		'topic': topic
+			// 		})
+			// 	}).then(r => r.json())
+			// 		.then(resp => {
+			
+			// 		console.log(topic)
+			// 		if (resp.status === "ok") {
+			// 			console.log(resp.message)
+			// 		}
+			// 		else {
+			// 			console.log(resp.error)
+			// 		}
+			// 		})
+				// })
 		}
 	}
 
@@ -135,7 +226,7 @@ function Projects() {
 
 					{/* Search Bar */}
 					<section>
-						<Searchbar placeholder="Search" onChange={(e) => setSearch(e.target.value)} />
+						<Searchbar placeholder="Search" onChange={e => setSearch(e.target.value)} />
 					</section>
 
 
@@ -238,6 +329,8 @@ function Projects() {
 											owner={owner}
 											id={id}
 											editFunc={setEdited}
+											languages={langs[id]}
+                        					topics={tops[id]}
 										/>
 
 									);
