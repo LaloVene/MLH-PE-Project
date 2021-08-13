@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import { Link } from "react-router-dom";
 import {
   IonContent,
@@ -13,6 +13,8 @@ import Searchbar from '../components/Searchbar.component';
 import Header from '../components/Header.component';
 import NotFound from '../components/NotFound.component';
 import './Home.css';
+import GlobalContext from "../utils/state/GlobalContext";
+import { useJwt } from "react-jwt";
 
 const Container = styled.div`
   padding: 1rem;
@@ -29,9 +31,17 @@ function Home() {
   const [tops, setTops]:any=useState(new Map<number,any[]>())
   const [langs, setLangs]:any=useState(new Map<number,any[]>())
 
+  const { state } = useContext(GlobalContext);
+  var decodedToken:any;
+  decodedToken = useJwt(state.token);
+
   useEffect(() => {
     fetch('/api/getProjects').then(res => res.json()).then(async data => {
-      setProjectList(data.projects);
+      
+      
+      setProjectList(projectList.filter((p: any) => {
+        return (p.owner.toLowerCase()!=decodedToken.decodedToken.username);
+      }));
       console.log(data.projects);
       var langdict=new Map<number,any[]>();
       var topdict=new Map<number,any[]>();
@@ -81,7 +91,7 @@ function Home() {
     let filteredProjects = projectList;
     if (search) {
       filteredProjects = projectList.filter((p: any) => {
-        return p.title.toLowerCase().includes(search.toLowerCase());
+        return (p.title.toLowerCase().includes(search.toLowerCase()));
       });
     }
     setFilteredProjects(filteredProjects);
