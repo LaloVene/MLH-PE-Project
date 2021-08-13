@@ -8,6 +8,7 @@ import {
   IonChip,
   IonSelect,
   IonSelectOption,
+  IonRow
 } from "@ionic/react";
 import {
   Card,
@@ -41,7 +42,7 @@ import dblanguages from "../utils/languages.json";
 import { open, checkmark, create, trash, close } from 'ionicons/icons';
 
 function EditableProjectCard(props) {
-  const { title, description, date, url, owner, id, editFunc,languages,topics } = props;
+  const { title, description, date, url, owner, id, editFunc,languages,topics,collabs } = props;
 
   const [editMode, setEditMode] = useState(false);
   const [showProject, setShowProject] = useState(false);
@@ -51,7 +52,7 @@ function EditableProjectCard(props) {
 
   const [eTopics, setTopics] = useState(topics);
   const [eLanguages, setLanguages] = useState(languages);
-  const [eCollaborators, setCollaborators] = useState([""]);
+  const [eCollab,setCollab]=useState("");
 
   const [present] = useIonAlert();
   const { state } = useContext(GlobalContext);
@@ -175,6 +176,52 @@ function EditableProjectCard(props) {
         })
   }
 
+  function addUser(username) {
+    fetch('/api/addUserInProject', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        'username': username,
+        'projectId': id
+      })
+    })
+    .then(()=>{
+      editFunc(username)
+      return present({
+      header: "User Added!",
+      buttons: [
+        'Ok'
+      ]
+    })
+    })
+  }
+  function checkUser() {
+    console.log(eCollab)
+    
+    fetch(`/api/getUserData?username=${eCollab}`).then(res => res.json()).then(resp => {
+      console.log(resp)
+      if (resp.userData){
+        // var currCollabs = eCollabs
+        // currCollabs.push(eCollab)
+        // setCollabs(currCollabs)
+        addUser(eCollab)
+        setCollab("")
+        
+
+      } else {
+        return present({
+          header: "Invalid Username!",
+          buttons: [
+            'Ok'
+          ]
+        })
+      }
+    })    
+
+  }
+
   return (
     <IonCol size="12" size-md="4" key={id}>
       {!editMode &&
@@ -189,7 +236,7 @@ function EditableProjectCard(props) {
 
                 <ProjectTags title="Languages" tagType={languages} />
                 <ProjectTags title="Tags" tagType={topics} />
-                <ProjectTags title="Collaborators" tagType={eCollaborators} />
+                <ProjectTags title="Collaborators" tagType={collabs} />
 
 
               </TagsWrapper>
@@ -271,15 +318,20 @@ function EditableProjectCard(props) {
             </IonSelect>
 
             <TagTitle>Collaborators</TagTitle>
-            <IonSelect style={{ height: "40px", width: "500px", marginLeft: "20px" }} value={eCollaborators} multiple={true} cancelText="Close" okText="Done" placeholder="Manage collaborator(s)"
-              onIonChange={e => (setCollaborators(e.target.value))}>
-              {/* CHANGE THIS to users */}
-              {
-                dbtopics.map(topic =>
-                  <IonSelectOption value={topic}>{topic}</IonSelectOption>
-                )
-              }
-            </IonSelect>
+            <IonRow>
+              <LinkInput
+                placeholder="Collaborator Username"
+                value={eCollab}
+                onIonChange={(e) => setCollab(e.target.value)}
+                type="text"
+                rows={1}
+                maxlength={47}
+              />
+              <IonButton onClick={checkUser}>Add User</IonButton>
+
+
+            </IonRow>
+            
 
 
             <ButtonsWrapper>
@@ -313,7 +365,7 @@ function EditableProjectCard(props) {
           <ProjectTags title="Languages" tagType={languages} limit={true} />
           <ProjectTags title="Tags" tagType={topics} limit={true} />
 
-          <ProjectTags title="Collaborators" tagType={eCollaborators} limit={true} />
+          <ProjectTags title="Collaborators" tagType={collabs} limit={true} />
 
 
         </IonCardContent>

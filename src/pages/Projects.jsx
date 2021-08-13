@@ -73,6 +73,7 @@ function Projects() {
 
 	const [tops, setTops]=useState({})
   	const [langs, setLangs]=useState({})
+	const [users, setUsers]=useState({})
 	const [mCollaborators, setMCollaborators] = useState([""]);
 
 
@@ -90,6 +91,7 @@ function Projects() {
 				setProjects(projs)
 				var langdict={}
 				var topdict={}
+				var userdict={}
 				for (var proj in data.projects) {
 					
 					let id=data.projects[proj].id;
@@ -102,6 +104,13 @@ function Projects() {
 							body: JSON.stringify({"projectId":id})
 						}),
 						fetch('/api/getProjectTopics', {
+							method: 'POST',
+							headers: {
+							'Content-Type': 'application/json'
+							},
+							body: JSON.stringify({"projectId":id})
+						}),
+						fetch('/api/getUsersInProject', {
 							method: 'POST',
 							headers: {
 							'Content-Type': 'application/json'
@@ -122,12 +131,20 @@ function Projects() {
 							topics.push(data[1].topics[top].topic)
 						}
 						topdict[id]=topics
+
+						const users = []
+						for (var us in data[2].users){
+							users.push(data[2].users[us].username)
+						}
+						userdict[id]=users
 						
 						})
 					}
 
 					setTops(topdict)
 					setLangs(langdict)
+					setUsers(userdict)
+					console.log(userdict)
 					
 							})
 						}
@@ -357,6 +374,7 @@ function Projects() {
 											editFunc={setEdited}
 											languages={langs[id]}
                         					topics={tops[id]}
+											collabs={users[id]}
 										/>
 
 									);
