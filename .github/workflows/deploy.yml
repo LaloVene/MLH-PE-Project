@@ -23,12 +23,12 @@ jobs:
 
     - name: Build the Docker api image
       run: |
-        docker build -f Dockerfile.api --tag ghcr.io/lalovene/react-flask-app-api:latest
+        docker build Dockerfile.api --tag ghcr.io/lalovene/react-flask-app-api:latest
         docker run ghcr.io/lalovene/react-flask-app-api:latest
         docker push ghcr.io/lalovene/react-flask-app-api:latest
 
     - name: Build the Docker client images
       run: |
-        docker build -f Dockerfile.client --tag ghcr.io/lalovene/react-flask-app-client:latest
+        docker build Dockerfile.client --tag ghcr.io/lalovene/react-flask-app-client:latest
         docker run ghcr.io/lalovene/react-flask-app-client:latest
         docker push ghcr.io/lalovene/react-flask-app-client:latest
