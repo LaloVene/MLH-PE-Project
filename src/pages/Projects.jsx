@@ -153,7 +153,58 @@ function Projects() {
 					console.log(resp)
 
 
-				}).then(() => {
+				}).then(()=>{
+					fetch(`/api/getProjects?searchterm=${mTitle}`).then(res => res.json()).then(resp=>{
+						var projId=resp.projects[0].id
+						mLanguages.forEach(function (lang) {
+								fetch('/api/addProjectLanguage', {
+									method: 'POST',
+									headers: {
+									'Content-Type': 'application/json'
+									},
+									body: JSON.stringify({
+									'projectId': projId,
+									'language': lang
+									})
+								}).then(r => r.json())
+									.then(resp => {
+							
+									if (resp.status === "ok") {
+										console.log(resp.message)
+									}
+									else {
+										console.log(resp.error)
+									}
+									})
+								})
+							
+							mTopics.forEach(function (topic) {
+								fetch('/api/addProjectTopic', {
+									method: 'POST',
+									headers: {
+									'Content-Type': 'application/json'
+									},
+									body: JSON.stringify({
+									'projectId': projId,
+									'topic': topic
+									})
+								}).then(r => r.json())
+									.then(resp => {
+							
+									console.log(topic)
+									if (resp.status === "ok") {
+										console.log(resp.message)
+									}
+									else {
+										console.log(resp.error)
+									}
+									})
+								})
+					})
+				})
+				
+				
+				.then(() => {
 					return present({
 						header: "Project created!",
 						buttons: [
@@ -169,50 +220,7 @@ function Projects() {
 						]
 					})
 				})
-			// mLanguages.forEach(function (lang) {
-			// 	fetch('/api/addProjectLanguage', {
-			// 		method: 'POST',
-			// 		headers: {
-			// 		'Content-Type': 'application/json'
-			// 		},
-			// 		body: JSON.stringify({
-			// 		// 'projectId': ,
-			// 		'language': lang
-			// 		})
-			// 	}).then(r => r.json())
-			// 		.then(resp => {
 			
-			// 		if (resp.status === "ok") {
-			// 			console.log(resp.message)
-			// 		}
-			// 		else {
-			// 			console.log(resp.error)
-			// 		}
-			// 		})
-			// 	})
-			
-			// mTopics.forEach(function (topic) {
-			// 	fetch('/api/addProjectTopic', {
-			// 		method: 'POST',
-			// 		headers: {
-			// 		'Content-Type': 'application/json'
-			// 		},
-			// 		body: JSON.stringify({
-			// 		// 'projectId': ,
-			// 		'topic': topic
-			// 		})
-			// 	}).then(r => r.json())
-			// 		.then(resp => {
-			
-			// 		console.log(topic)
-			// 		if (resp.status === "ok") {
-			// 			console.log(resp.message)
-			// 		}
-			// 		else {
-			// 			console.log(resp.error)
-			// 		}
-			// 		})
-				// })
 		}
 	}
 
@@ -293,7 +301,7 @@ function Projects() {
 												{/* CHANGE THIS to users */}
 												{
 													dbtopics.map(topic =>
-														<IonSelectOption value={topic}>{topic}</IonSelectOption>
+														<IonSelectOption key={topic} value={topic}>{topic}</IonSelectOption>
 													)
 												}
 											</IonSelect>
