@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { LRTitle, LRWrapper, LRCol, LRButton } from '../components/LRStyles' 
 import Header from '../components/Header.component';
 
-import { ReactComponent as RegisterPic } from "../components/RegisterIcon.svg"
+import { ReactComponent as RegisterPic } from "../imgs/RegisterIcon.svg"
 
 const ErrorMsg = styled.small`
   color: red;
@@ -24,7 +24,7 @@ const ResetPassword = ({match, location, history}) => {
   const [presentToast, dismissToast] = useIonToast();
   const [presentAlert, dismissAlert] = useIonAlert();
 
-  const resetPasswort = async (user, password, token) => {
+  const resetPassword = async (user, password, token) => {
     try {
       const response = await fetch('/api/resetPassword', {
           method: 'POST',
@@ -62,7 +62,7 @@ const ResetPassword = ({match, location, history}) => {
   const onSubmitClick = async ({password}) => {
     let user = match.params.user
     let token = new URLSearchParams(location.search).get('token')
-    resetPasswort(user, password, token);
+    resetPassword(user, password, token);
   }
 
   return (

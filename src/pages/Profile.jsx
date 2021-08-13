@@ -9,18 +9,17 @@ import NotFound from '../components/NotFound.component';
 import GlobalContext from "../utils/state/GlobalContext";
 import { useJwt } from "react-jwt";
 
-
 const Title = styled.h4`
     margin-bottom: 12px;
     margin-top: 36px;
     text-align: center;
+    font-weight: bold;
 `;
 
 const Wrapper = styled.div`
     max-width: 1200px;
     margin: auto;
     padding: 1rem;
-    
 `;
 
 const Section = styled.div`
@@ -32,10 +31,6 @@ const TagSection = styled.div`
     align-items: center;
     justify-content: center;
     text-align: center;
-`
-
-const Row = styled.div`
-    display: flex;
 `
 
 function ProfilePage() {
@@ -62,6 +57,7 @@ function ProfilePage() {
     })
   }, [])
 
+  const placeholderBio = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
 
   return (
     <IonPage>
@@ -70,10 +66,10 @@ function ProfilePage() {
         <Wrapper>
 
           {/* Profile information */}
-          <Profile name={profileData.name} username={profileData.username} bio="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
+          <Profile name={profileData.name} username={profileData.username} bio={placeholderBio} />
 
           {/* Languages and interests row */}
-          <Row>
+          <IonRow>
             <Section>
               <Title>
                 Languages
@@ -90,7 +86,7 @@ function ProfilePage() {
                 {profileData.topics ? profileData.topics.map(topic => <Tag key={topic.name} text={topic.name} />) : <div />}
               </TagSection>
             </Section>
-          </Row>
+          </IonRow>
 
           {/* Projects section */}
           <Title>
@@ -117,7 +113,7 @@ function ProfilePage() {
                   })}
                 </IonRow>
                 :
-                  <NotFound title="No Projects" message="You don´t have projects yet"/>
+                  <NotFound title="No Projects" message="You don't have projects yet"/>
               }
           </IonGrid>
 

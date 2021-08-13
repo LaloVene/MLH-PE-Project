@@ -11,7 +11,7 @@ import Header from '../components/Header.component';
 import dblanguages from "../utils/languages.json";
 import dbtopics from "../utils/topics.json";
 
-import { ReactComponent as RegisterPic } from "../components/RegisterIcon.svg"
+import { ReactComponent as RegisterPic } from "../imgs/RegisterIcon.svg"
 
 const ErrorMsg = styled.small`
   color: red;

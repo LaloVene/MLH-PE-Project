@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { LRTitle, LRWrapper, LRCol, LRButton } from '../components/LRStyles' 
 import Header from '../components/Header.component';
 
-import { ReactComponent as RegisterPic } from "../components/RegisterIcon.svg"
+import { ReactComponent as RegisterPic } from "../imgs/RegisterIcon.svg"
 
 const ErrorMsg = styled.small`
   color: red;
@@ -23,7 +23,7 @@ const validationSchema = yup.object({
 const ForgotPassword = () => {
   const [presentAlert, dismissAlert] = useIonAlert();
 
-  const resetPasswort = async (user) => {
+  const resetPassword = async (user) => {
     try {
       const response = await fetch('/api/requestReset', {
           method: 'POST',
@@ -39,8 +39,8 @@ const ForgotPassword = () => {
       if (!data.error) {
         presentAlert({
           buttons: [{ text: 'Ok', handler: () => dismissAlert() }],
-          header: 'Email Send',
-          message: 'Please check your Email and Spam.'
+          header: 'Email sent!',
+          message: 'Please check your Inbox and Spam for a link to reset your password.'
         })
       } else {
         presentAlert({
@@ -57,7 +57,7 @@ const ForgotPassword = () => {
   }
 
   const onSubmitClick = async ({username}) => {
-    resetPasswort(username);
+    resetPassword(username);
   }
 
   return (
@@ -97,7 +97,7 @@ const ForgotPassword = () => {
                     <ErrorMsg>
                       {formikProps.touched.username && formikProps.errors.username}
                     </ErrorMsg>
-                  <LRButton type="submit">Send Email</LRButton>
+                  <LRButton type="submit">Send email</LRButton>
                   </form>
                 </LRWrapper>
               )}
