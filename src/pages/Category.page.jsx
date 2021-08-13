@@ -97,6 +97,8 @@ function Category(props) {
                       owner={owner}
                       id={id}
                       key={id}
+                      languages={state.lang[id]}
+                      topics={state.top[id]}
                     />
 
                   );
