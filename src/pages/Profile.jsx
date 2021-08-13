@@ -23,6 +23,7 @@ import { pencilOutline, close, checkmark } from 'ionicons/icons';
 // import { EditProfileDetails } from '../components/EditLanguagesInterests';
 import dbtopics from "../utils/topics.json";
 import dblanguages from "../utils/languages.json";
+import SectionTitle from '../components/SectionTitle.component';
 
 const Title = styled.h4`
     margin-bottom: 12px;
@@ -67,6 +68,7 @@ function ProfilePage() {
 
   const [profileData, setProfileData] = useState([]);
   const [profileLanguages, setProfileLanguages] = useState([]);
+  const [profileInterests, setProfileInterests] = useState([]);
   const [projectList, setProjectList] = useState([]);
 
   const [editLanguagesDetails, setEditLanguagesDetails] = useState(false);
@@ -121,34 +123,106 @@ function ProfilePage() {
 
       }
     }
+    if (editInterestsDetails) {
+      if (!profileInterests) {
+        return present({
+          header: "Please select at least one option!",
+          buttons: [
+            'Ok'
+          ]
+        })
+      } else {
+
+        profileInterests.forEach(function (topic) {
+          fetch('/api/addUserTopic', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              'username': profileData.username,
+              'topic': topic
+            })
+          }).then(r => r.json())
+            .then(resp => {
+
+              console.log(topic)
+              if (resp.status === "ok") {
+                console.log(resp.message)
+              }
+              else {
+                console.log(resp.error)
+              }
+            })
+        })
+        return present({
+          header: "Interests added!",
+          buttons: [
+            {
+              text: 'Ok', handler: (d) => {
+                setEditInterestsDetails(false)
+              }
+            }
+          ]
+        })
+
+      }
+    }
   }
+
   function EditProfileDetails() {
     return (
       <>
         <IonModal isOpen={editLanguagesDetails || editInterestsDetails}>
           <ModalContent>
-            <TagTitle>Edit Section</TagTitle>
-            {editLanguagesDetails ? <IonSelect
-              style={{ height: "40px", width: "500px", marginLeft: "20px" }}
-              value={profileLanguages}
-              multiple={true}
-              cancelText="Close"
-              okText="Done"
-              placeholder="Select language(s)"
-              onIonChange={e => (setProfileLanguages(e.target.value))}>
-              {
-                dblanguages.map(topic =>
-                  <IonSelectOption key={topic} value={topic}>{topic}</IonSelectOption>
-                )
-              }
-            </IonSelect> : <></>}
+            {editLanguagesDetails ?
+              <>
+                <div style={{ marginTop: "60px", marginBottom: "30px" }}>
+                  <SectionTitle>Edit Languages</SectionTitle>
+                </div>
+
+                <IonSelect
+                  style={{ height: "40px", width: "500px", marginLeft: "20px" }}
+                  value={profileLanguages}
+                  multiple={true}
+                  cancelText="Close"
+                  okText="Done"
+                  placeholder="Select language(s)"
+                  onIonChange={e => (setProfileLanguages(e.target.value))}>
+                  {
+                    dblanguages.map(language =>
+                      <IonSelectOption key={language} value={language}>{language}</IonSelectOption>
+                    )
+                  }
+                </IonSelect> </> : <></>}
+
+            {editInterestsDetails ?
+              <>
+                <div style={{ marginTop: "60px", marginBottom: "30px" }}>
+                  <SectionTitle>Edit Interests</SectionTitle>
+                </div>
+
+                <IonSelect
+                  style={{ height: "40px", width: "500px", marginLeft: "20px" }}
+                  value={profileInterests}
+                  multiple={true}
+                  cancelText="Close"
+                  okText="Done"
+                  placeholder="Select language(s)"
+                  onIonChange={e => (setProfileInterests(e.target.value))}>
+                  {
+                    dbtopics.map(topic =>
+                      <IonSelectOption key={topic} value={topic}>{topic}</IonSelectOption>
+                    )
+                  }
+                </IonSelect> </> : <></>}
 
             <ButtonsWrapper>
               <IonButton color="success" id="closemodal" onClick={saveChanges}  >
                 <SmallIcon slot="start" icon={checkmark} />
                 Save
               </IonButton>
-              <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={() => { setEditLanguagesDetails(false); setEditInterestsDetails(false)}}>
+              <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={() => { setEditLanguagesDetails(false); setEditInterestsDetails(false) }}>
                 <SmallIcon slot="start" icon={close} />
                 Close
               </IonButton>
@@ -216,7 +290,7 @@ function ProfilePage() {
                 Interests
                 &nbsp;
                 <EditIcon
-                  onClick={EditInterests}
+                  onClick={() => setEditInterestsDetails(true)}
                 >
                   <IonIcon slot="icon-only" icon={pencilOutline} />
                 </EditIcon>
