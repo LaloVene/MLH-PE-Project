@@ -10,14 +10,12 @@ import styled from "styled-components";
 import Header from '../components/Header.component';
 import Searchbar from '../components/Searchbar.component';
 import CategoryCard from '../components/CategoryCard.component';
+import SectionTitle from "../components/SectionTitle.component";
 
 const Container = styled.div`
   padding: 1rem;
 `;
-const Title = styled.h1`
-  font-size: 2.2rem;
-  font-weight: 300;
-`;
+
 const SearchBarContainer = styled.h1`
   max-width: 20rem;
   font-size: 1rem;
@@ -51,7 +49,7 @@ function Categories() {
       <IonContent fullscreen>
 
         <Container>
-          <Title>Categories</Title>
+          <SectionTitle>Categories</SectionTitle>
           <SearchBarContainer>
             <Searchbar placeholder="Search" onChange={Search} onSubmit={() => { }} />
           </SearchBarContainer>
