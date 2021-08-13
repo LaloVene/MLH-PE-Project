@@ -49,7 +49,10 @@ function Categories() {
       <IonContent fullscreen>
 
         <Container>
-          <SectionTitle>Categories</SectionTitle>
+          <SectionTitle>
+            Categories
+          </SectionTitle>
+
           <SearchBarContainer>
             <Searchbar placeholder="Search" onChange={Search} onSubmit={() => { }} />
           </SearchBarContainer>
@@ -68,7 +71,7 @@ function Categories() {
           </IonRow>
         </Container>
       </IonContent>
-    </IonPage>
+    </IonPage >
   );
 }
 
