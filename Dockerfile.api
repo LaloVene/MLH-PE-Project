@@ -5,6 +5,7 @@ WORKDIR /app
 
 COPY api/requirements.txt ./
 RUN pip install -r ./requirements.txt
+ENV FLASK_APP=api.py
 COPY api/api.py api/.flaskenv ./
 
 COPY ./api /app
