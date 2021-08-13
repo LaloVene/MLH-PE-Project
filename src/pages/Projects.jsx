@@ -163,6 +163,8 @@ function Projects() {
 				}).then(()=>{
 					fetch(`/api/getProjects?searchterm=${mTitle}`).then(res => res.json()).then(resp=>{
 						var projId=resp.projects[0].id
+						console.log(mLanguages)
+						console.log(mTopics)
 						mLanguages.forEach(function (lang) {
 								fetch('/api/addProjectLanguage', {
 									method: 'POST',
@@ -221,7 +223,10 @@ function Projects() {
 									setMTitle("")
 									setMDescription("")
 									setMUrl("")
+									setMLanguages([""])
+									setMTopics([""])
 									setEdited(mTitle)
+
 								}
 							}
 						]
