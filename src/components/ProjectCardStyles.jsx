@@ -7,6 +7,7 @@ import {
   IonInput,
   IonContent,
   IonTextarea,
+  IonRow
 } from "@ionic/react";
 import styled from "styled-components";
 
@@ -133,7 +134,15 @@ const ButtonsWrapper = styled.div`
   margin-top: 24px;
 `
 
+const CollabRow = styled(IonRow) `
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`
+
 export {
+  CollabRow,
   Card,
   CardHeader,
   Icon,

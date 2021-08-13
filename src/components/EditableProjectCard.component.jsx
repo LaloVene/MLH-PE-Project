@@ -29,7 +29,8 @@ import {
   TagsWrapper,
   ModalContent,
   ModalContentView,
-  ButtonsWrapper
+  ButtonsWrapper,
+  CollabRow
 } from './ProjectCardStyles'
 import ProjectTags from './ProjectTags'
 import { personCircleOutline } from "ionicons/icons";
@@ -318,7 +319,7 @@ function EditableProjectCard(props) {
             </IonSelect>
 
             <TagTitle>Collaborators</TagTitle>
-            <IonRow>
+            
               <LinkInput
                 placeholder="Collaborator Username"
                 value={eCollab}
@@ -327,10 +328,10 @@ function EditableProjectCard(props) {
                 rows={1}
                 maxlength={47}
               />
-              <IonButton onClick={checkUser}>Add User</IonButton>
+              <IonButton  onClick={checkUser}>Add User</IonButton>
 
 
-            </IonRow>
+           
             
 
 
