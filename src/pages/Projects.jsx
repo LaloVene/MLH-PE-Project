@@ -87,7 +87,12 @@ function Projects() {
 	useEffect(() => {
 		if (decodedToken) {
 			fetch("/api/getProjects").then(res => res.json()).then(async data => {
-				const projs = data.projects.filter((proj) => proj.owner === decodedToken?.username)
+				const projs = data.projects.filter((proj) => {
+					if (searchText){
+						return (proj.owner === decodedToken?.username && proj.title.toLowerCase().includes(searchText.toLowerCase()))
+					}
+					return proj.owner === decodedToken?.username
+				})
 				setProjects(projs)
 				var langdict={}
 				var topdict={}
@@ -148,7 +153,7 @@ function Projects() {
 					
 							})
 						}
-					}, [decodedToken, edited])
+					}, [decodedToken, edited,searchText])
 
 	function saveChanges() {
 		if (!mTitle || !mDescription || !mUrl) {
@@ -275,7 +280,7 @@ function Projects() {
 						<SectionTitle>Your Projects</SectionTitle>
 						{/* Search Bar */}
 						<SearchBarContainer>
-							<Searchbar placeholder="Search" onChange={onChange} onSubmit={Search} />
+							<Searchbar placeholder="Search" onChange={(e)=>setSearchText(e.target.value)}  />
 						</SearchBarContainer>
 							<IonRow>
 								<IonCol size="12" size-md="4">
