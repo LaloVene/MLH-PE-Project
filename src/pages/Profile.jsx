@@ -41,6 +41,8 @@ function ProfilePage() {
 
   const [profileData, setProfileData] = useState([]);
   const [projectList, setProjectList] = useState([]);
+  const [tops, setTops]=useState({})
+  const [langs, setLangs]=useState({})
 
   useEffect(() => {
     if (decodedToken) {
@@ -50,12 +52,58 @@ function ProfilePage() {
     }
   }, [decodedToken])
 
+
+
   useEffect(() => {
-    fetch('/api/getProjects').then(res => res.json()).then(data => {
-      setProjectList(data.projects);
-      console.log(data.projects);
-    })
-  }, [])
+		if (decodedToken){
+			fetch("/api/getProjects").then(res => res.json()).then(async data => {
+				const projs = data.projects.filter((proj) => proj.owner === decodedToken?.username)
+        setProjectList(projs)
+        console.log(projectList)
+				var langdict={}
+				var topdict={}
+				for (var proj in data.projects) {
+					
+					let id=data.projects[proj].id;
+					await Promise.all([
+						fetch('/api/getProjectLanguages', {
+							method: 'POST',
+							headers: {
+							'Content-Type': 'application/json'
+							},
+							body: JSON.stringify({"projectId":id})
+						}),
+						fetch('/api/getProjectTopics', {
+							method: 'POST',
+							headers: {
+							'Content-Type': 'application/json'
+							},
+							body: JSON.stringify({"projectId":id})
+						})
+						]).then(responses =>
+						Promise.all(responses.map(response => response.json()))
+						).then(data =>{
+						const languages = []
+						for (var lang in data[0].languages){
+							languages.push(data[0].languages[lang].language)
+						}
+						langdict[id]=languages
+          
+						const topics = []
+						for (var top in data[1].topics){
+							topics.push(data[1].topics[top].topic)
+						}
+						topdict[id]=topics
+						
+						})
+					}
+
+					setTops(topdict)
+					setLangs(langdict)
+					
+							})
+    }
+					}, [decodedToken])
 
   const placeholderBio = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
 
@@ -107,6 +155,8 @@ function ProfilePage() {
                         owner={owner}
                         id={id}
                         key={id}
+                        languages={langs[id]}
+                        topics={tops[id]}
                       />
 
                     );
