@@ -48,9 +48,10 @@ function EditableProjectCard(props) {
   const [eTitle, setTitle] = useState(title);
   const [eDescription, setDescription] = useState(description);
   const [eUrl, setUrl] = useState(url);
-  const [eTopics, setTopics] = useState(topics);
-  const [eLanguages, setLanguages] = useState(languages);
 
+  const [eTopics, setTopics] = useState([""]);
+  const [eLanguages, setLanguages] = useState([""]);
+  const [eCollaborators, setCollaborators] = useState([""]);
 
   const [present] = useIonAlert();
   const { state } = useContext(GlobalContext);
@@ -185,8 +186,11 @@ function EditableProjectCard(props) {
               <Date>{date}</Date>
               <Description >{description}</Description>
               <TagsWrapper>
+
                 <ProjectTags title="Languages" tagType={languages} />
                 <ProjectTags title="Tags" tagType={topics} />
+                <ProjectTags title="Collaborators" tagType={eCollaborators} />
+
 
               </TagsWrapper>
               <ButtonsWrapper>
@@ -265,6 +269,19 @@ function EditableProjectCard(props) {
                 )
               }
             </IonSelect>
+
+            <TagTitle>Collaborators</TagTitle>
+            <IonSelect style={{ height: "40px", width: "500px", marginLeft: "20px" }} value={eCollaborators} multiple={true} cancelText="Close" okText="Done" placeholder="Manage collaborator(s)"
+              onIonChange={e => (setCollaborators(e.target.value))}>
+              {/* CHANGE THIS to users */}
+              {
+                dbtopics.map(topic =>
+                  <IonSelectOption value={topic}>{topic}</IonSelectOption>
+                )
+              }
+            </IonSelect>
+
+
             <ButtonsWrapper>
               <IonButton color="success" id="closemodal" onClick={saveChanges}>
                 <SmallIcon slot="start" icon={checkmark} />
@@ -295,6 +312,9 @@ function EditableProjectCard(props) {
 
           <ProjectTags title="Languages" tagType={languages} limit={true} />
           <ProjectTags title="Tags" tagType={topics} limit={true} />
+
+          <ProjectTags title="Collaborators" tagType={eCollaborators} limit={true} />
+
 
         </IonCardContent>
       </Card>
