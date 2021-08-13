@@ -90,6 +90,7 @@ function Category(props) {
                       key={id}
                       languages={state.lang[id]}
                       topics={state.top[id]}
+                      collabs={state.us[id]}
                     />
                   );
                 })

@@ -31,7 +31,8 @@ function useProjects() {
           isError: false,
           data: action.payload,
           lang: action.languages,
-          top:action.topics
+          top:action.topics,
+          us:action.users
         };
       case 'FETCH_FAILURE':
         return {
@@ -59,6 +60,7 @@ function useProjects() {
 
         var langdict={}
 				var topdict={}
+        var userdict={}
 				for (var proj in data.projects) {
 					
 					let id=data.projects[proj].id;
@@ -71,6 +73,13 @@ function useProjects() {
 							body: JSON.stringify({"projectId":id})
 						}),
 						fetch('/api/getProjectTopics', {
+							method: 'POST',
+							headers: {
+							'Content-Type': 'application/json'
+							},
+							body: JSON.stringify({"projectId":id})
+						}),
+						fetch('/api/getUsersInProject', {
 							method: 'POST',
 							headers: {
 							'Content-Type': 'application/json'
@@ -91,15 +100,25 @@ function useProjects() {
 							topics.push(data[1].topics[top].topic)
 						}
 						topdict[id]=topics
+
+						const users = []
+						for (var us in data[2].users){
+							users.push(data[2].users[us].username)
+						}
+						userdict[id]=users
 						
 						})
 					}
 
 					
+					
+							
+
+					
 
         
-        console.log(data);
-        dispatch({ type: 'FETCH_SUCCESS', payload: data,topics:topdict,languages:langdict });
+        console.log(userdict);
+        dispatch({ type: 'FETCH_SUCCESS', payload: data,topics:topdict,languages:langdict ,users:userdict});
       } catch (error) {
         dispatch({ type: 'FETCH_FAILURE' });
         console.error('Bad data: ', error);
