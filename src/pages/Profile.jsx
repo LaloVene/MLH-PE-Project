@@ -20,33 +20,31 @@ import NotFound from '../components/NotFound.component';
 import GlobalContext from "../utils/state/GlobalContext";
 import { useJwt } from "react-jwt";
 import { pencilOutline, close, checkmark } from 'ionicons/icons';
-// import { EditProfileDetails } from '../components/EditLanguagesInterests';
 import dbtopics from "../utils/topics.json";
 import dblanguages from "../utils/languages.json";
 import SectionTitle from '../components/SectionTitle.component';
 
 const Title = styled.h4`
-    margin-bottom: 12px;
-    margin-top: 36px;
-    text-align: center;
-    font-weight: bold;
+  margin-bottom: 12px;
+  margin-top: 36px;
+  text-align: center;
+  font-weight: bold;
 `;
 
 const Wrapper = styled.div`
-    max-width: 1200px;
-    margin: auto;
-    padding: 1rem;
+  max-width: 1200px;
+  margin: auto;
+  padding: 1rem;
 `;
 
 const Section = styled.div`
-    width: 50%;
-    position: relative;
+  width: 50%;
+  position: relative;
 `
-const TagSection = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+const TagSection = styled(IonRow)`
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 `
 
 const EditIcon = styled.button`
@@ -178,7 +176,7 @@ function ProfilePage() {
             {editLanguagesDetails ?
               <>
                 <div style={{ marginTop: "60px", marginBottom: "30px" }}>
-                  <SectionTitle>Edit Languages</SectionTitle>
+                  <SectionTitle>Add Languages</SectionTitle>
                 </div>
 
                 <IonSelect
@@ -199,7 +197,7 @@ function ProfilePage() {
             {editInterestsDetails ?
               <>
                 <div style={{ marginTop: "60px", marginBottom: "30px" }}>
-                  <SectionTitle>Edit Interests</SectionTitle>
+                  <SectionTitle>Add Interests</SectionTitle>
                 </div>
 
                 <IonSelect
@@ -249,14 +247,6 @@ function ProfilePage() {
 
   const placeholderBio = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
 
-  function EditLanguages() {
-    console.log(profileData.languages);
-    console.log()
-  }
-  function EditInterests() {
-    console.log('heaallo');
-    console.log()
-  }
   return (
     <IonPage>
       <Header />
