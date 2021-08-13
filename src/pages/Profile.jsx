@@ -43,6 +43,7 @@ function ProfilePage() {
   const [projectList, setProjectList] = useState([]);
   const [tops, setTops]=useState({})
   const [langs, setLangs]=useState({})
+  const [users, setUsers]=useState({})
 
   useEffect(() => {
     if (decodedToken) {
@@ -62,7 +63,10 @@ function ProfilePage() {
         console.log(projectList)
 				var langdict={}
 				var topdict={}
-				for (var proj in data.projects) {
+        var userdict={}
+				
+					
+        for (var proj in data.projects) {
 					
 					let id=data.projects[proj].id;
 					await Promise.all([
@@ -74,6 +78,13 @@ function ProfilePage() {
 							body: JSON.stringify({"projectId":id})
 						}),
 						fetch('/api/getProjectTopics', {
+							method: 'POST',
+							headers: {
+							'Content-Type': 'application/json'
+							},
+							body: JSON.stringify({"projectId":id})
+						}),
+						fetch('/api/getUsersInProject', {
 							method: 'POST',
 							headers: {
 							'Content-Type': 'application/json'
@@ -94,12 +105,19 @@ function ProfilePage() {
 							topics.push(data[1].topics[top].topic)
 						}
 						topdict[id]=topics
+
+						const users = []
+						for (var us in data[2].users){
+							users.push(data[2].users[us].username)
+						}
+						userdict[id]=users
 						
 						})
 					}
 
 					setTops(topdict)
 					setLangs(langdict)
+          setUsers(userdict)
 					
 							})
     }
@@ -157,6 +175,7 @@ function ProfilePage() {
                         key={id}
                         languages={langs[id]}
                         topics={tops[id]}
+                        collabs={users[id]}
                       />
 
                     );
