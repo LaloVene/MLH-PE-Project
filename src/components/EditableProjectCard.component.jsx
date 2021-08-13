@@ -109,24 +109,69 @@ function EditableProjectCard(props) {
       "url": eUrl,
     }
 
-    fetch('/api/editProject', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(opts)
-    }).then(r => r.json())
-      .then(resp => {
-        setShowProject(false)
-        setEditMode(false)
-        editFunc(eTitle)
-        if (resp.status === "ok") {
-          console.log("Edit Successful")
-        }
-        else {
-          console.log(resp.error)
-        }
+
+      eLanguages.forEach(function (lang) {
+        fetch('/api/addProjectLanguage', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            'language': lang,
+            'projectId': id
+          })
+        }).then(r => r.json())
+          .then(resp => {
+  
+            if (resp.status === "ok") {
+              console.log(resp.message)
+            }
+            else {
+              console.log(resp.error)
+            }
+          })
       })
+  
+      eTopics.forEach(function (topic) {
+        fetch('/api/addProjectTopic', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            'topic': topic,
+            'projectId': id
+          })
+        }).then(r => r.json())
+          .then(resp => {
+  
+            console.log(topic)
+            if (resp.status === "ok") {
+              console.log(resp.message)
+            }
+            else {
+              console.log(resp.error)
+            }
+          })
+      })
+      fetch('/api/editProject', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(opts)
+      }).then(r => r.json())
+        .then(resp => {
+          setShowProject(false)
+          setEditMode(false)
+          editFunc(eTitle)
+          if (resp.status === "ok") {
+            console.log("Edit Successful")
+          }
+          else {
+            console.log(resp.error)
+          }
+        })
   }
 
   return (
@@ -248,8 +293,8 @@ function EditableProjectCard(props) {
           <Description>{description}</Description>
           <Date style={{ textAlign: "right" }}>{date}</Date>
 
-          <ProjectTags title="Languages" tagType={eLanguages} limit={true} />
-          <ProjectTags title="Tags" tagType={eTopics} limit={true} />
+          <ProjectTags title="Languages" tagType={languages} limit={true} />
+          <ProjectTags title="Tags" tagType={topics} limit={true} />
 
         </IonCardContent>
       </Card>
