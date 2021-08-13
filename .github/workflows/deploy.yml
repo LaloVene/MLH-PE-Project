@@ -5,7 +5,7 @@ on:
   # but only for the main branch
   push:
     branches:
-      - feat/deploy
+      - main
 
 jobs:
   publish-images:
@@ -32,7 +32,7 @@ jobs:
         docker build . --tag ghcr.io/lalovene/dev-up-client:latest -f Dockerfile.client
         docker push ghcr.io/lalovene/dev-up-client:latest
 
-  publish-snapshot:
+  deploy:
     needs: publish-images
     runs-on: ubuntu-latest
     steps:
@@ -56,7 +56,7 @@ jobs:
       - name: Deploy site
         run: |
           ssh my-vm 'cd ${{ secrets.PROJECT_ROOT }}
-          git fetch && git reset --hard origin/feat/deploy
+          git fetch && git reset --hard origin/main
           docker pull ghcr.io/lalovene/dev-up-api:latest
           docker pull ghcr.io/lalovene/dev-up-client:latest
           docker-compose down
