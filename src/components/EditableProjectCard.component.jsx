@@ -41,15 +41,15 @@ import dblanguages from "../utils/languages.json";
 import { open, checkmark, create, trash, close } from 'ionicons/icons';
 
 function EditableProjectCard(props) {
-  const { title, description, date, url, owner, id, editFunc } = props;
+  const { title, description, date, url, owner, id, editFunc,languages,topics } = props;
 
   const [editMode, setEditMode] = useState(false);
   const [showProject, setShowProject] = useState(false);
   const [eTitle, setTitle] = useState(title);
   const [eDescription, setDescription] = useState(description);
   const [eUrl, setUrl] = useState(url);
-  const [eTopics, setTopics] = useState([""]);
-  const [eLanguages, setLanguages] = useState([""]);
+  const [eTopics, setTopics] = useState(topics);
+  const [eLanguages, setLanguages] = useState(languages);
 
 
   const [present] = useIonAlert();
@@ -140,8 +140,8 @@ function EditableProjectCard(props) {
               <Date>{date}</Date>
               <Description >{description}</Description>
               <TagsWrapper>
-                <ProjectTags title="Languages" tagType={eLanguages} />
-                <ProjectTags title="Tags" tagType={eTopics} />
+                <ProjectTags title="Languages" tagType={languages} />
+                <ProjectTags title="Tags" tagType={topics} />
 
               </TagsWrapper>
               <ButtonsWrapper>
@@ -205,8 +205,8 @@ function EditableProjectCard(props) {
             <IonSelect style={{ height: "40px", width: "500px", marginLeft: "20px" }} value={eLanguages} multiple={true} cancelText="Close" okText="Done" placeholder="Select language(s)"
               onIonChange={e => (setLanguages(e.target.value))}>
               {
-                dblanguages.map(topic =>
-                  <IonSelectOption value={topic}>{topic}</IonSelectOption>
+                dblanguages.map(lang =>
+                  <IonSelectOption value={lang}>{lang}</IonSelectOption>
                 )
               }
             </IonSelect>
