@@ -266,7 +266,7 @@ function Projects() {
 													setMTitle(e.target.value)
 												}}
 												type="text"
-												maxlength={30}
+												maxlength={25}
 											/>
 											<DescriptionInput
 												value={mDescription}
@@ -274,8 +274,8 @@ function Projects() {
 												onIonChange={(e) => {
 													setMDescription(e.target.value)
 												}}
-												rows={10}
-												maxlength={470}
+												rows={5}
+												maxlength={200}
 											/>
 
 											<LinkInput

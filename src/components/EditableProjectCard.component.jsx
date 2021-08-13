@@ -227,7 +227,7 @@ function EditableProjectCard(props) {
                 setTitle(e.target.value)
               }}
               type="text"
-              maxlength={30}
+              maxlength={25}
             />
 
             <DescriptionInput
@@ -237,8 +237,8 @@ function EditableProjectCard(props) {
                 setDescription(e.target.value)
               }}
               type="text"
-              rows={10}
-              maxlength={470}
+              rows={5}
+              maxlength={200}
             />
 
             <LinkInput
