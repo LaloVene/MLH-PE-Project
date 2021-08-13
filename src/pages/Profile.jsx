@@ -13,12 +13,14 @@ import { useJwt } from "react-jwt";
 const Title = styled.h4`
     margin-bottom: 12px;
     margin-top: 36px;
+    text-align: center;
 `;
 
 const Wrapper = styled.div`
     max-width: 1200px;
     margin: auto;
     padding: 1rem;
+    
 `;
 
 const Section = styled.div`
@@ -27,6 +29,9 @@ const Section = styled.div`
 `
 const TagSection = styled.div`
     display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 `
 
 const Row = styled.div`
@@ -65,7 +70,7 @@ function ProfilePage() {
         <Wrapper>
 
           {/* Profile information */}
-          <Profile name={profileData.name} username={profileData.username} bio="Profile bio" />
+          <Profile name={profileData.name} username={profileData.username} bio="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
 
           {/* Languages and interests row */}
           <Row>
