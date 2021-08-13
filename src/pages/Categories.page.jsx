@@ -57,7 +57,7 @@ function Categories() {
             {
               filteredCategories.map(category =>
                 <IonCol size="6" size-md="3" key={category.name}>
-                  <Link to={`/category/${category.name}`}>
+                  <Link style={{ textDecoration: "none" }} to={`/category/${category.name}`}>
                     <CategoryCard
                       name={category.name}
                     />
