@@ -47,7 +47,7 @@ const Tags = styled.p`
 
 function CategoryCard(props) {
 
-  const { title, description, date, url, owner, id,languages,topics} = props;
+  const { title, description, date, url, owner, id,languages,topics,collabs} = props;
   const [showProject, setShowProject] = useState(false);
   const [showContact, setShowContact] = useState(false);
   const [mTitle, setMTitle] = useState("");
@@ -189,6 +189,7 @@ function CategoryCard(props) {
   
             <ProjectTags title="Languages" tagType={languages} limit={true} />
             <ProjectTags title="Tags" tagType={topics} limit={true} />
+            <ProjectTags title="Tags" tagType={collabs} limit={true} />
   
           </IonCardContent>
         </Card>
