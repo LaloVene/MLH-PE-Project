@@ -1,0 +1,65 @@
+name: Deploy
+
+on:
+  # Trigger the workflow on push or pull request,
+  # but only for the main branch
+  push:
+    branches:
+      - main
+
+jobs:
+  publish-images:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Build the Docker api image
+      run: |
+        docker build . --tag ghcr.io/lalovene/dev-up-api:latest -f Dockerfile.api
+        docker push ghcr.io/lalovene/dev-up-api:latest
+
+    - name: Build the Docker client image
+      run: |
+        docker build . --tag ghcr.io/lalovene/dev-up-client:latest -f Dockerfile.client
+        docker push ghcr.io/lalovene/dev-up-client:latest
+
+  deploy:
+    needs: publish-images
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/deploy-key.pem
+          chmod 600 ~/.ssh/deploy-key.pem
+          cat >>~/.ssh/config <<END
+          Host my-vm
+            Hostname $SSH_IP
+            User $SSH_USER
+            IdentityFile ~/.ssh/deploy-key.pem
+            StrictHostKeyChecking no
+          END
+        env:
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_IP: ${{ secrets.SSH_IP }}
+      
+      - name: Deploy site
+        run: |
+          ssh my-vm 'cd ${{ secrets.PROJECT_ROOT }}
+          git fetch && git reset --hard origin/main
+          docker pull ghcr.io/lalovene/dev-up-api:latest
+          docker pull ghcr.io/lalovene/dev-up-client:latest
+          docker-compose down
+          docker-compose up -d'
+      - name: Print container status
+        run: ssh my-vm 'cd ${{ secrets.PROJECT_ROOT }} && docker-compose ps'
