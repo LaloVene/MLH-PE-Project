@@ -1,16 +1,10 @@
 import { IonContent, useIonAlert, IonGrid, IonPage, IonRow, IonIcon, IonButton, IonModal, IonSelect, IonSelectOption } from '@ionic/react';
 import {
-  Icon,
-  TagTitle,
-  TitleInput,
-  DescriptionInput,
-  LinkInput,
   ModalContent,
-  ModalContentView,
   ButtonsWrapper,
   SmallIcon
 } from '../components/ProjectCardStyles';
-import React, { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components'
 import ProjectCard from "../components/ProjectCard.component";
 import Profile from '../components/Profile';
@@ -56,8 +50,6 @@ const EditIcon = styled.button`
   }
 `;
 
-
-
 function ProfilePage() {
 
   // Auth
@@ -72,6 +64,7 @@ function ProfilePage() {
   const [editLanguagesDetails, setEditLanguagesDetails] = useState(false);
   const [editInterestsDetails, setEditInterestsDetails] = useState(false);
 
+  const [edited, setEdited] = useState(false);
   const [present] = useIonAlert();
 
   function saveChanges() {
@@ -114,6 +107,7 @@ function ProfilePage() {
             {
               text: 'Ok', handler: (d) => {
                 setEditLanguagesDetails(false)
+                setEdited(true)
               }
             }
           ]
@@ -159,6 +153,7 @@ function ProfilePage() {
             {
               text: 'Ok', handler: (d) => {
                 setEditInterestsDetails(false)
+                setEdited(true)
               }
             }
           ]
@@ -192,7 +187,9 @@ function ProfilePage() {
                       <IonSelectOption key={language} value={language}>{language}</IonSelectOption>
                     )
                   }
-                </IonSelect> </> : <></>}
+                </IonSelect>
+              </>
+              : <></>}
 
             {editInterestsDetails ?
               <>
@@ -213,7 +210,9 @@ function ProfilePage() {
                       <IonSelectOption key={topic} value={topic}>{topic}</IonSelectOption>
                     )
                   }
-                </IonSelect> </> : <></>}
+                </IonSelect>
+              </>
+              : <></>}
 
             <ButtonsWrapper>
               <IonButton color="success" id="closemodal" onClick={saveChanges}  >
@@ -236,7 +235,7 @@ function ProfilePage() {
         setProfileData(data.userData)
       })
     }
-  }, [decodedToken])
+  }, [decodedToken, edited])
 
   useEffect(() => {
     fetch('/api/getProjects').then(res => res.json()).then(data => {
