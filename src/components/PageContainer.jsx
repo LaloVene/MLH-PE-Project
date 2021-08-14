@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { IonPage, IonContent } from "@ionic/react";
 import { PageWrapper, Title } from './PageComponentStyles';
 import Header from './Header.component';
