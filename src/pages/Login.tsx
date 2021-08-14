@@ -79,7 +79,11 @@ const Login: React.FC = () => {
                   value={username}
                   onIonChange={(e: { detail: { value: any } }) =>
                     setUsername(e.detail.value!)
+                    
                   }
+                  style={{
+                      "color":"black"
+                  }}
                 />
               </IonItem>
 

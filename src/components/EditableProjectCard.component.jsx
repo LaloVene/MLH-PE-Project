@@ -113,7 +113,7 @@ function EditableProjectCard(props) {
     }
 
 
-      eLanguages.forEach(function (lang) {
+      eLanguages?.forEach(function (lang) {
         fetch('/api/addProjectLanguage', {
           method: 'POST',
           headers: {
@@ -135,7 +135,7 @@ function EditableProjectCard(props) {
           })
       })
   
-      eTopics.forEach(function (topic) {
+      eTopics?.forEach(function (topic) {
         fetch('/api/addProjectTopic', {
           method: 'POST',
           headers: {

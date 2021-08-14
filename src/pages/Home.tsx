@@ -110,13 +110,20 @@ function Home() {
 
 
   useEffect(() => {
-    let filteredProjects = projectList;
-    if (search) {
+    var filteredProjects=[]
+    if (decodedToken?.decodedToken?.username) {
       filteredProjects = projectList.filter((p: any) => {
-        return (p.title.toLowerCase().includes(search.toLowerCase()));
+        return (p.owner!=decodedToken.decodedToken.username);
       });
+      if (search){
+        filteredProjects = projectList.filter((p: any) => {
+          return (p.title.toLowerCase().includes(search.toLowerCase()));
+        });
+        
+      }
+      setFilteredProjects(filteredProjects);
     }
-    setFilteredProjects(filteredProjects);
+    
   }, [search, projectList]);
 
   

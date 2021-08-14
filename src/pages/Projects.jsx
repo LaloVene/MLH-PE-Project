@@ -335,16 +335,7 @@ function Projects() {
 												}
 											</IonSelect>
 
-											<TagTitle>Collaborators</TagTitle>
-											<IonSelect style={{ height: "40px", width: "500px", marginLeft: "20px" }} value={mCollaborators} multiple={true} cancelText="Close" okText="Done" placeholder="Manage collaborator(s)"
-												onIonChange={e => (setMCollaborators(e.target.value))}>
-												{/* CHANGE THIS to users */}
-												{
-													dbtopics.map(topic =>
-														<IonSelectOption key={topic} value={topic}>{topic}</IonSelectOption>
-													)
-												}
-											</IonSelect>
+											
 
 											<ButtonsWrapper>
 												<IonButton color="success" id="closemodal" onClick={saveChanges}>
