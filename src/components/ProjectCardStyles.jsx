@@ -17,7 +17,7 @@ const Card = styled(IonCard)`
   padding: 10px;
   background-color: #D4E0FF;
   box-shadow: none;
-  height: 60vh;
+  height: 100%;
   align-content: space-around;
   overflow: hidden;
   flex: 1;
