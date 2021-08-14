@@ -58,8 +58,8 @@ function ProfilePage() {
   const { decodedToken } = useJwt(state.token);
 
   const [profileData, setProfileData] = useState([]);
-  const [profileLanguages, setProfileLanguages] = useState([]);
-  const [profileInterests, setProfileInterests] = useState([]);
+  const [profileLanguages, setProfileLanguages] = useState(profileData?.languages);
+  const [profileInterests, setProfileInterests] = useState(profileData?.topics);
   const [projectList, setProjectList] = useState([]);
   const [tops, setTops]=useState({})
   const [langs, setLangs]=useState({})
@@ -406,9 +406,9 @@ function ProfilePage() {
           </Title>
           <IonGrid>
             {
-              projectList.filter(project => project.owner === profileData.username).length ?
+              projectList?.filter(project => project.owner === profileData.username).length ?
                 <IonRow>
-                  {projectList.filter(project => project.owner === profileData.username).map(project => {
+                  {projectList?.filter(project => project.owner === profileData.username).map(project => {
                     const { id, title, description, date, url, owner } = project;
                     return (
                       <ProjectCard

@@ -562,7 +562,7 @@ def getUserTopics():
 @app.route("/api/deleteUserTopic", methods=("DELETE",))
 def deleteUserTopic():
 
-     try:
+    try:
         body = request.get_json()
         username = str(body["username"])
         topic = str(body["topic"])
