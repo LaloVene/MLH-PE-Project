@@ -83,14 +83,15 @@ function ProfilePage() {
         })
       } else {
 
-        profileData.languges?.forEach(function (lang) {
+        profileData.languages?.forEach(function (lang) {
           fetch('/api/deleteUserLanguage', {
+
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-              'language': lang,
+              'language': lang.name,
               'username':profileData.username
             })
           }).then(r => r.json())
@@ -157,7 +158,7 @@ function ProfilePage() {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-              'topic': top,
+              'topic': top.name,
               'username':profileData.username
             })
           }).then(r => r.json())
