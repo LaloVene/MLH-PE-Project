@@ -24,13 +24,13 @@ jobs:
 
     - name: Build the Docker api image
       run: |
-        docker build . --tag ghcr.io/lalovene/dev-up-api:0.0.3 -f Dockerfile.api
-        docker push ghcr.io/lalovene/dev-up-api:0.0.3
+        docker build . --tag ghcr.io/lalovene/dev-up-api:latest -f Dockerfile.api
+        docker push ghcr.io/lalovene/dev-up-api:latest
 
     - name: Build the Docker client image
       run: |
-        docker build . --tag ghcr.io/lalovene/dev-up-client:0.0.3 -f Dockerfile.client
-        docker push ghcr.io/lalovene/dev-up-client:0.0.3
+        docker build . --tag ghcr.io/lalovene/dev-up-client:latest -f Dockerfile.client
+        docker push ghcr.io/lalovene/dev-up-client:latest
 
   deploy:
     needs: publish-images
@@ -58,8 +58,8 @@ jobs:
           ssh my-vm 'cd ${{ secrets.PROJECT_ROOT }}
           git fetch && git reset --hard origin/main
           docker-compose down
-          docker pull ghcr.io/lalovene/dev-up-api:0.0.3
-          docker pull ghcr.io/lalovene/dev-up-client:0.0.3
+          docker pull ghcr.io/lalovene/dev-up-api:latest
+          docker pull ghcr.io/lalovene/dev-up-client:latest
           docker-compose up -d'
       - name: Print container status
         run: ssh my-vm 'cd ${{ secrets.PROJECT_ROOT }} && docker-compose ps'
