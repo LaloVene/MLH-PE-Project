@@ -7,6 +7,8 @@ import {
   useIonAlert,
   IonSelect,
   IonSelectOption,
+  IonItem,
+  IonRow,
 } from "@ionic/react";
 import {
   Card,
@@ -239,10 +241,12 @@ function EditableProjectCard(props) {
               </TagsWrapper>
               <ButtonsWrapper>
 
-                <LRButton onClick={() => {
-                  const fullURL = eUrl.match(/^https?:/) ? eUrl : '//' + eUrl
-                  window.open(fullURL)
-                }}>
+                <LRButton
+                  style={{ marginLeft: "-8px" }}
+                  onClick={() => {
+                    const fullURL = eUrl.match(/^https?:/) ? eUrl : '//' + eUrl
+                    window.open(fullURL)
+                  }}>
                   <SmallIcon slot="start" icon={open} />
                   Github
                 </LRButton>
@@ -295,6 +299,17 @@ function EditableProjectCard(props) {
               maxlength={47}
             />
 
+            <TagTitle>Collaborators</TagTitle>
+
+            <LinkInput
+              placeholder="Collaborator Username"
+              value={eCollab}
+              onIonChange={(e) => setCollab(e.target.value)}
+              type="text"
+              rows={1}
+              maxlength={47}
+            />
+            <IonButton onClick={checkUser}>Add User</IonButton>
             <TagTitle>Languages</TagTitle>
             <IonSelect style={{ height: "40px", width: "500px", marginLeft: "20px" }} value={eLanguages ? eLanguages : languages} multiple={true} cancelText="Close" okText="Done" placeholder="Select language(s)"
               onIonChange={e => (setLanguages(e.target.value))}>
@@ -315,33 +330,18 @@ function EditableProjectCard(props) {
               }
             </IonSelect>
 
-            <TagTitle>Collaborators</TagTitle>
-
-            <LinkInput
-              placeholder="Collaborator Username"
-              value={eCollab}
-              onIonChange={(e) => setCollab(e.target.value)}
-              type="text"
-              rows={1}
-              maxlength={47}
-            />
-            <IonButton onClick={checkUser}>Add User</IonButton>
-
-
-
-
 
 
             <ButtonsWrapper>
-              <IonButton color="success" id="closemodal" onClick={saveChanges}>
+              <IonButton color="success" id="closemodal" style={{ width: "200px" }} onClick={saveChanges}>
                 <SmallIcon slot="start" icon={checkmark} />
                 Save
               </IonButton>
-              <IonButton color="danger" id="closemodal" style={{ background: "red" }} onClick={handleDelete}>
+              <IonButton color="danger" id="closemodal" style={{ width: "200px" }} onClick={handleDelete}>
                 <SmallIcon slot="start" icon={trash} />
                 Delete
               </IonButton>
-              <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={closeEdit}>
+              <IonButton style={{ marginBottom: "50px", width: "200px" }} id="closemodal" onClick={closeEdit}>
                 <SmallIcon slot="start" icon={close} />
                 Close
               </IonButton>
