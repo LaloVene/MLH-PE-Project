@@ -20,7 +20,6 @@ const Card = styled(IonCard)`
   height: 100%;
   align-content: space-around;
   overflow: hidden;
-  flex: 1;
   &:hover {
     background-color: #c2d0f3;
   }
