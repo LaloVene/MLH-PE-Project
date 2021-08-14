@@ -217,6 +217,27 @@ function EditableProjectCard(props) {
       })
   }
 
+  function deleteUser(username) {
+    fetch('/api/deleteUserInProject', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        'username': username,
+        'projectId': id
+      })
+    })
+      .then(() => {
+        editFunc((Math.random() + 1).toString(36).substring(7))
+        return present({
+          header: "User Deleted!",
+          buttons: [
+            'Ok'
+          ]
+        })
+      })
+  }
   function addUser(username) {
     fetch('/api/addUserInProject', {
       method: 'POST',
@@ -247,6 +268,8 @@ function EditableProjectCard(props) {
         // var currCollabs = eCollabs
         // currCollabs.push(eCollab)
         // setCollabs(currCollabs)
+
+        //deleteUser(eCollab)
         addUser(eCollab)
         setCollab("")
 
