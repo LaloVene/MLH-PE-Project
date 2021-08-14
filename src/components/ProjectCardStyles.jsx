@@ -16,7 +16,11 @@ const Card = styled(IonCard)`
   border-radius: 2rem;
   padding: 10px;
   background-color: #D4E0FF;
-  box-shadow: none;  
+  box-shadow: none;
+  height: 60vh;
+  align-content: space-around;
+  overflow: hidden;
+  flex: 1;
   &:hover {
     background-color: #c2d0f3;
   }
@@ -134,7 +138,7 @@ const ButtonsWrapper = styled.div`
   margin-top: 24px;
 `
 
-const CollabRow = styled(IonRow) `
+const CollabRow = styled(IonRow)`
   display: flex;
   align-items: center;
   justify-content: center;
