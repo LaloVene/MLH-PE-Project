@@ -58,8 +58,6 @@ jobs:
           ssh my-vm 'cd ${{ secrets.PROJECT_ROOT }}
           git fetch && git reset --hard origin/main
           docker-compose down
-          docker image rm -f dev-up-api
-          docker image rm -f dev-up-client
           docker pull ghcr.io/lalovene/dev-up-api:latest
           docker pull ghcr.io/lalovene/dev-up-client:latest
           docker-compose up -d'
