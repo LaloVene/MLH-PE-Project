@@ -1,12 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import {
-  IonContent,
-  IonPage,
-  IonRow,
-  IonCol,
-} from "@ionic/react";
-import Header from '../components/Header.component';
+import { IonRow, IonCol } from "@ionic/react";
 import Searchbar from '../components/Searchbar.component';
 import CategoryCard from '../components/CategoryCard.component';
 import PageContainer from "../components/PageContainer";

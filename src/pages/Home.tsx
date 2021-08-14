@@ -1,17 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import {
-  IonContent,
-  IonPage,
-  IonRow,
-} from "@ionic/react";
-import SectionTitle from "../components/PageContainer";
+import { IonRow } from "@ionic/react";
 import ProjectCard from "../components/ProjectCard.component";
 import CategoryButton from "../components/CategoryButton.component";
 import Searchbar from '../components/Searchbar.component';
-import Header from '../components/Header.component';
 import NotFound from '../components/NotFound.component';
-import './Home.css';
 import GlobalContext from "../utils/state/GlobalContext";
 import { useJwt } from "react-jwt";
 import { Title, Separator } from "../components/PageComponentStyles";

@@ -1,8 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import {
 	IonModal,
-	IonContent,
-	IonPage,
 	IonRow,
 	IonCol,
 	IonButton,
@@ -21,17 +19,14 @@ import {
 	SmallIcon,
 	CreateCard
 } from '../components/ProjectCardStyles';
-import SectionTitle from "../components/PageContainer";
 import EditableProjectCard from "../components/EditableProjectCard.component";
 import Searchbar from '../components/Searchbar.component';
-import Header from '../components/Header.component';
 import { useJwt } from "react-jwt";
 import GlobalContext from "../utils/state/GlobalContext";
 import './Projects.css';
 import dbtopics from "../utils/topics.json";
 import dblanguages from "../utils/languages.json";
 import { checkmark, close, addCircleOutline } from 'ionicons/icons';
-import React from "react";
 import { Title, SearchBarContainer } from "../components/PageComponentStyles";
 import PageContainer from '../components/PageContainer';
 
@@ -233,15 +228,6 @@ function Projects() {
 		}
 	}
 
-	const onChange = (event) => {
-		const query = event.target.value;
-		setSearchText(query)
-	}
-	const Search = (event) => {
-		event.preventDefault();
-		setSearchQuery(searchText)
-	}
-
 	return (
 		<PageContainer>
 
@@ -342,10 +328,8 @@ function Projects() {
 								topics={tops[id]}
 								collabs={users[id]}
 							/>
-
 						);
-					}) : <div></div>}
-
+					}) : <></>}
 				</IonRow>
 			</section>
 		</PageContainer>
