@@ -24,13 +24,13 @@ jobs:
 
     - name: Build the Docker api image
       run: |
-        docker build . --tag ghcr.io/lalovene/dev-up-api:latest -f Dockerfile.api
-        docker push ghcr.io/lalovene/dev-up-api:latest
+        docker build . --tag ghcr.io/lalovene/dev-up-api:0.0.1 -f Dockerfile.api
+        docker push ghcr.io/lalovene/dev-up-api:0.0.1
 
     - name: Build the Docker client image
       run: |
-        docker build . --tag ghcr.io/lalovene/dev-up-client:latest -f Dockerfile.client
-        docker push ghcr.io/lalovene/dev-up-client:latest
+        docker build . --tag ghcr.io/lalovene/dev-up-client:0.0.1 -f Dockerfile.client
+        docker push ghcr.io/lalovene/dev-up-client:0.0.1
 
   deploy:
     needs: publish-images
