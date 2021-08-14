@@ -16,7 +16,7 @@ import { useJwt } from "react-jwt";
 import { pencilOutline, close, checkmark } from 'ionicons/icons';
 import dbtopics from "../utils/topics.json";
 import dblanguages from "../utils/languages.json";
-import SectionTitle from '../components/SectionTitle.component';
+import PageContainer from '../components/PageContainer';
 
 const Title = styled.h4`
   margin-bottom: 12px;
@@ -60,9 +60,9 @@ function ProfilePage() {
   const [profileLanguages, setProfileLanguages] = useState([]);
   const [profileInterests, setProfileInterests] = useState([]);
   const [projectList, setProjectList] = useState([]);
-  const [tops, setTops]=useState({})
-  const [langs, setLangs]=useState({})
-  const [users, setUsers]=useState({})
+  const [tops, setTops] = useState({})
+  const [langs, setLangs] = useState({})
+  const [users, setUsers] = useState({})
 
   const [editLanguagesDetails, setEditLanguagesDetails] = useState(false);
   const [editInterestsDetails, setEditInterestsDetails] = useState(false);
@@ -174,7 +174,7 @@ function ProfilePage() {
             {editLanguagesDetails ?
               <>
                 <div style={{ marginTop: "60px", marginBottom: "30px" }}>
-                  <SectionTitle>Add Languages</SectionTitle>
+                  {/* <SectionTitle title="Add Languages" /> */}
                 </div>
 
                 <IonSelect
@@ -197,7 +197,7 @@ function ProfilePage() {
             {editInterestsDetails ?
               <>
                 <div style={{ marginTop: "60px", marginBottom: "30px" }}>
-                  <SectionTitle>Add Interests</SectionTitle>
+                  {/* <SectionTitle>Add Interests</SectionTitle> */}
                 </div>
 
                 <IonSelect
@@ -243,72 +243,72 @@ function ProfilePage() {
 
 
   useEffect(() => {
-		if (decodedToken){
-			fetch("/api/getProjects").then(res => res.json()).then(async data => {
-				const projs = data.projects.filter((proj) => proj.owner === decodedToken?.username)
+    if (decodedToken) {
+      fetch("/api/getProjects").then(res => res.json()).then(async data => {
+        const projs = data.projects.filter((proj) => proj.owner === decodedToken?.username)
         setProjectList(projs)
         console.log(projectList)
-				var langdict={}
-				var topdict={}
-        var userdict={}
-				
-					
+        var langdict = {}
+        var topdict = {}
+        var userdict = {}
+
+
         for (var proj in data.projects) {
-					
-					let id=data.projects[proj].id;
-					await Promise.all([
-						fetch('/api/getProjectLanguages', {
-							method: 'POST',
-							headers: {
-							'Content-Type': 'application/json'
-							},
-							body: JSON.stringify({"projectId":id})
-						}),
-						fetch('/api/getProjectTopics', {
-							method: 'POST',
-							headers: {
-							'Content-Type': 'application/json'
-							},
-							body: JSON.stringify({"projectId":id})
-						}),
-						fetch('/api/getUsersInProject', {
-							method: 'POST',
-							headers: {
-							'Content-Type': 'application/json'
-							},
-							body: JSON.stringify({"projectId":id})
-						})
-						]).then(responses =>
-						Promise.all(responses.map(response => response.json()))
-						).then(data =>{
-						const languages = []
-						for (var lang in data[0].languages){
-							languages.push(data[0].languages[lang].language)
-						}
-						langdict[id]=languages
-          
-						const topics = []
-						for (var top in data[1].topics){
-							topics.push(data[1].topics[top].topic)
-						}
-						topdict[id]=topics
 
-						const users = []
-						for (var us in data[2].users){
-							users.push(data[2].users[us].username)
-						}
-						userdict[id]=users
-						
-						})
-					}
+          let id = data.projects[proj].id;
+          await Promise.all([
+            fetch('/api/getProjectLanguages', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ "projectId": id })
+            }),
+            fetch('/api/getProjectTopics', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ "projectId": id })
+            }),
+            fetch('/api/getUsersInProject', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ "projectId": id })
+            })
+          ]).then(responses =>
+            Promise.all(responses.map(response => response.json()))
+          ).then(data => {
+            const languages = []
+            for (var lang in data[0].languages) {
+              languages.push(data[0].languages[lang].language)
+            }
+            langdict[id] = languages
 
-					setTops(topdict)
-					setLangs(langdict)
-          setUsers(userdict)
-					
-							})
+            const topics = []
+            for (var top in data[1].topics) {
+              topics.push(data[1].topics[top].topic)
+            }
+            topdict[id] = topics
+
+            const users = []
+            for (var us in data[2].users) {
+              users.push(data[2].users[us].username)
+            }
+            userdict[id] = users
+
+          })
+        }
+
+        setTops(topdict)
+        setLangs(langdict)
+        setUsers(userdict)
+
+      })
     }
-					}, [decodedToken])
+  }, [decodedToken])
 
   const placeholderBio = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
 
