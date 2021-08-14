@@ -17,6 +17,7 @@ import { pencilOutline, close, checkmark } from 'ionicons/icons';
 import dbtopics from "../utils/topics.json";
 import dblanguages from "../utils/languages.json";
 import SectionTitle from '../components/SectionTitle.component';
+// import { profile } from 'console';
 
 const Title = styled.h4`
   margin-bottom: 12px;
@@ -82,6 +83,27 @@ function ProfilePage() {
         })
       } else {
 
+        profileData.languges?.forEach(function (lang) {
+          fetch('/api/deleteUserLanguage', {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              'language': lang,
+              'username':profileData.username
+            })
+          }).then(r => r.json())
+            .then(resp => {
+    
+              if (resp.status === "ok") {
+                console.log(resp.message)
+              }
+              else {
+                console.log(resp.error)
+              }
+            })
+        })
         profileLanguages.forEach(function (language) {
           fetch('/api/addUserLanguage', {
             method: 'POST',
@@ -128,6 +150,27 @@ function ProfilePage() {
         })
       } else {
 
+        profileData.topics?.forEach(function (top) {
+          fetch('/api/deleteUserTopic', {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              'topic': top,
+              'username':profileData.username
+            })
+          }).then(r => r.json())
+            .then(resp => {
+    
+              if (resp.status === "ok") {
+                console.log(resp.message)
+              }
+              else {
+                console.log(resp.error)
+              }
+            })
+        })
         profileInterests.forEach(function (topic) {
           fetch('/api/addUserTopic', {
             method: 'POST',
