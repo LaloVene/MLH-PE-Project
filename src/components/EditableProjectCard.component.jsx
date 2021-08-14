@@ -5,10 +5,8 @@ import {
   IonModal,
   IonButton,
   useIonAlert,
-  IonChip,
   IonSelect,
   IonSelectOption,
-  IonRow
 } from "@ionic/react";
 import {
   Card,
@@ -21,7 +19,6 @@ import {
   Description,
   ProjTitle,
   Owner,
-  TagText,
   TagTitle,
   TitleInput,
   DescriptionInput,
@@ -30,7 +27,6 @@ import {
   ModalContent,
   ModalContentView,
   ButtonsWrapper,
-  CollabRow
 } from './ProjectCardStyles'
 import ProjectTags from './ProjectTags'
 import { personCircleOutline } from "ionicons/icons";
@@ -42,13 +38,6 @@ import dbtopics from "../utils/topics.json";
 import dblanguages from "../utils/languages.json";
 import { open, checkmark, create, trash, close } from 'ionicons/icons';
 
-import styled from 'styled-components'
-const Fade = styled(IonCardContent)`
-  max-height: 78%;
-  overflow: hidden;
-  -webkit-mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
-  mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
-`
 function EditableProjectCard(props) {
   const { title, description, date, url, owner, id, editFunc, languages, topics, collabs } = props;
 
@@ -366,18 +355,16 @@ function EditableProjectCard(props) {
           <Icon icon={personCircleOutline} />
           <Username>{owner}</Username>
         </CardHeader>
-        <Fade>
+        <IonCardContent>
           <Title>{title}</Title>
-          <Description>{description.length < 60 ? description : description.slice(0, 80) + "..."}</Description>
+          <Description>{description.length < 100 ? description : description.slice(0, 100) + "..."}</Description>
           <Date style={{ textAlign: "right" }}>{date}</Date>
 
           <ProjectTags title="Languages" tagType={languages} limit={true} />
           <ProjectTags title="Tags" tagType={topics} limit={true} />
-
           <ProjectTags title="Collaborators" tagType={collabs} limit={true} />
 
-
-        </Fade>
+        </IonCardContent>
       </Card>
     </IonCol >
   );

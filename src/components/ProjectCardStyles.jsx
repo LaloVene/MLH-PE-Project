@@ -17,7 +17,7 @@ const CreateCard = styled(IonCard)`
 	border-radius: 2rem;
   	background-color: #D4E0FF;
 	box-shadow: none;
-	height: 93%;
+	height: 95%;
 	display: flex;
 	min-height: 200px;
 
@@ -32,7 +32,7 @@ const Card = styled(IonCard)`
   padding: 10px;
   background-color: #D4E0FF;
   box-shadow: none;
-  height: 100%;
+  height: 95%;
   align-content: space-around;
   overflow: hidden;
   &:hover {
