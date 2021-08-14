@@ -11,12 +11,30 @@ import {
 } from "@ionic/react";
 import styled from "styled-components";
 
+
+const CreateCard = styled(IonCard)`
+	cursor: pointer;
+	border-radius: 2rem;
+  	background-color: #D4E0FF;
+	box-shadow: none;
+	height: 93%;
+	display: flex;
+	min-height: 200px;
+
+	&:hover {
+	background-color: #c2d0f3;
+	}
+`;
+
 const Card = styled(IonCard)`
   cursor: pointer;
   border-radius: 2rem;
   padding: 10px;
   background-color: #D4E0FF;
-  box-shadow: none;  
+  box-shadow: none;
+  height: 100%;
+  align-content: space-around;
+  overflow: hidden;
   &:hover {
     background-color: #c2d0f3;
   }
@@ -134,7 +152,7 @@ const ButtonsWrapper = styled.div`
   margin-top: 24px;
 `
 
-const CollabRow = styled(IonRow) `
+const CollabRow = styled(IonRow)`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -142,6 +160,7 @@ const CollabRow = styled(IonRow) `
 `
 
 export {
+  CreateCard,
   CollabRow,
   Card,
   CardHeader,
