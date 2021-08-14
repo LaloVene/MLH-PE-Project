@@ -68,7 +68,7 @@ function ProfilePage() {
   const [editLanguagesDetails, setEditLanguagesDetails] = useState(false);
   const [editInterestsDetails, setEditInterestsDetails] = useState(false);
 
-  const [edited, setEdited] = useState(false);
+  const [edited, setEdited] = useState("");
   const [present] = useIonAlert();
 
   function saveChanges() {
@@ -133,7 +133,7 @@ function ProfilePage() {
             {
               text: 'Ok', handler: (d) => {
                 setEditLanguagesDetails(false)
-                setEdited(true)
+                setEdited((Math.random() + 1).toString(36).substring(7))
               }
             }
           ]
@@ -200,7 +200,7 @@ function ProfilePage() {
             {
               text: 'Ok', handler: (d) => {
                 setEditInterestsDetails(false)
-                setEdited(true)
+                setEdited((Math.random() + 1).toString(36).substring(7))
               }
             }
           ]
