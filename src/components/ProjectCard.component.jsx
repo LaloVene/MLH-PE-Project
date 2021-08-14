@@ -189,7 +189,7 @@ function CategoryCard(props) {
   
             <ProjectTags title="Languages" tagType={languages} limit={true} />
             <ProjectTags title="Tags" tagType={topics} limit={true} />
-            <ProjectTags title="Tags" tagType={collabs} limit={true} />
+            <ProjectTags title="Collaborators" tagType={collabs} limit={true} />
   
           </IonCardContent>
         </Card>
