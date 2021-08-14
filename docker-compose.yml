@@ -9,7 +9,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.api
-    image: dev-up-api
+    image: ghcr.io/lalovene/dev-up-api
     volumes:
       - .:/api
     depends_on:
@@ -32,7 +32,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.client
-    image: dev-up-client
+    image: ghcr.io/lalovene/dev-up-client
     ports:
       - "3000:80"
 
