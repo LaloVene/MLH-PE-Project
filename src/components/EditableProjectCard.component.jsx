@@ -231,7 +231,7 @@ function EditableProjectCard(props) {
       .then(() => {
         editFunc((Math.random() + 1).toString(36).substring(7))
         return present({
-          header: "User Deleted!",
+          header: "User Removed!",
           buttons: [
             'Ok'
           ]
@@ -259,7 +259,7 @@ function EditableProjectCard(props) {
         })
       })
   }
-  function checkUser() {
+  function checkUser(method) {
     console.log(eCollab)
 
     fetch(`/api/getUserData?username=${eCollab}`).then(res => res.json()).then(resp => {
@@ -269,8 +269,13 @@ function EditableProjectCard(props) {
         // currCollabs.push(eCollab)
         // setCollabs(currCollabs)
 
-        //deleteUser(eCollab)
-        addUser(eCollab)
+      
+        if (method=="add"){
+          addUser(eCollab)
+        } else{
+          deleteUser(eCollab)
+        }
+        
         setCollab("")
 
 
@@ -374,7 +379,8 @@ function EditableProjectCard(props) {
               rows={1}
               maxlength={47}
             />
-            <IonButton onClick={checkUser}>Add User</IonButton>
+            <IonButton onClick={()=>checkUser("add")}>Add User</IonButton>
+            <IonButton onClick={()=>checkUser("remove")}>Remove User</IonButton>
             <TagTitle>Languages</TagTitle>
             <IonSelect style={{ height: "40px", width: "500px", marginLeft: "20px" }} value={eLanguages ? eLanguages : languages} multiple={true} cancelText="Close" okText="Done" placeholder="Select language(s)"
               onIonChange={e => (setLanguages(e.target.value))}>
