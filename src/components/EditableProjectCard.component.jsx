@@ -96,7 +96,7 @@ function EditableProjectCard(props) {
       .then(() => {
         setShowProject(false)
         setEditMode(false)
-        editFunc(id.toString())
+        editFunc((Math.random() + 1).toString(36).substring(7))
       })
   }
 
@@ -227,7 +227,7 @@ function EditableProjectCard(props) {
       })
     })
       .then(() => {
-        editFunc(username)
+        editFunc((Math.random() + 1).toString(36).substring(7))
         return present({
           header: "User Added!",
           buttons: [
