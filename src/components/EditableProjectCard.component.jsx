@@ -108,7 +108,49 @@ function EditableProjectCard(props) {
       "url": eUrl,
     }
 
+    languages?.forEach(function (lang) {
+      fetch('/api/deleteProjectLanguage', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'language': lang,
+          'projectId': id
+        })
+      }).then(r => r.json())
+        .then(resp => {
 
+          if (resp.status === "ok") {
+            console.log(resp.message)
+          }
+          else {
+            console.log(resp.error)
+          }
+        })
+    })
+    topics?.forEach(function (topic) {
+      fetch('/api/deleteProjectTopic', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'topic': topic,
+          'projectId': id
+        })
+      }).then(r => r.json())
+        .then(resp => {
+
+          console.log(topic)
+          if (resp.status === "ok") {
+            console.log(resp.message)
+          }
+          else {
+            console.log(resp.error)
+          }
+        })
+    })
     eLanguages?.forEach(function (lang) {
       fetch('/api/addProjectLanguage', {
         method: 'POST',
@@ -163,7 +205,7 @@ function EditableProjectCard(props) {
       .then(resp => {
         setShowProject(false)
         setEditMode(false)
-        editFunc(eTitle)
+        editFunc((Math.random() + 1).toString(36).substring(7))
         if (resp.status === "ok") {
           console.log("Edit Successful")
         }
