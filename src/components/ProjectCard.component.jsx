@@ -183,7 +183,7 @@ function CategoryCard(props) {
           </CardHeader>
           <IonCardContent>
             <Title>{title}</Title>
-            <Description>{description}</Description>
+            <Description>{description.length < 100 ? description : description.slice(0, 100) + "..."}</Description>
             <Date style={{ textAlign: "right" }}>{date}</Date>
   
   
