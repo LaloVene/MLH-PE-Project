@@ -144,7 +144,6 @@ function EditableProjectCard(props) {
       }).then(r => r.json())
         .then(resp => {
 
-          console.log(topic)
           if (resp.status === "ok") {
             console.log(resp.message)
           }
