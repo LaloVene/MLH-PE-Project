@@ -6,21 +6,11 @@ import {
   IonRow,
   IonCol,
 } from "@ionic/react";
-import styled from "styled-components";
 import Header from '../components/Header.component';
 import Searchbar from '../components/Searchbar.component';
 import CategoryCard from '../components/CategoryCard.component';
 import SectionTitle from "../components/SectionTitle.component";
-
-const Container = styled.div`
-  padding: 1rem;
-`;
-
-const SearchBarContainer = styled.h1`
-  max-width: 20rem;
-  font-size: 1rem;
-  padding-left: 1rem;
-`;
+import { PageContainer, SearchBarContainer } from '../components/PageComponentStyles';
 
 function Categories() {
 
@@ -48,7 +38,7 @@ function Categories() {
       <Header />
       <IonContent fullscreen>
 
-        <Container>
+        <PageContainer>
           <SectionTitle>
             Categories
           </SectionTitle>
@@ -69,7 +59,7 @@ function Categories() {
               )
             }
           </IonRow>
-        </Container>
+        </PageContainer>
       </IonContent>
     </IonPage >
   );

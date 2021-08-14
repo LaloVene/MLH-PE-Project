@@ -12,4 +12,8 @@ const SearchBarContainer = styled.h1`
   padding-left: 1rem;
 `;
 
-export { PageContainer, SearchBarContainer};
+const Separator = styled.div`
+  margin: 3rem 0;
+`;
+
+export { PageContainer, SearchBarContainer, Separator };
