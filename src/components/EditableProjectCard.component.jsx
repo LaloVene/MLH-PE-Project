@@ -32,7 +32,6 @@ import ProjectTags from './ProjectTags'
 import { personCircleOutline } from "ionicons/icons";
 import { useJwt } from "react-jwt";
 import GlobalContext from "../utils/state/GlobalContext";
-import '../pages/Projects.css';
 import { LRButton } from '../components/LRStyles'
 import dbtopics from "../utils/topics.json";
 import dblanguages from "../utils/languages.json";

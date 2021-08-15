@@ -23,7 +23,6 @@ import EditableProjectCard from "../components/EditableProjectCard.component";
 import Searchbar from '../components/Searchbar.component';
 import { useJwt } from "react-jwt";
 import GlobalContext from "../utils/state/GlobalContext";
-import './Projects.css';
 import dbtopics from "../utils/topics.json";
 import dblanguages from "../utils/languages.json";
 import { checkmark, close, addCircleOutline } from 'ionicons/icons';
