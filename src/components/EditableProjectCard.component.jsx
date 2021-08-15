@@ -98,7 +98,7 @@ function EditableProjectCard(props) {
       .then(() => {
         setShowProject(false)
         setEditMode(false)
-        editFunc(id.toString())
+        editFunc((Math.random() + 1).toString(36).substring(7))
       })
   }
 
@@ -110,7 +110,48 @@ function EditableProjectCard(props) {
       "url": eUrl,
     }
 
+    languages?.forEach(function (lang) {
+      fetch('/api/deleteProjectLanguage', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'language': lang,
+          'projectId': id
+        })
+      }).then(r => r.json())
+        .then(resp => {
 
+          if (resp.status === "ok") {
+            console.log(resp.message)
+          }
+          else {
+            console.log(resp.error)
+          }
+        })
+    })
+    topics?.forEach(function (topic) {
+      fetch('/api/deleteProjectTopic', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'topic': topic,
+          'projectId': id
+        })
+      }).then(r => r.json())
+        .then(resp => {
+
+          if (resp.status === "ok") {
+            console.log(resp.message)
+          }
+          else {
+            console.log(resp.error)
+          }
+        })
+    })
     eLanguages?.forEach(function (lang) {
       fetch('/api/addProjectLanguage', {
         method: 'POST',
@@ -165,7 +206,7 @@ function EditableProjectCard(props) {
       .then(resp => {
         setShowProject(false)
         setEditMode(false)
-        editFunc(eTitle)
+        editFunc((Math.random() + 1).toString(36).substring(7))
         if (resp.status === "ok") {
           console.log("Edit Successful")
         }
@@ -175,6 +216,27 @@ function EditableProjectCard(props) {
       })
   }
 
+  function deleteUser(username) {
+    fetch('/api/deleteUserInProject', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        'username': username,
+        'projectId': id
+      })
+    })
+      .then(() => {
+        editFunc((Math.random() + 1).toString(36).substring(7))
+        return present({
+          header: "User Removed!",
+          buttons: [
+            'Ok'
+          ]
+        })
+      })
+  }
   function addUser(username) {
     fetch('/api/addUserInProject', {
       method: 'POST',
@@ -187,7 +249,7 @@ function EditableProjectCard(props) {
       })
     })
       .then(() => {
-        editFunc(username)
+        editFunc((Math.random() + 1).toString(36).substring(7))
         return present({
           header: "User Added!",
           buttons: [
@@ -196,7 +258,7 @@ function EditableProjectCard(props) {
         })
       })
   }
-  function checkUser() {
+  function checkUser(method) {
     console.log(eCollab)
 
     fetch(`/api/getUserData?username=${eCollab}`).then(res => res.json()).then(resp => {
@@ -205,7 +267,14 @@ function EditableProjectCard(props) {
         // var currCollabs = eCollabs
         // currCollabs.push(eCollab)
         // setCollabs(currCollabs)
-        addUser(eCollab)
+
+      
+        if (method=="add"){
+          addUser(eCollab)
+        } else{
+          deleteUser(eCollab)
+        }
+        
         setCollab("")
 
 
@@ -309,7 +378,8 @@ function EditableProjectCard(props) {
               rows={1}
               maxlength={47}
             />
-            <IonButton onClick={checkUser}>Add User</IonButton>
+            <IonButton onClick={()=>checkUser("add")}>Add User</IonButton>
+            <IonButton onClick={()=>checkUser("remove")}>Remove User</IonButton>
             <TagTitle>Languages</TagTitle>
             <IonSelect style={{ height: "40px", width: "500px", marginLeft: "20px" }} value={eLanguages ? eLanguages : languages} multiple={true} cancelText="Close" okText="Done" placeholder="Select language(s)"
               onIonChange={e => (setLanguages(e.target.value))}>

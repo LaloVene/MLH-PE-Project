@@ -220,7 +220,7 @@ function Projects() {
 									setMUrl("")
 									setMLanguages([""])
 									setMTopics([""])
-									setEdited(mTitle)
+									setEdited((Math.random() + 1).toString(36).substring(7))
 
 								}
 							}
