@@ -152,7 +152,27 @@ function EditableProjectCard(props) {
           }
         })
     })
-    eLanguages?.forEach(function (lang) {
+    eLanguages?eLanguages.forEach(function (lang) {
+      fetch('/api/addProjectLanguage', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'language': lang,
+          'projectId': id
+        })
+      }).then(r => r.json())
+        .then(resp => {
+
+          if (resp.status === "ok") {
+            console.log(resp.message)
+          }
+          else {
+            console.log(resp.error)
+          }
+        })
+    }):languages.forEach(function (lang) {
       fetch('/api/addProjectLanguage', {
         method: 'POST',
         headers: {
@@ -174,7 +194,28 @@ function EditableProjectCard(props) {
         })
     })
 
-    eTopics?.forEach(function (topic) {
+    eTopics?eTopics.forEach(function (topic) {
+      fetch('/api/addProjectTopic', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'topic': topic,
+          'projectId': id
+        })
+      }).then(r => r.json())
+        .then(resp => {
+
+          console.log(topic)
+          if (resp.status === "ok") {
+            console.log(resp.message)
+          }
+          else {
+            console.log(resp.error)
+          }
+        })
+    }):topics.forEach(function (topic) {
       fetch('/api/addProjectTopic', {
         method: 'POST',
         headers: {
