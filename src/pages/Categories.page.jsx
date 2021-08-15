@@ -1,16 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import {
-  IonContent,
-  IonPage,
-  IonRow,
-  IonCol,
-} from "@ionic/react";
-import Header from '../components/Header.component';
+import { IonRow, IonCol } from "@ionic/react";
 import Searchbar from '../components/Searchbar.component';
 import CategoryCard from '../components/CategoryCard.component';
-import SectionTitle from "../components/SectionTitle.component";
-import { PageContainer, SearchBarContainer } from '../components/PageComponentStyles';
+import PageContainer from "../components/PageContainer";
+import { Title, SearchBarContainer } from '../components/PageComponentStyles';
 
 function Categories() {
 
@@ -34,34 +28,26 @@ function Categories() {
   }
 
   return (
-    <IonPage>
-      <Header />
-      <IonContent fullscreen>
+    <PageContainer>
+      <Title>Categories</Title>
+      <SearchBarContainer>
+        <Searchbar placeholder="Search" onChange={Search} onSubmit={() => { }} />
+      </SearchBarContainer>
+      <IonRow>
+        {
+          filteredCategories.map(category =>
+            <IonCol size="6" size-md="3" key={category.name}>
+              <Link style={{ textDecoration: "none" }} to={`/category/${category.name}`}>
+                <CategoryCard
+                  name={category.name}
+                />
+              </Link>
+            </IonCol>
+          )
+        }
+      </IonRow>
+    </PageContainer>
 
-        <PageContainer>
-          <SectionTitle>
-            Categories
-          </SectionTitle>
-
-          <SearchBarContainer>
-            <Searchbar placeholder="Search" onChange={Search} onSubmit={() => { }} />
-          </SearchBarContainer>
-          <IonRow>
-            {
-              filteredCategories.map(category =>
-                <IonCol size="6" size-md="3" key={category.name}>
-                  <Link style={{ textDecoration: "none" }} to={`/category/${category.name}`}>
-                    <CategoryCard
-                      name={category.name}
-                    />
-                  </Link>
-                </IonCol>
-              )
-            }
-          </IonRow>
-        </PageContainer>
-      </IonContent>
-    </IonPage >
   );
 }
 

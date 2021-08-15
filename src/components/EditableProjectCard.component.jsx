@@ -7,8 +7,6 @@ import {
   useIonAlert,
   IonSelect,
   IonSelectOption,
-  IonItem,
-  IonRow,
 } from "@ionic/react";
 import {
   Card,
@@ -34,7 +32,6 @@ import ProjectTags from './ProjectTags'
 import { personCircleOutline } from "ionicons/icons";
 import { useJwt } from "react-jwt";
 import GlobalContext from "../utils/state/GlobalContext";
-import '../pages/Projects.css';
 import { LRButton } from '../components/LRStyles'
 import dbtopics from "../utils/topics.json";
 import dblanguages from "../utils/languages.json";
@@ -152,7 +149,7 @@ function EditableProjectCard(props) {
           }
         })
     })
-    eLanguages?eLanguages.forEach(function (lang) {
+    eLanguages ? eLanguages.forEach(function (lang) {
       fetch('/api/addProjectLanguage', {
         method: 'POST',
         headers: {
@@ -172,7 +169,7 @@ function EditableProjectCard(props) {
             console.log(resp.error)
           }
         })
-    }):languages.forEach(function (lang) {
+    }) : languages.forEach(function (lang) {
       fetch('/api/addProjectLanguage', {
         method: 'POST',
         headers: {
@@ -194,7 +191,7 @@ function EditableProjectCard(props) {
         })
     })
 
-    eTopics?eTopics.forEach(function (topic) {
+    eTopics ? eTopics.forEach(function (topic) {
       fetch('/api/addProjectTopic', {
         method: 'POST',
         headers: {
@@ -215,7 +212,7 @@ function EditableProjectCard(props) {
             console.log(resp.error)
           }
         })
-    }):topics.forEach(function (topic) {
+    }) : topics.forEach(function (topic) {
       fetch('/api/addProjectTopic', {
         method: 'POST',
         headers: {
@@ -309,13 +306,13 @@ function EditableProjectCard(props) {
         // currCollabs.push(eCollab)
         // setCollabs(currCollabs)
 
-      
-        if (method=="add"){
+
+        if (method === "add") {
           addUser(eCollab)
-        } else{
+        } else {
           deleteUser(eCollab)
         }
-        
+
         setCollab("")
 
 
@@ -419,8 +416,8 @@ function EditableProjectCard(props) {
               rows={1}
               maxlength={47}
             />
-            <IonButton onClick={()=>checkUser("add")}>Add User</IonButton>
-            <IonButton onClick={()=>checkUser("remove")}>Remove User</IonButton>
+            <IonButton onClick={() => checkUser("add")}>Add User</IonButton>
+            <IonButton onClick={() => checkUser("remove")}>Remove User</IonButton>
             <TagTitle>Languages</TagTitle>
             <IonSelect style={{ height: "40px", width: "500px", marginLeft: "20px" }} value={eLanguages ? eLanguages : languages} multiple={true} cancelText="Close" okText="Done" placeholder="Select language(s)"
               onIonChange={e => (setLanguages(e.target.value))}>

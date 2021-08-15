@@ -15,7 +15,7 @@ import styled from "styled-components";
 const CreateCard = styled(IonCard)`
 	cursor: pointer;
 	border-radius: 2rem;
-  	background-color: #D4E0FF;
+  background-color: #D4E0FF;
 	box-shadow: none;
 	height: 95%;
 	display: flex;

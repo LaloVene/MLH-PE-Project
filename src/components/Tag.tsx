@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components'
 
 interface ContainerProps {
-    text: string;
+  text: string;
 }
 
 const TagBubble = styled.div`
@@ -16,11 +16,9 @@ const TagBubble = styled.div`
 
 const Tag: React.FC<ContainerProps> = ({ text }) => {
   return (
-    <div className="container">
-        <TagBubble>
-            {text}
-        </TagBubble>
-    </div>
+    <TagBubble>
+      {text}
+    </TagBubble>
   );
 };
 

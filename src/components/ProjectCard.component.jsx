@@ -1,15 +1,9 @@
 import React, { useState, useContext,useEffect } from "react";
 import {
-  IonCard,
-  IonCardHeader,
-  IonCardTitle,
-  IonCardSubtitle,
   IonCardContent,
-  IonIcon,
   IonCol,
   IonModal,
   IonButton,
-  IonItem,
   useIonAlert
 } from "@ionic/react";
 import {
@@ -23,27 +17,18 @@ import {
   Description,
   ProjTitle,
   Owner,
-  TagText,
-  TagTitle,
   TitleInput,
   DescriptionInput,
-  LinkInput,
-  TagsWrapper,
   ModalContent,
   ModalContentView,
   ButtonsWrapper
 } from './ProjectCardStyles';
 import ProjectTags from './ProjectTags';
 import { personCircleOutline, send, close, open } from "ionicons/icons";
-import styled from "styled-components";
 import { useJwt } from "react-jwt";
 import GlobalContext from "../utils/state/GlobalContext";
 import { LRButton } from '../components/LRStyles'
 
-const Tags = styled.p`
-  padding-top: 1rem;
-  color: #B4B5B8;
-`;
 
 function CategoryCard(props) {
 
@@ -53,16 +38,11 @@ function CategoryCard(props) {
   const [mTitle, setMTitle] = useState("");
   const [mMessage, setMMessage] = useState("");
 
-
-  
-  
-
   const { state } = useContext(GlobalContext);
   const { decodedToken } = useJwt(state.token);
   const [present] = useIonAlert()
 
   function sendEmail() {
-
 
     if (!mTitle || !mMessage) {
       return present({
@@ -108,7 +88,6 @@ function CategoryCard(props) {
         })
     }
   }
-
 
     return (
       <IonCol size="12" size-md="4" key={id}>
@@ -186,7 +165,6 @@ function CategoryCard(props) {
             <Description>{description.length < 100 ? description : description.slice(0, 100) + "..."}</Description>
             <Date style={{ textAlign: "right" }}>{date}</Date>
   
-  
             <ProjectTags title="Languages" tagType={languages} limit={true} />
             <ProjectTags title="Tags" tagType={topics} limit={true} />
             <ProjectTags title="Collaborators" tagType={collabs} limit={true} />
@@ -195,12 +173,6 @@ function CategoryCard(props) {
         </Card>
       </IonCol>
     );
-//   }
-// else {
-//   return null
-// }
 }
-
-  
 
 export default CategoryCard;

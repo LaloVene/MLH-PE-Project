@@ -1,20 +1,14 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import {
-  IonContent,
-  IonPage,
-  IonRow,
-} from "@ionic/react";
-import SectionTitle from "../components/SectionTitle.component";
+import { IonRow } from "@ionic/react";
 import ProjectCard from "../components/ProjectCard.component";
 import CategoryButton from "../components/CategoryButton.component";
 import Searchbar from '../components/Searchbar.component';
-import Header from '../components/Header.component';
 import NotFound from '../components/NotFound.component';
-import './Home.css';
 import GlobalContext from "../utils/state/GlobalContext";
 import { useJwt } from "react-jwt";
-import { PageContainer, Separator } from "../components/PageComponentStyles";
+import { Title, Separator } from "../components/PageComponentStyles";
+import PageContainer from '../components/PageContainer'
 
 function Home() {
   const [search, setSearch] = useState('');
@@ -134,63 +128,58 @@ function Home() {
   }, []);
 
   return (
-    <IonPage>
-      <Header />
-      <IonContent fullscreen>
-        <PageContainer>
-          {/* Search Bar */}
-          <section>
-            <Searchbar
-              placeholder="Search"
-              onChange={(e: any) => setSearch(e.target.value!)}
-            />
-          </section>
 
-          {/* Categories */}
-          <section>
-            <SectionTitle>Explore by Category</SectionTitle>
-            {categories.slice(0, 4).map((category: any) => (
-              <Link to={`/category/${category.name}`}>
-                <CategoryButton key={category.name}>
-                  {category.name}
-                </CategoryButton>
-              </Link>
-            ))}
-          </section>
+    <PageContainer>
+      {/* Search Bar */}
+      <section>
+        <Searchbar
+          placeholder="Search"
+          onChange={(e: any) => setSearch(e.target.value!)}
+        />
+      </section>
 
-          <Separator />
+      {/* Categories */}
+      <section>
+        <Title>Explore by Category</Title>
+        {categories.slice(0, 4).map((category: any) => (
+          <Link to={`/category/${category.name}`}>
+            <CategoryButton key={category.name}>
+              {category.name}
+            </CategoryButton>
+          </Link>
+        ))}
+      </section>
 
-          {/* Projects */}
-          <section>
-            <SectionTitle>
-              {search ? "Search Results" : "Recommended for You"}
-            </SectionTitle>
-            <IonRow>
+      <Separator />
 
-              {filteredProjects.map((project: any) => {
-                const { id, title, description, date, url, owner } = project;
+      {/* Projects */}
+      <section>
+        <Title>{search ? "Search Results" : "Recommended for You"}</Title>
+        <IonRow>
 
-                return (
-                  <ProjectCard
-                    title={title}
-                    description={description}
-                    date={date}
-                    url={url}
-                    owner={owner}
-                    id={id}
-                    languages={langs.get(id)}
-                    topics={tops.get(id)}
-                    collabs={users.get(id)}
-                  />
-                );
-              })}
+          {filteredProjects.map((project: any) => {
+            const { id, title, description, date, url, owner } = project;
 
-            </IonRow>
-            {!filteredProjects.length && <NotFound title="No match" />}
-          </section>
-        </PageContainer>
-      </IonContent>
-    </IonPage>
+            return (
+              <ProjectCard
+                title={title}
+                description={description}
+                date={date}
+                url={url}
+                owner={owner}
+                id={id}
+                languages={langs.get(id)}
+                topics={tops.get(id)}
+                collabs={users.get(id)}
+              />
+            );
+          })}
+
+        </IonRow>
+        {!filteredProjects.length && <NotFound title="No match" />}
+      </section>
+    </PageContainer>
+
   );
 }
 
