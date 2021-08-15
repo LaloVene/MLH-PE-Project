@@ -584,7 +584,7 @@ def deleteUserTopic():
             ).delete()
             db.session.commit()
             message = (
-                f"Topic {topicName} removed from user with username {username}"
+                f"Topic {topic} removed from user with username {username}"
             )
             return jsonify({"status": "ok", "message": message}), 200
         else:
@@ -593,11 +593,7 @@ def deleteUserTopic():
     except:  # noqa: E722
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
 
-
-  
-
 # ------------ LANGUAGES ##############
-
 
 @app.route("/api/addLanguage", methods=("POST",))
 def addLanguage():
