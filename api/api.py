@@ -726,7 +726,7 @@ def deleteUserLanguage():
                 langName=language, username=username
             ).first()
             is None
-        ):          
+        ):
             error = f"Language not in user with username {username}"
 
         if error is None:
