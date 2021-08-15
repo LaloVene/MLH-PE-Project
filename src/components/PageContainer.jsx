@@ -1,5 +1,5 @@
 import { IonPage, IonContent } from "@ionic/react";
-import { PageWrapper, Title } from './PageComponentStyles';
+import { PageWrapper } from './PageComponentStyles';
 import Header from './Header.component';
 
 function PageContainer(props) {
@@ -8,7 +8,6 @@ function PageContainer(props) {
       <Header />
       <IonContent fullscreen>
         <PageWrapper>
-          {props.title ? <Title title={props.title} /> : <></>}
           {props.children}
         </PageWrapper>
       </IonContent>

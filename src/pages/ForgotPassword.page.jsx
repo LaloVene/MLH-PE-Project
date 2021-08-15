@@ -1,13 +1,11 @@
-import React from 'react';
-import { IonContent, IonHeader, IonInput, IonItem, IonPage, IonRow, IonTitle, IonToolbar, useIonAlert } from '@ionic/react';
+import { IonInput, IonItem, IonRow, useIonAlert } from '@ionic/react';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import styled from "styled-components";
 
-import { LRTitle, LRWrapper, LRCol, LRButton } from '../components/LRStyles' 
-import Header from '../components/Header.component';
-
-import { ReactComponent as RegisterPic } from "../imgs/RegisterIcon.svg"
+import { LRTitle, LRWrapper, LRCol, LRButton } from '../components/LRStyles'
+import PageContainer from '../components/PageContainer';
+import { ReactComponent as RegisterPic } from "../imgs/RegisterIcon.svg";
 
 const ErrorMsg = styled.small`
   color: red;
@@ -26,14 +24,14 @@ const ForgotPassword = () => {
   const resetPassword = async (user) => {
     try {
       const response = await fetch('/api/requestReset', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            'username': user,
-          })
-        });
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'username': user,
+        })
+      });
       const data = await response.json();
       console.log(data)
       if (!data.error) {
@@ -56,57 +54,50 @@ const ForgotPassword = () => {
     }
   }
 
-  const onSubmitClick = async ({username}) => {
+  const onSubmitClick = async ({ username }) => {
     resetPassword(username);
   }
 
   return (
-    <IonPage>
-      <Header />
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Forgot Password</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <IonRow>
-          <LRCol>
-          <RegisterPic style={{width: "200px", height: "200px"}} />
+    <PageContainer>
+      <IonRow>
+        <LRCol>
+          <RegisterPic style={{ width: "200px", height: "200px" }} />
           <LRTitle>
-              Forgot Password
+            Forgot Password
           </LRTitle>
-            <Formik
-            initialValues={{username: null,}}
+          <Formik
+            initialValues={{ username: null, }}
             validationSchema={validationSchema}
             onSubmit={values => {
               onSubmitClick(values);
             }}
-            >
-              {formikProps => (
-                <LRWrapper>
-                  <form onSubmit={formikProps.handleSubmit}>
-                    <IonItem>
-                      <IonInput
+          >
+            {formikProps => (
+              <LRWrapper>
+                <form onSubmit={formikProps.handleSubmit}>
+                  <IonItem>
+                    <IonInput
                       type="text"
                       name="username"
                       placeholder="Username"
                       value={formikProps.values.username}
                       onIonChange={formikProps.handleChange}
-                      />
-                    </IonItem>
-                    <ErrorMsg>
-                      {formikProps.touched.username && formikProps.errors.username}
-                    </ErrorMsg>
+                    />
+                  </IonItem>
+                  <ErrorMsg>
+                    {formikProps.touched.username && formikProps.errors.username}
+                  </ErrorMsg>
                   <LRButton type="submit">Send email</LRButton>
-                  </form>
-                </LRWrapper>
-              )}
+                </form>
+              </LRWrapper>
+            )}
 
-            </Formik>
-          </LRCol>
-        </IonRow>
-      </IonContent>
-    </IonPage>
+          </Formik>
+        </LRCol>
+      </IonRow>
+    </PageContainer>
+
   );
 };
 

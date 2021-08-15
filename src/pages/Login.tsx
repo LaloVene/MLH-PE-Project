@@ -1,12 +1,11 @@
-import { useIonAlert, IonContent, IonInput, IonItem, IonLabel, IonPage, IonRow } from '@ionic/react';
+import { useIonAlert, IonInput, IonItem, IonLabel, IonRow } from '@ionic/react';
 import React, { useState, useContext } from 'react';
-import Header from '../components/Header.component';
 
-import ExploreContainer from '../components/ExploreContainer';
 import GlobalContext from "../utils/state/GlobalContext";
-import { LRTitle, LRWrapper, LRSmall, LRSwitch, LRLink, LRCol, LRButton } from '../components/LRStyles' ;
+import { LRTitle, LRWrapper, LRSmall, LRSwitch, LRLink, LRCol, LRButton } from '../components/LRStyles';
 
 import { ReactComponent as LoginPic } from "../imgs/LoginIcon.svg"
+import PageContainer from '../components/PageContainer';
 
 const Login: React.FC = () => {
   const { dispatch } = useContext(GlobalContext);
@@ -23,7 +22,7 @@ const Login: React.FC = () => {
       'password': password
     }
     console.log(opts)
-    
+
     await fetch('/api/login', {
       method: 'POST',
       headers: {
@@ -42,74 +41,73 @@ const Login: React.FC = () => {
         }
       }).catch(() => {
         msg = "Invalid username";
-      }).then(()=>{
+      }).then(() => {
         return present({
           header: msg,
           buttons: [
-            {text:'Ok', handler:(d)=>{    
-              window.location.href = ("/Profile")
-            }}
-            
+            {
+              text: 'Ok', handler: (d) => {
+                window.location.href = ("/Profile")
+              }
+            }
+
           ],
         })
       })
 
-    
+
   }
 
   return (
-    <IonPage>
-      <Header />
-      <IonContent fullscreen>
-        <ExploreContainer name="Login" />
-        <IonRow
-          style={{
-            margin: "8vh",
-          }}
-        >
-          <LRCol>
-            <LoginPic style={{ width: "200px", height: "200px" }} />
-            <LRTitle>Login to DevUp</LRTitle>
+    <PageContainer>
+      <IonRow
+        style={{
+          margin: "8vh",
+        }}
+      >
+        <LRCol>
+          <LoginPic style={{ width: "200px", height: "200px" }} />
+          <LRTitle>Login to DevUp</LRTitle>
 
-            <LRWrapper>
-              <IonItem>
-                <IonLabel position="floating"> Username</IonLabel>
-                <IonInput
-                  type="text"
-                  value={username}
-                  onIonChange={(e: { detail: { value: any } }) =>
-                    setUsername(e.detail.value!)
-                    
-                  }
-                  style={{
-                      "color":"black"
-                  }}
-                />
-              </IonItem>
+          <LRWrapper>
+            <IonItem>
+              <IonLabel position="floating">
+                Username
+              </IonLabel>
+              <IonInput
+                type="text"
+                value={username}
+                onIonChange={(e: { detail: { value: any } }) =>
+                  setUsername(e.detail.value!)
+                }
+                style={{
+                  "color": "black"
+                }}
+              />
+            </IonItem>
 
-              <IonItem>
-                <IonLabel position="floating"> Password</IonLabel>
-                <IonInput
-                  type="password"
-                  value={password}
-                  onIonChange={(e: { detail: { value: any } }) =>
-                    setPassword(e.detail.value!)
-                  }
-                />
-              </IonItem>
+            <IonItem>
+              <IonLabel position="floating"> Password</IonLabel>
+              <IonInput
+                type="password"
+                value={password}
+                onIonChange={(e: { detail: { value: any } }) =>
+                  setPassword(e.detail.value!)
+                }
+              />
+            </IonItem>
 
-              <LRSmall>
-                <LRLink to="/reset">Forgot password?</LRLink>
-              </LRSmall>
-            </LRWrapper>
-            <LRButton onClick={onSubmitClick}>Login</LRButton>
-            <LRSwitch>
-              New to DevUp? <LRLink to="/register">Create an account</LRLink>
-            </LRSwitch>
-          </LRCol>
-        </IonRow>
-      </IonContent>
-    </IonPage>
+            <LRSmall>
+              <LRLink to="/reset">Forgot password?</LRLink>
+            </LRSmall>
+          </LRWrapper>
+          <LRButton onClick={onSubmitClick}>Login</LRButton>
+          <LRSwitch>
+            New to DevUp? <LRLink to="/register">Create an account</LRLink>
+          </LRSwitch>
+        </LRCol>
+      </IonRow>
+    </PageContainer>
   );
 };
 

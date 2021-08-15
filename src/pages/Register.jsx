@@ -1,17 +1,16 @@
 import { useState } from 'react';
-import { IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonRow, IonTitle, IonToolbar, useIonAlert, IonSelect, IonSelectOption } from '@ionic/react';
+import { IonInput, IonItem, IonLabel, IonRow,useIonAlert, IonSelect, IonSelectOption } from '@ionic/react';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import styled from "styled-components";
 
-import { LRTitle, LRWrapper, LRSwitch, LRLink, LRCol, LRButton } from '../components/LRStyles' 
-import ExploreContainer from '../components/ExploreContainer';
-import Header from '../components/Header.component';
+import { LRTitle, LRWrapper, LRSwitch, LRLink, LRCol, LRButton } from '../components/LRStyles'
 
 import dblanguages from "../utils/languages.json";
 import dbtopics from "../utils/topics.json";
 
 import { ReactComponent as RegisterPic } from "../imgs/RegisterIcon.svg"
+import PageContainer from '../components/PageContainer';
 
 const ErrorMsg = styled.small`
   color: red;
@@ -34,7 +33,7 @@ const Register = () => {
 
   const [present] = useIonAlert()
 
-  const onSubmitClick = async ({name, email, username, password, github}) => {
+  const onSubmitClick = async ({ name, email, username, password, github }) => {
     console.log(languages)
     console.log(topics)
 
@@ -112,42 +111,37 @@ const Register = () => {
           console.log(resp)
           msg = resp.error
         }
-      }).then(()=>{
+      }).then(() => {
         return present({
           header: msg,
           buttons: [
-            {text:'Ok', handler:(d)=>{    
-              window.location.href = ("/Login")
-            }}
-            
+            {
+              text: 'Ok', handler: (d) => {
+                window.location.href = ("/Login")
+              }
+            }
+
           ],
         })
       })
 
 
-    
+
   }
 
   return (
-    <IonPage>
-      <Header />
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Register</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <ExploreContainer name="Register" />
-        <IonRow>
-          <LRCol>
+    <PageContainer>
+
+      <IonRow>
+        <LRCol>
           <RegisterPic style={{
-                        width: "200px",
-                        height: "200px"
-                    }} />
+            width: "200px",
+            height: "200px"
+          }} />
           <LRTitle>
-              Register for DevUp
+            Register for DevUp
           </LRTitle>
-            <Formik
+          <Formik
             initialValues={{
               name: null,
               email: null,
@@ -161,115 +155,115 @@ const Register = () => {
             onSubmit={values => {
               onSubmitClick(values);
             }}
-            >
-              {formikProps => (
-                <>
+          >
+            {formikProps => (
+              <>
                 <LRWrapper>
 
-                <form onSubmit={formikProps.handleSubmit}>
-                    
-                  <IonItem>
-                    <IonInput
-                    type="text"
-                    name="name"
-                    placeholder="Name*"
-                    value={formikProps.values.name}
-                    onIonChange={formikProps.handleChange}
-                    />
-                  </IonItem>
-                  <ErrorMsg>
-                    {formikProps.touched.name && formikProps.errors.name}
-                  </ErrorMsg>
+                  <form onSubmit={formikProps.handleSubmit}>
 
-                  <IonItem>
-                    <IonInput
-                    type="email"
-                    name="email"
-                    placeholder="Email*"
-                    value={formikProps.values.email}
-                    onIonChange={formikProps.handleChange}
-                    />
-                  </IonItem>
-                  <ErrorMsg>
-                    {formikProps.touched.email && formikProps.errors.email}
-                  </ErrorMsg>
-                  
-                  <IonItem>
-                    <IonInput
-                    type="text"
-                    name="username"
-                    placeholder="Username*"
-                    value={formikProps.values.username}
-                    onIonChange={formikProps.handleChange}
-                    />
-                  </IonItem>
-                  <ErrorMsg>
-                    {formikProps.touched.username && formikProps.errors.username}
-                  </ErrorMsg>
+                    <IonItem>
+                      <IonInput
+                        type="text"
+                        name="name"
+                        placeholder="Name*"
+                        value={formikProps.values.name}
+                        onIonChange={formikProps.handleChange}
+                      />
+                    </IonItem>
+                    <ErrorMsg>
+                      {formikProps.touched.name && formikProps.errors.name}
+                    </ErrorMsg>
 
-                  <IonItem>
-                    <IonInput
-                    type="password"
-                    name="password"
-                    placeholder="Password*"
-                    value={formikProps.values.password}
-                    onIonChange={formikProps.handleChange}
-                    />
-                  </IonItem>
-                  <ErrorMsg>
-                    {formikProps.touched.password && formikProps.errors.password}
-                  </ErrorMsg>
+                    <IonItem>
+                      <IonInput
+                        type="email"
+                        name="email"
+                        placeholder="Email*"
+                        value={formikProps.values.email}
+                        onIonChange={formikProps.handleChange}
+                      />
+                    </IonItem>
+                    <ErrorMsg>
+                      {formikProps.touched.email && formikProps.errors.email}
+                    </ErrorMsg>
 
-                  <IonItem>
-                    <IonInput
-                    type="text"
-                    name="github"
-                    placeholder="Github*"
-                    value={formikProps.values.github}
-                    onIonChange={formikProps.handleChange}
-                    />
-                  </IonItem>
-                  <ErrorMsg>
-                    {formikProps.touched.github && formikProps.errors.github}
-                  </ErrorMsg>
+                    <IonItem>
+                      <IonInput
+                        type="text"
+                        name="username"
+                        placeholder="Username*"
+                        value={formikProps.values.username}
+                        onIonChange={formikProps.handleChange}
+                      />
+                    </IonItem>
+                    <ErrorMsg>
+                      {formikProps.touched.username && formikProps.errors.username}
+                    </ErrorMsg>
 
-                  <IonItem style={{width:"300px"}}>
-                    <IonLabel>Languages</IonLabel>
-                    <IonSelect value={languages} multiple={true} cancelText="Close" okText="Done" 
-                      onIonChange={e => setLanguages(e.target.value)}>
-                    {
-                      dblanguages.map(lang =>
-                        <IonSelectOption value={lang}>{lang}</IonSelectOption>
-                      )
-                    }
-                    </IonSelect>
-                  </IonItem>
+                    <IonItem>
+                      <IonInput
+                        type="password"
+                        name="password"
+                        placeholder="Password*"
+                        value={formikProps.values.password}
+                        onIonChange={formikProps.handleChange}
+                      />
+                    </IonItem>
+                    <ErrorMsg>
+                      {formikProps.touched.password && formikProps.errors.password}
+                    </ErrorMsg>
 
-                <IonItem style={{width:"300px"}}>
-                  <IonLabel>Interests</IonLabel>
-                  <IonSelect value={topics} multiple={true} cancelText="Close" okText="Done" 
-                    onIonChange={e => setTopics(e.target.value)}>
-                    {
-                      dbtopics.map(topic =>
-                        <IonSelectOption value={topic}>{topic}</IonSelectOption>
-                      )
-                    }
-                </IonSelect>
-              </IonItem>
-                <LRButton type="submit">Register</LRButton>
-                </form>
+                    <IonItem>
+                      <IonInput
+                        type="text"
+                        name="github"
+                        placeholder="Github*"
+                        value={formikProps.values.github}
+                        onIonChange={formikProps.handleChange}
+                      />
+                    </IonItem>
+                    <ErrorMsg>
+                      {formikProps.touched.github && formikProps.errors.github}
+                    </ErrorMsg>
+
+                    <IonItem style={{ width: "300px" }}>
+                      <IonLabel>Languages</IonLabel>
+                      <IonSelect value={languages} multiple={true} cancelText="Close" okText="Done"
+                        onIonChange={e => setLanguages(e.target.value)}>
+                        {
+                          dblanguages.map(lang =>
+                            <IonSelectOption value={lang}>{lang}</IonSelectOption>
+                          )
+                        }
+                      </IonSelect>
+                    </IonItem>
+
+                    <IonItem style={{ width: "300px" }}>
+                      <IonLabel>Interests</IonLabel>
+                      <IonSelect value={topics} multiple={true} cancelText="Close" okText="Done"
+                        onIonChange={e => setTopics(e.target.value)}>
+                        {
+                          dbtopics.map(topic =>
+                            <IonSelectOption value={topic}>{topic}</IonSelectOption>
+                          )
+                        }
+                      </IonSelect>
+                    </IonItem>
+                    <LRButton type="submit">Register</LRButton>
+                  </form>
                 </LRWrapper>
-                </>
-              )}
+              </>
+            )}
 
-            </Formik>
-            <LRSwitch>
-              Already have an account? <LRLink to="/login">Login</LRLink>
-            </LRSwitch>
-          </LRCol>
-        </IonRow>
-      </IonContent>
-    </IonPage>
+          </Formik>
+          <LRSwitch>
+            Already have an account? <LRLink to="/login">Login</LRLink>
+          </LRSwitch>
+        </LRCol>
+      </IonRow>
+    </PageContainer>
+
   );
 };
 

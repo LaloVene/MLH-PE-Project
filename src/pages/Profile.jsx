@@ -79,11 +79,11 @@ function ProfilePage() {
             },
             body: JSON.stringify({
               'language': lang.name,
-              'username':profileData.username
+              'username': profileData.username
             })
           }).then(r => r.json())
             .then(resp => {
-    
+
               if (resp.status === "ok") {
                 console.log(resp.message)
               }
@@ -146,11 +146,11 @@ function ProfilePage() {
             },
             body: JSON.stringify({
               'topic': top.name,
-              'username':profileData.username
+              'username': profileData.username
             })
           }).then(r => r.json())
             .then(resp => {
-    
+
               if (resp.status === "ok") {
                 console.log(resp.message)
               }
@@ -344,79 +344,79 @@ function ProfilePage() {
   const placeholderBio = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
 
   return (
-<PageContainer>
+    <PageContainer>
 
-          {/* Profile information */}
-          <Profile name={profileData.name} username={profileData.username} bio={placeholderBio} />
+      {/* Profile information */}
+      <Profile name={profileData.name} username={profileData.username} bio={placeholderBio} />
 
-          {/* Languages and interests row */}
-          <IonRow>
-            <Section>
-              <SmallTitle>
-                &nbsp;&nbsp;
-                Languages
-                &nbsp;
-                <EditIcon
-                  onClick={() => setEditLanguagesDetails(true)}
-                >
-                  <IonIcon slot="icon-only" icon={pencilOutline} />
-                </EditIcon>
-                <EditProfileDetails />
-              </SmallTitle>
-              <TagSection>
-                {profileData.languages ? profileData.languages.map(language => <Tag key={language.name} text={language.name} />) : <div />}
-              </TagSection>
-            </Section>
-            <Section>
-              <SmallTitle>
-                &nbsp;&nbsp;
-                Interests
-                &nbsp;
-                <EditIcon
-                  onClick={() => setEditInterestsDetails(true)}
-                >
-                  <IonIcon slot="icon-only" icon={pencilOutline} />
-                </EditIcon>
-              </SmallTitle>
-              <TagSection>
-                {profileData.topics ? profileData.topics.map(topic => <Tag key={topic.name} text={topic.name} />) : <div />}
-              </TagSection>
-            </Section>
-          </IonRow>
-
-          {/* Projects section */}
+      {/* Languages and interests row */}
+      <IonRow>
+        <Section>
           <SmallTitle>
-            Projects
+            &nbsp;&nbsp;
+            Languages
+            &nbsp;
+            <EditIcon
+              onClick={() => setEditLanguagesDetails(true)}
+            >
+              <IonIcon slot="icon-only" icon={pencilOutline} />
+            </EditIcon>
+            <EditProfileDetails />
           </SmallTitle>
-          <IonGrid>
-            {
-              projectList?.filter(project => project.owner === profileData.username).length ?
-                <IonRow>
-                  {projectList?.filter(project => project.owner === profileData.username).map(project => {
-                    const { id, title, description, date, url, owner } = project;
-                    return (
-                      <ProjectCard
-                        title={title}
-                        description={description}
-                        date={date}
-                        url={url}
-                        owner={owner}
-                        id={id}
-                        key={id}
-                        languages={langs[id]}
-                        topics={tops[id]}
-                        collabs={users[id]}
-                      />
+          <TagSection>
+            {profileData.languages ? profileData.languages.map(language => <Tag key={language.name} text={language.name} />) : <div />}
+          </TagSection>
+        </Section>
+        <Section>
+          <SmallTitle>
+            &nbsp;&nbsp;
+            Interests
+            &nbsp;
+            <EditIcon
+              onClick={() => setEditInterestsDetails(true)}
+            >
+              <IonIcon slot="icon-only" icon={pencilOutline} />
+            </EditIcon>
+          </SmallTitle>
+          <TagSection>
+            {profileData.topics ? profileData.topics.map(topic => <Tag key={topic.name} text={topic.name} />) : <div />}
+          </TagSection>
+        </Section>
+      </IonRow>
 
-                    );
-                  })}
-                </IonRow>
-                :
-                <NotFound title="No Projects" message="You don't have projects yet" />
-            }
-          </IonGrid>
+      {/* Projects section */}
+      <SmallTitle>
+        Projects
+      </SmallTitle>
+      <IonGrid>
+        {
+          projectList?.filter(project => project.owner === profileData.username).length ?
+            <IonRow>
+              {projectList?.filter(project => project.owner === profileData.username).map(project => {
+                const { id, title, description, date, url, owner } = project;
+                return (
+                  <ProjectCard
+                    title={title}
+                    description={description}
+                    date={date}
+                    url={url}
+                    owner={owner}
+                    id={id}
+                    key={id}
+                    languages={langs[id]}
+                    topics={tops[id]}
+                    collabs={users[id]}
+                  />
 
-        </PageContainer>
+                );
+              })}
+            </IonRow>
+            :
+            <NotFound title="No Projects" message="You don't have projects yet" />
+        }
+      </IonGrid>
+
+    </PageContainer>
 
   );
 };
