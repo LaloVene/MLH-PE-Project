@@ -570,19 +570,23 @@ def deleteUserTopic():
         if not username:
             error = "Missing Data"
 
-        if (RelUserTopic.query.filter_by(topicName=topic, username=username).first() is None):
+        if (
+            RelUserTopic.query.filter_by(topicName=topic, username=username).first()
+            is None
+        ):
             error = f"Topic not in user with username {username}"
 
         if error is None:
             RelUserTopic.query.filter_by(topicName=topic, username=username).delete()
             db.session.commit()
-            message = (f"Topic {topic} removed from user with username {username}")
+            message = f"Topic {topic} removed from user with username {username}"
             return jsonify({"status": "ok", "message": message}), 200
         else:
             return jsonify({"status": "bad", "error": error}), 400
 
     except:  # noqa: E722
         return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
+
 
 # ------------ LANGUAGES ##############
 
@@ -717,13 +721,20 @@ def deleteUserLanguage():
         if not username:
             error = "Missing Data"
 
-        if (RelUserLanguage.query.filter_by(langName=language, username=username).first() is None):
+        if (
+            RelUserLanguage.query.filter_by(
+                langName=language, username=username
+            ).first()
+            is None
+        ):          
             error = f"Language not in user with username {username}"
 
         if error is None:
-            RelUserLanguage.query.filter_by(langName=language, username=username).delete()
+            RelUserLanguage.query.filter_by(
+                langName=language, username=username
+            ).delete()
             db.session.commit()
-            message = (f"Language {language} removed from user with username {username}")
+            message = f"Language {language} removed from user with username {username}"
             return jsonify({"status": "ok", "message": message}), 200
         else:
             return jsonify({"status": "bad", "error": error}), 400
