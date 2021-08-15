@@ -40,7 +40,7 @@ const Profile: React.FC<ContainerProps> = ({ name, username, bio }) => {
                 </Col3>
                 <Col7>
                     <IonCardHeader>
-                        <IonCardTitle><strong>{name}</strong></IonCardTitle>
+                        <IonCardTitle style={{fontSize: "165%"}}><strong>{name}</strong></IonCardTitle>
                         <i><IonCardSubtitle>{username}</IonCardSubtitle></i>
                     </IonCardHeader>
                     <IonCardContent>

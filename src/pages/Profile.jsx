@@ -1,4 +1,4 @@
-import { IonContent, useIonAlert, IonGrid, IonPage, IonRow, IonIcon, IonButton, IonModal, IonSelect, IonSelectOption } from '@ionic/react';
+import { useIonAlert, IonGrid, IonRow, IonIcon, IonButton, IonModal, IonSelect, IonSelectOption } from '@ionic/react';
 import {
   ModalContent,
   ButtonsWrapper,
@@ -9,7 +9,6 @@ import styled from 'styled-components'
 import ProjectCard from "../components/ProjectCard.component";
 import Profile from '../components/Profile';
 import Tag from '../components/Tag';
-import Header from '../components/Header.component';
 import NotFound from '../components/NotFound.component';
 import GlobalContext from "../utils/state/GlobalContext";
 import { useJwt } from "react-jwt";
@@ -17,19 +16,8 @@ import { pencilOutline, close, checkmark } from 'ionicons/icons';
 import dbtopics from "../utils/topics.json";
 import dblanguages from "../utils/languages.json";
 import PageContainer from '../components/PageContainer';
+import { SmallTitle } from '../components/PageComponentStyles';
 
-const Title = styled.h4`
-  margin-bottom: 12px;
-  margin-top: 36px;
-  text-align: center;
-  font-weight: bold;
-`;
-
-const Wrapper = styled.div`
-  max-width: 1200px;
-  margin: auto;
-  padding: 1rem;
-`;
 
 const Section = styled.div`
   width: 50%;
@@ -364,7 +352,7 @@ function ProfilePage() {
           {/* Languages and interests row */}
           <IonRow>
             <Section>
-              <Title>
+              <SmallTitle>
                 &nbsp;&nbsp;
                 Languages
                 &nbsp;
@@ -374,13 +362,13 @@ function ProfilePage() {
                   <IonIcon slot="icon-only" icon={pencilOutline} />
                 </EditIcon>
                 <EditProfileDetails />
-              </Title>
+              </SmallTitle>
               <TagSection>
                 {profileData.languages ? profileData.languages.map(language => <Tag key={language.name} text={language.name} />) : <div />}
               </TagSection>
             </Section>
             <Section>
-              <Title>
+              <SmallTitle>
                 &nbsp;&nbsp;
                 Interests
                 &nbsp;
@@ -389,7 +377,7 @@ function ProfilePage() {
                 >
                   <IonIcon slot="icon-only" icon={pencilOutline} />
                 </EditIcon>
-              </Title>
+              </SmallTitle>
               <TagSection>
                 {profileData.topics ? profileData.topics.map(topic => <Tag key={topic.name} text={topic.name} />) : <div />}
               </TagSection>
@@ -397,9 +385,9 @@ function ProfilePage() {
           </IonRow>
 
           {/* Projects section */}
-          <Title>
+          <SmallTitle>
             Projects
-          </Title>
+          </SmallTitle>
           <IonGrid>
             {
               projectList?.filter(project => project.owner === profileData.username).length ?
