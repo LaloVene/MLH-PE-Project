@@ -3,7 +3,8 @@
 
 By Michelle Shen, Eduardo Venegas, and Angela Wang
 
-Deployment: https://dev-up.tech
+### Deployment: https://dev-up.tech
+-----------------------------
 
 ## Project Overview
 DevUp is a platform where developers of all skill levels can find other developers to team up with on a project. Developers can search for projects that they are interested in, and contact the current team members of the project to learn more about them and join their team. Developers that already have an project idea can make a post on DevUp to display it to other seeking developers and find new team members.
@@ -12,6 +13,10 @@ DevUp is a platform where developers of all skill levels can find other develope
 - Flask
 - React Ionic
 - PostgreSQL
+- Docker
+- AWS
+- Python
+- JavaScript
 
 ## Project Overview
 ### Login/Register
@@ -20,20 +25,19 @@ DevUp is a platform where developers of all skill levels can find other develope
 Developers can create a DevUp account to share their interests and languages, post about their projects, and contact other project owners.
 
 ### Explore/Home Page
-![Explore/Home Page](https://user-images.githubusercontent.com/74735037/129317672-7c5b896d-361c-44a8-960c-a90813b41c9d.png)
+![Explore/Home Page](https://user-images.githubusercontent.com/74735037/129460432-6744aaf1-aec5-4645-ba84-bd33ce229bdd.png)
 The Explore/Home Page is where developers can see projects that are open for collaboration. Users will be able to view more details about the project and contact the project owner.
 
 ### Categories Page
-![Categories Page](https://user-images.githubusercontent.com/74735037/129317849-04ffa41b-62b8-40f5-b05a-b612758c6cb6.png)
-![Category Example](https://user-images.githubusercontent.com/74735037/129317770-418c5b12-3c12-4f8f-b3be-2407179b2bf8.png)
+![Categories Page](https://user-images.githubusercontent.com/74735037/129460447-323cd625-fa1f-49d1-919f-fd3c46f7e302.png)
+![Category Example](https://user-images.githubusercontent.com/74735037/129461644-23bef6a2-6656-4769-bbe4-38a81b419d89.png)
 The Categories Page shows all available topics and users can click on a topic to view related projects.
 
 ### Projects Page
-![Projects Page](https://user-images.githubusercontent.com/74735037/129317894-7180bf30-2e97-41d0-ab9a-e45cbc61fb51.png)
-![Project example](https://user-images.githubusercontent.com/74735037/129317947-7ef3b0ac-0435-4872-ad1c-9b9c14a90d57.png)
+![Projects Page](https://user-images.githubusercontent.com/74735037/129464603-7b70f2f4-2e11-49cf-bf95-a0138f8143ea.png)
+![Project example](https://user-images.githubusercontent.com/74735037/129464596-38fe0434-7f54-4ba9-a5a4-f728f71dd63e.png)
 The Projects Page displays all of the projects that the user is contributing to. It is also where the user can post about their own project to look for other developers.
 
 
 ### Profile Page
-![Profile Page](https://user-images.githubusercontent.com/74735037/129318008-f51fb32c-5507-4744-883a-70960c81e3f1.png)
-The Profile Page displays a user's basic information, languages, interests, and top projects that they are working on. 
+![Profile Page](https://user-images.githubusercontent.com/74735037/129464999-b1730a11-8626-4508-b7fc-f15bf7808e47.png)The Profile Page displays a user's basic information, languages, interests, and top projects that they are working on. 
