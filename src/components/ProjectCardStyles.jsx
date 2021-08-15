@@ -149,6 +149,9 @@ padding: 24px;
 `
 
 const ButtonsWrapper = styled.div`
+  display: block;
+  width: 200px;
+  margin: auto;
   margin-top: 24px;
 `
 

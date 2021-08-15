@@ -57,8 +57,8 @@ function ProfilePage() {
   const { decodedToken } = useJwt(state.token);
 
   const [profileData, setProfileData] = useState([]);
-  const [profileLanguages, setProfileLanguages] = useState([]);
-  const [profileInterests, setProfileInterests] = useState([]);
+  const [profileLanguages, setProfileLanguages] = useState(profileData?.languages);
+  const [profileInterests, setProfileInterests] = useState(profileData?.topics);
   const [projectList, setProjectList] = useState([]);
   const [tops, setTops] = useState({})
   const [langs, setLangs] = useState({})
@@ -67,7 +67,7 @@ function ProfilePage() {
   const [editLanguagesDetails, setEditLanguagesDetails] = useState(false);
   const [editInterestsDetails, setEditInterestsDetails] = useState(false);
 
-  const [edited, setEdited] = useState(false);
+  const [edited, setEdited] = useState("");
   const [present] = useIonAlert();
 
   function saveChanges() {
@@ -82,6 +82,28 @@ function ProfilePage() {
         })
       } else {
 
+        profileData.languages?.forEach(function (lang) {
+          fetch('/api/deleteUserLanguage', {
+
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              'language': lang.name,
+              'username':profileData.username
+            })
+          }).then(r => r.json())
+            .then(resp => {
+    
+              if (resp.status === "ok") {
+                console.log(resp.message)
+              }
+              else {
+                console.log(resp.error)
+              }
+            })
+        })
         profileLanguages.forEach(function (language) {
           fetch('/api/addUserLanguage', {
             method: 'POST',
@@ -110,7 +132,7 @@ function ProfilePage() {
             {
               text: 'Ok', handler: (d) => {
                 setEditLanguagesDetails(false)
-                setEdited(true)
+                setEdited((Math.random() + 1).toString(36).substring(7))
               }
             }
           ]
@@ -128,6 +150,27 @@ function ProfilePage() {
         })
       } else {
 
+        profileData.topics?.forEach(function (top) {
+          fetch('/api/deleteUserTopic', {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              'topic': top.name,
+              'username':profileData.username
+            })
+          }).then(r => r.json())
+            .then(resp => {
+    
+              if (resp.status === "ok") {
+                console.log(resp.message)
+              }
+              else {
+                console.log(resp.error)
+              }
+            })
+        })
         profileInterests.forEach(function (topic) {
           fetch('/api/addUserTopic', {
             method: 'POST',
@@ -156,7 +199,7 @@ function ProfilePage() {
             {
               text: 'Ok', handler: (d) => {
                 setEditInterestsDetails(false)
-                setEdited(true)
+                setEdited((Math.random() + 1).toString(36).substring(7))
               }
             }
           ]
@@ -313,10 +356,7 @@ function ProfilePage() {
   const placeholderBio = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
 
   return (
-    <IonPage>
-      <Header />
-      <IonContent>
-        <Wrapper>
+<PageContainer>
 
           {/* Profile information */}
           <Profile name={profileData.name} username={profileData.username} bio={placeholderBio} />
@@ -362,9 +402,9 @@ function ProfilePage() {
           </Title>
           <IonGrid>
             {
-              projectList.filter(project => project.owner === profileData.username).length ?
+              projectList?.filter(project => project.owner === profileData.username).length ?
                 <IonRow>
-                  {projectList.filter(project => project.owner === profileData.username).map(project => {
+                  {projectList?.filter(project => project.owner === profileData.username).map(project => {
                     const { id, title, description, date, url, owner } = project;
                     return (
                       <ProjectCard
@@ -388,9 +428,8 @@ function ProfilePage() {
             }
           </IonGrid>
 
-        </Wrapper>
-      </IonContent>
-    </IonPage>
+        </PageContainer>
+
   );
 };
 

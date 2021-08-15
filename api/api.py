@@ -563,18 +563,23 @@ def getUserTopics():
 def deleteUserTopic():
     try:
         body = request.get_json()
-        id = str(body["id"])
+        username = str(body["username"])
+        topic = str(body["topic"])
         error = None
 
-        if not id:
+        if not username:
             error = "Missing Data"
-        if RelUserTopic.query.filter_by(id=id).first() is None:
-            error = f"User have no topic with id {id}"
+
+        if (
+            RelUserTopic.query.filter_by(topicName=topic, username=username).first()
+            is None
+        ):
+            error = f"Topic not in user with username {username}"
 
         if error is None:
-            RelUserTopic.query.filter_by(id=id).delete()
+            RelUserTopic.query.filter_by(topicName=topic, username=username).delete()
             db.session.commit()
-            message = f"Topic with id {id} removed"
+            message = f"Topic {topic} removed from user with username {username}"
             return jsonify({"status": "ok", "message": message}), 200
         else:
             return jsonify({"status": "bad", "error": error}), 400
@@ -709,18 +714,27 @@ def getUserLanguages():
 def deleteUserLanguage():
     try:
         body = request.get_json()
-        id = str(body["id"])
+        username = str(body["username"])
+        language = str(body["language"])
         error = None
 
-        if not id:
+        if not username:
             error = "Missing Data"
-        if RelUserLanguage.query.filter_by(id=id).first() is None:
-            error = f"User have no language with id {id}"
+
+        if (
+            RelUserLanguage.query.filter_by(
+                langName=language, username=username
+            ).first()
+            is None
+        ):
+            error = f"Language not in user with username {username}"
 
         if error is None:
-            RelUserLanguage.query.filter_by(id=id).delete()
+            RelUserLanguage.query.filter_by(
+                langName=language, username=username
+            ).delete()
             db.session.commit()
-            message = f"Language with id {id} removed"
+            message = f"Language {language} removed from user with username {username}"
             return jsonify({"status": "ok", "message": message}), 200
         else:
             return jsonify({"status": "bad", "error": error}), 400

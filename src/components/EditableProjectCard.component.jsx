@@ -7,6 +7,8 @@ import {
   useIonAlert,
   IonSelect,
   IonSelectOption,
+  IonItem,
+  IonRow,
 } from "@ionic/react";
 import {
   Card,
@@ -96,7 +98,7 @@ function EditableProjectCard(props) {
       .then(() => {
         setShowProject(false)
         setEditMode(false)
-        editFunc(id.toString())
+        editFunc((Math.random() + 1).toString(36).substring(7))
       })
   }
 
@@ -108,8 +110,69 @@ function EditableProjectCard(props) {
       "url": eUrl,
     }
 
+    languages?.forEach(function (lang) {
+      fetch('/api/deleteProjectLanguage', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'language': lang,
+          'projectId': id
+        })
+      }).then(r => r.json())
+        .then(resp => {
 
-    eLanguages?.forEach(function (lang) {
+          if (resp.status === "ok") {
+            console.log(resp.message)
+          }
+          else {
+            console.log(resp.error)
+          }
+        })
+    })
+    topics?.forEach(function (topic) {
+      fetch('/api/deleteProjectTopic', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'topic': topic,
+          'projectId': id
+        })
+      }).then(r => r.json())
+        .then(resp => {
+
+          if (resp.status === "ok") {
+            console.log(resp.message)
+          }
+          else {
+            console.log(resp.error)
+          }
+        })
+    })
+    eLanguages?eLanguages.forEach(function (lang) {
+      fetch('/api/addProjectLanguage', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'language': lang,
+          'projectId': id
+        })
+      }).then(r => r.json())
+        .then(resp => {
+
+          if (resp.status === "ok") {
+            console.log(resp.message)
+          }
+          else {
+            console.log(resp.error)
+          }
+        })
+    }):languages.forEach(function (lang) {
       fetch('/api/addProjectLanguage', {
         method: 'POST',
         headers: {
@@ -131,7 +194,28 @@ function EditableProjectCard(props) {
         })
     })
 
-    eTopics?.forEach(function (topic) {
+    eTopics?eTopics.forEach(function (topic) {
+      fetch('/api/addProjectTopic', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'topic': topic,
+          'projectId': id
+        })
+      }).then(r => r.json())
+        .then(resp => {
+
+          console.log(topic)
+          if (resp.status === "ok") {
+            console.log(resp.message)
+          }
+          else {
+            console.log(resp.error)
+          }
+        })
+    }):topics.forEach(function (topic) {
       fetch('/api/addProjectTopic', {
         method: 'POST',
         headers: {
@@ -163,7 +247,7 @@ function EditableProjectCard(props) {
       .then(resp => {
         setShowProject(false)
         setEditMode(false)
-        editFunc(eTitle)
+        editFunc((Math.random() + 1).toString(36).substring(7))
         if (resp.status === "ok") {
           console.log("Edit Successful")
         }
@@ -173,6 +257,27 @@ function EditableProjectCard(props) {
       })
   }
 
+  function deleteUser(username) {
+    fetch('/api/deleteUserInProject', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        'username': username,
+        'projectId': id
+      })
+    })
+      .then(() => {
+        editFunc((Math.random() + 1).toString(36).substring(7))
+        return present({
+          header: "User Removed!",
+          buttons: [
+            'Ok'
+          ]
+        })
+      })
+  }
   function addUser(username) {
     fetch('/api/addUserInProject', {
       method: 'POST',
@@ -185,7 +290,7 @@ function EditableProjectCard(props) {
       })
     })
       .then(() => {
-        editFunc(username)
+        editFunc((Math.random() + 1).toString(36).substring(7))
         return present({
           header: "User Added!",
           buttons: [
@@ -194,7 +299,7 @@ function EditableProjectCard(props) {
         })
       })
   }
-  function checkUser() {
+  function checkUser(method) {
     console.log(eCollab)
 
     fetch(`/api/getUserData?username=${eCollab}`).then(res => res.json()).then(resp => {
@@ -203,7 +308,14 @@ function EditableProjectCard(props) {
         // var currCollabs = eCollabs
         // currCollabs.push(eCollab)
         // setCollabs(currCollabs)
-        addUser(eCollab)
+
+      
+        if (method=="add"){
+          addUser(eCollab)
+        } else{
+          deleteUser(eCollab)
+        }
+        
         setCollab("")
 
 
@@ -239,10 +351,12 @@ function EditableProjectCard(props) {
               </TagsWrapper>
               <ButtonsWrapper>
 
-                <LRButton onClick={() => {
-                  const fullURL = eUrl.match(/^https?:/) ? eUrl : '//' + eUrl
-                  window.open(fullURL)
-                }}>
+                <LRButton
+                  style={{ marginLeft: "-8px" }}
+                  onClick={() => {
+                    const fullURL = eUrl.match(/^https?:/) ? eUrl : '//' + eUrl
+                    window.open(fullURL)
+                  }}>
                   <SmallIcon slot="start" icon={open} />
                   Github
                 </LRButton>
@@ -295,6 +409,18 @@ function EditableProjectCard(props) {
               maxlength={47}
             />
 
+            <TagTitle>Collaborators</TagTitle>
+
+            <LinkInput
+              placeholder="Collaborator Username"
+              value={eCollab}
+              onIonChange={(e) => setCollab(e.target.value)}
+              type="text"
+              rows={1}
+              maxlength={47}
+            />
+            <IonButton onClick={()=>checkUser("add")}>Add User</IonButton>
+            <IonButton onClick={()=>checkUser("remove")}>Remove User</IonButton>
             <TagTitle>Languages</TagTitle>
             <IonSelect style={{ height: "40px", width: "500px", marginLeft: "20px" }} value={eLanguages ? eLanguages : languages} multiple={true} cancelText="Close" okText="Done" placeholder="Select language(s)"
               onIonChange={e => (setLanguages(e.target.value))}>
@@ -315,33 +441,18 @@ function EditableProjectCard(props) {
               }
             </IonSelect>
 
-            <TagTitle>Collaborators</TagTitle>
-
-            <LinkInput
-              placeholder="Collaborator Username"
-              value={eCollab}
-              onIonChange={(e) => setCollab(e.target.value)}
-              type="text"
-              rows={1}
-              maxlength={47}
-            />
-            <IonButton onClick={checkUser}>Add User</IonButton>
-
-
-
-
 
 
             <ButtonsWrapper>
-              <IonButton color="success" id="closemodal" onClick={saveChanges}>
+              <IonButton color="success" id="closemodal" style={{ width: "200px" }} onClick={saveChanges}>
                 <SmallIcon slot="start" icon={checkmark} />
                 Save
               </IonButton>
-              <IonButton color="danger" id="closemodal" style={{ background: "red" }} onClick={handleDelete}>
+              <IonButton color="danger" id="closemodal" style={{ width: "200px" }} onClick={handleDelete}>
                 <SmallIcon slot="start" icon={trash} />
                 Delete
               </IonButton>
-              <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={closeEdit}>
+              <IonButton style={{ marginBottom: "50px", width: "200px" }} id="closemodal" onClick={closeEdit}>
                 <SmallIcon slot="start" icon={close} />
                 Close
               </IonButton>
