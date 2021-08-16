@@ -14,7 +14,7 @@ function Home() {
   const [search, setSearch] = useState('');
   const [projectList, setProjectList]: any = useState([]);
   const [categories, setCategories]: any = useState([]);
-  const [filteredProjects, setFilteredProjects]: any = useState([]);
+  const [filteredProjects, setFilteredProjects]: any = useState(projectList);
   const [tops, setTops]: any = useState(new Map<number, any[]>())
   const [langs, setLangs]: any = useState(new Map<number, any[]>())
   const [users, setUsers]: any = useState(new Map<number, any[]>())
@@ -27,14 +27,14 @@ function Home() {
     fetch('/api/getProjects').then(res => res.json()).then(async data => {
 
       // console.log(decodedToken.decodedToken.username)
-      if (decodedToken?.decodedToken?.username) {
-        setProjectList(data.projects.filter((p: any) => {
-          return (p.owner.toLowerCase() != decodedToken.decodedToken.username);
-        }));
-      }
-      else {
-        setProjectList(data.projects)
-      }
+      // if (decodedToken?.decodedToken?.username) {
+      //   setProjectList(data.projects.filter((p: any) => {
+      //     return (p.owner.toLowerCase() != decodedToken.decodedToken.username);
+      //   }));
+      // }
+      // else {
+      setProjectList(data.projects)
+      // }
 
       console.log(data.projects);
       var langdict = new Map<number, any[]>();
@@ -98,19 +98,20 @@ function Home() {
 
 
   useEffect(() => {
-    var filteredProjects = []
+    var filteredProjects = projectList
     if (decodedToken?.decodedToken?.username) {
-      filteredProjects = projectList.filter((p: any) => {
+      filteredProjects = filteredProjects.filter((p: any) => {
         return (p.owner != decodedToken.decodedToken.username);
       });
-      if (search) {
-        filteredProjects = projectList.filter((p: any) => {
-          return (p.title.toLowerCase().includes(search.toLowerCase()));
-        });
+      
+    } 
+    if (search) {
+      filteredProjects = filteredProjects.filter((p: any) => {
+        return (p.title.toLowerCase().includes(search.toLowerCase()));
+      });
 
-      }
-      setFilteredProjects(filteredProjects);
     }
+    setFilteredProjects(filteredProjects);
 
   }, [search, projectList]);
 
