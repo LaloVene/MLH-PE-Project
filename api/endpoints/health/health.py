@@ -2,7 +2,8 @@ from flask import Blueprint
 
 from models.models import UserModel
 
-health_api = Blueprint('health_api', __name__)
+health_api = Blueprint("health_api", __name__)
+
 
 @health_api.route("/health")
 def check_health():

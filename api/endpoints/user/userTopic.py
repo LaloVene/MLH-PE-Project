@@ -53,28 +53,24 @@ def getUserTopics():
 
 @userTopic_api.route("/deleteUserTopic", methods=("DELETE",))
 def deleteUserTopic():
-    try:
-        body = request.get_json()
-        username = str(body["username"])
-        topic = str(body["topic"])
-        error = None
+    body = request.get_json()
+    username = str(body["username"])
+    topic = str(body["topic"])
+    error = None
 
-        if not username:
-            error = "Missing Data"
+    if not username:
+        error = "Missing Data"
 
-        if (
-            RelUserTopic.query.filter_by(topicName=topic, username=username).first()
-            is None
-        ):
-            error = f"Topic not in user with username {username}"
+    if (
+        RelUserTopic.query.filter_by(topicName=topic, username=username).first()
+        is None
+    ):
+        error = f"Topic not in user with username {username}"
 
-        if error is None:
-            RelUserTopic.query.filter_by(topicName=topic, username=username).delete()
-            db.session.commit()
-            message = f"Topic {topic} removed from user with username {username}"
-            return jsonify({"status": "ok", "message": message}), 200
-        else:
-            return jsonify({"status": "bad", "error": error}), 400
-
-    except:  # noqa: E722
-        return jsonify({"status": "bad", "error": "missing or invalid data"}), 400
+    if error is None:
+        RelUserTopic.query.filter_by(topicName=topic, username=username).delete()
+        db.session.commit()
+        message = f"Topic {topic} removed from user with username {username}"
+        return jsonify({"status": "ok", "message": message}), 200
+    else:
+        return jsonify({"status": "bad", "error": error}), 400
