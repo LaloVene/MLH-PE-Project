@@ -116,7 +116,7 @@ function CategoryCard(props) {
                 </LRButton>
   
                 <ButtonsWrapper>
-                  {showContactButton &&
+                  {showContactButton && decodedToken?.username &&
                   <IonButton id="closemodal" color="tertiary" onClick={() => setShowContact(true)}>
                     <SmallIcon slot="start" icon={send} />
                     Contact
