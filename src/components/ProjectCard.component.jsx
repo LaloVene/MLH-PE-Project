@@ -52,22 +52,30 @@ function CategoryCard(props) {
         ]
       })
     } else {
-      fetch(`/api/getUserData?username=${owner}`).then(res => res.json()).then(data => {
-        let opts = {
-          'title': mTitle,
-          'message': mMessage,
-          // email of receiver, username of sender
-          'sender': decodedToken.username,
-          'receiver': data.userData.email
-        }
-        return fetch('/api/sendmessage', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(opts)
+      Promise.all([
+        fetch(`/api/getUserData?username=${owner}`),
+        fetch(`/api/getUserData?username=${decodedToken.username}`),
+        ]).then(responses =>
+        Promise.all(responses.map(response => response.json()))
+      ).then(data => {
+       
+          console.log(data)
+          let opts = {
+            'title': mTitle,
+            'message': mMessage+"<p>To contact "+decodedToken.username+", please email at: "+ data[1]?.userData.email+"</p>",
+            // email of receiver, username of sender
+            'sender': decodedToken.username,
+            'receiver': data[0]?.userData.email
+          }
+          console.log(opts)
+          return fetch('/api/sendmessage', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(opts)
+          })
         })
-      })
 
         .then(r => r.json())
         .then(resp => {
