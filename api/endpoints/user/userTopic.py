@@ -61,10 +61,7 @@ def deleteUserTopic():
     if not username:
         error = "Missing Data"
 
-    if (
-        RelUserTopic.query.filter_by(topicName=topic, username=username).first()
-        is None
-    ):
+    if RelUserTopic.query.filter_by(topicName=topic, username=username).first() is None:
         error = f"Topic not in user with username {username}"
 
     if error is None:
