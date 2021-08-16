@@ -1,4 +1,4 @@
-import { useIonAlert, IonGrid, IonRow, IonIcon, IonButton, IonModal, IonSelect, IonSelectOption } from '@ionic/react';
+import { useIonAlert, IonGrid, IonRow, IonIcon, IonButton, IonModal, IonSelect, IonSelectOption, IonChip, IonLabel } from '@ionic/react';
 import {
   ModalContent,
   ButtonsWrapper,
@@ -16,8 +16,8 @@ import { pencilOutline, close, checkmark } from 'ionicons/icons';
 import dbtopics from "../utils/topics.json";
 import dblanguages from "../utils/languages.json";
 import PageContainer from '../components/PageContainer';
-import { SmallTitle } from '../components/PageComponentStyles';
-
+import { SmallTitle, Title } from '../components/PageComponentStyles';
+import { heart } from 'ionicons/icons'
 
 const Section = styled.div`
   width: 50%;
@@ -60,6 +60,7 @@ function ProfilePage() {
 
   function saveChanges() {
     console.log('pressed save')
+
     if (editLanguagesDetails) {
       if (!profileLanguages) {
         return present({
@@ -69,30 +70,7 @@ function ProfilePage() {
           ]
         })
       } else {
-
-        profileData.languages?.forEach(function (lang) {
-          fetch('/api/deleteUserLanguage', {
-
-            method: 'DELETE',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              'language': lang.name,
-              'username': profileData.username
-            })
-          }).then(r => r.json())
-            .then(resp => {
-
-              if (resp.status === "ok") {
-                console.log(resp.message)
-              }
-              else {
-                console.log(resp.error)
-              }
-            })
-        })
-        profileLanguages.forEach(function (language) {
+        profileLanguages.forEach((language) => {
           fetch('/api/addUserLanguage', {
             method: 'POST',
             headers: {
@@ -108,14 +86,16 @@ function ProfilePage() {
               console.log(language)
               if (resp.status === "ok") {
                 console.log(resp.message)
+
               }
               else {
                 console.log(resp.error)
+
               }
             })
         })
         return present({
-          header: "Languages added!",
+          header: "Done",
           buttons: [
             {
               text: 'Ok', handler: (d) => {
@@ -138,27 +118,6 @@ function ProfilePage() {
         })
       } else {
 
-        profileData.topics?.forEach(function (top) {
-          fetch('/api/deleteUserTopic', {
-            method: 'DELETE',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              'topic': top.name,
-              'username': profileData.username
-            })
-          }).then(r => r.json())
-            .then(resp => {
-
-              if (resp.status === "ok") {
-                console.log(resp.message)
-              }
-              else {
-                console.log(resp.error)
-              }
-            })
-        })
         profileInterests.forEach(function (topic) {
           fetch('/api/addUserTopic', {
             method: 'POST',
@@ -197,17 +156,108 @@ function ProfilePage() {
     }
   }
 
+  function deleteItem(item) {
+    console.log(item)
+    if (editLanguagesDetails) {
+
+      fetch('/api/deleteUserLanguage', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'language': item,
+          'username': profileData.username
+        })
+      }).then(r => r.json())
+        .then(resp => {
+
+          if (resp.status === "ok") {
+            console.log(resp.message)
+            setEditLanguagesDetails(false)
+            setEdited({ item })
+          }
+          else {
+            console.log(resp.error)
+          }
+        }
+        )
+
+    }
+
+    if (editInterestsDetails) {
+      fetch('/api/deleteUserTopic', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'topic': item,
+          'username': profileData.username
+        })
+      }).then(r => r.json())
+        .then(resp => {
+
+          if (resp.status === "ok") {
+            console.log(resp.message)
+            setEditInterestsDetails(false)
+            setEdited({ item })
+          }
+          else {
+            console.log(resp.error)
+          }
+        })
+
+    }
+  }
+
   function EditProfileDetails() {
     return (
       <>
         <IonModal isOpen={editLanguagesDetails || editInterestsDetails}>
           <ModalContent>
             {editLanguagesDetails ?
+
               <>
                 <div style={{ marginTop: "60px", marginBottom: "30px" }}>
-                  {/* <SectionTitle title="Add Languages" /> */}
+                  <SmallTitle>Edit Language(s)</SmallTitle>
                 </div>
+                <div style={{ maxWidth: "500px", margin: "auto" }}>
 
+                  {profileData?.languages ? profileData.languages.map(language =>
+                  (<IonChip key={language.id} onClick={() => deleteItem(language.name)}>
+                    <IonLabel>
+                      {language.name}
+                    </IonLabel>
+                    <IonIcon icon={close} />
+
+                  </IonChip>))
+                    : <div />}
+                </div>
+              </> : <> </>}
+
+            {editInterestsDetails ?
+              <>
+                <div style={{ marginTop: "60px", marginBottom: "30px" }}>
+                  <SmallTitle>Edit Interest(s)</SmallTitle>
+                </div>
+                <div style={{ maxWidth: "500px", margin: "auto" }}>
+
+                  {profileData?.topics ? profileData.topics.map(topic =>
+                  (<IonChip key={topic.id} onClick={() => deleteItem(topic.name)}>
+                    <IonLabel>
+                      {topic.name}
+                    </IonLabel>
+                    <IonIcon icon={close} />
+
+                  </IonChip>))
+                    : <div />}
+                </div>
+              </> : <> </>}
+
+
+            {editLanguagesDetails ?
+              <>
                 <IonSelect
                   style={{ height: "40px", width: "500px", marginLeft: "20px" }}
                   value={profileLanguages}
@@ -222,15 +272,12 @@ function ProfilePage() {
                     )
                   }
                 </IonSelect>
+
               </>
               : <></>}
 
             {editInterestsDetails ?
               <>
-                <div style={{ marginTop: "60px", marginBottom: "30px" }}>
-                  {/* <SectionTitle>Add Interests</SectionTitle> */}
-                </div>
-
                 <IonSelect
                   style={{ height: "40px", width: "500px", marginLeft: "20px" }}
                   value={profileInterests}
@@ -251,8 +298,12 @@ function ProfilePage() {
             <ButtonsWrapper>
               <IonButton color="success" id="closemodal" onClick={saveChanges}  >
                 <SmallIcon slot="start" icon={checkmark} />
-                Save
+                Add
               </IonButton>
+            </ButtonsWrapper>
+
+            <ButtonsWrapper>
+
               <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={() => { setEditLanguagesDetails(false); setEditInterestsDetails(false) }}>
                 <SmallIcon slot="start" icon={close} />
                 Close
