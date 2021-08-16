@@ -171,6 +171,7 @@ function Home() {
                 languages={langs.get(id)}
                 topics={tops.get(id)}
                 collabs={users.get(id)}
+                showContactButton={true}
               />
             );
           })}

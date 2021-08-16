@@ -32,7 +32,7 @@ import { LRButton } from '../components/LRStyles'
 
 function CategoryCard(props) {
 
-  const { title, description, date, url, owner, id,languages,topics,collabs} = props;
+  const { title, description, date, url, owner, id,languages,topics,collabs,showContactButton} = props;
   const [showProject, setShowProject] = useState(false);
   const [showContact, setShowContact] = useState(false);
   const [mTitle, setMTitle] = useState("");
@@ -116,10 +116,12 @@ function CategoryCard(props) {
                 </LRButton>
   
                 <ButtonsWrapper>
+                  {showContactButton &&
                   <IonButton id="closemodal" color="tertiary" onClick={() => setShowContact(true)}>
                     <SmallIcon slot="start" icon={send} />
                     Contact
                   </IonButton>
+                  }
                   <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={() => setShowProject(false)}>
                     <SmallIcon slot="start" icon={close} />
                     Close
