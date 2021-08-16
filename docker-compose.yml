@@ -26,15 +26,15 @@ services:
       - mydatabase:/var/lib/postgresql/data
   
   # Comment out the following line if you don't want to run client
-  client:
-    container_name: client
-    restart: unless-stopped
-    build:
-      context: .
-      dockerfile: Dockerfile.client
-    image: ghcr.io/lalovene/dev-up-client
-    ports:
-      - "3000:80"
+  # client:
+  #   container_name: client
+  #   restart: unless-stopped
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.client
+  #   image: ghcr.io/lalovene/dev-up-client
+  #   ports:
+  #     - "3000:80"
 
 volumes:
   mydatabase:
