@@ -116,8 +116,27 @@ function CategoryCard(props) {
                 </LRButton>
   
                 <ButtonsWrapper>
-                  {showContactButton && decodedToken?.username &&
-                  <IonButton id="closemodal" color="tertiary" onClick={() => setShowContact(true)}>
+                  {showContactButton &&
+                  <IonButton id="closemodal" color="tertiary" onClick={() => {
+                    if (decodedToken?.username){
+                      setShowContact(true)
+                    }
+                    else {
+                      return present({
+                        header: "Please log in or register first!",
+                        buttons: [
+                          {
+                            text: 'Ok', handler: (d) => {
+                              window.location.href = ("/Login")
+                            }
+                          }
+              
+                        ],
+                      })
+                    }
+                  }}
+                  
+                    >
                     <SmallIcon slot="start" icon={send} />
                     Contact
                   </IonButton>
