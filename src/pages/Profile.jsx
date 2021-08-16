@@ -406,6 +406,7 @@ function ProfilePage() {
                     languages={langs[id]}
                     topics={tops[id]}
                     collabs={users[id]}
+                    showContactButton={false}
                   />
 
                 );
