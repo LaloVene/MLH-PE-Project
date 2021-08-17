@@ -52,7 +52,14 @@ const EditIcon = styled.button`
 const ProfileDetailsSelect = styled(IonSelect)`
   height: 40px;
   width: 500px;
-  margin-left: 20px; 
+  margin-left: 20px;
+  max-width: 55%;
+  margin-top: 16px
 `
 
-export { PageWrapper, SearchBarContainer, Separator, Title, SmallTitle, Section, TagSection, EditIcon, ProfileDetailsSelect };
+const SelectButtonRow = styled(IonRow)`
+  align-items: center;
+  margin-top: 10px;
+`
+
+export { PageWrapper, SearchBarContainer, Separator, Title, SmallTitle, Section, TagSection, EditIcon, ProfileDetailsSelect, SelectButtonRow };

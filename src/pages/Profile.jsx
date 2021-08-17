@@ -11,7 +11,7 @@ import { pencilOutline, close, checkmark } from 'ionicons/icons';
 import dbtopics from "../utils/topics.json";
 import dblanguages from "../utils/languages.json";
 import PageContainer from '../components/PageContainer';
-import { SmallTitle, Section, TagSection, EditIcon, ProfileDetailsSelect } from '../components/PageComponentStyles';
+import { SmallTitle, Section, TagSection, EditIcon, ProfileDetailsSelect, SelectButtonRow } from '../components/PageComponentStyles';
 
 
 function ProfilePage() {
@@ -236,8 +236,8 @@ function ProfilePage() {
                   </IonChip>))
                     : <div />}
                 </div>
-                <IonRow style={{ alignItems: "center", marginTop: "10px" }}>
-                  <ProfileDetailsSelect style={{ maxWidth: "55%", marginTop: "16px" }}
+                <SelectButtonRow>
+                  <ProfileDetailsSelect
                     value={profileInterests}
                     multiple={true}
                     cancelText="Close"
@@ -256,7 +256,7 @@ function ProfilePage() {
                       Add
                     </IonButton>
                   </ButtonsWrapper>
-                </IonRow>
+                </SelectButtonRow>
 
               </> : <> </>}
 
