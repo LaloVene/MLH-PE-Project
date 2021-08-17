@@ -5,7 +5,6 @@ import { ModalContent, ButtonsWrapper, SmallIcon } from '../components/ProjectCa
 
 import ProjectCard from "../components/ProjectCard.component";
 import Profile from '../components/ProfileHeader.component';
-import Tag from '../components/Tag';
 import NotFound from '../components/NotFound.component';
 import PageContainer from '../components/PageContainer.component';
 
