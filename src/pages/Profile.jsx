@@ -45,8 +45,8 @@ function ProfilePage() {
   const { decodedToken } = useJwt(state.token);
 
   const [profileData, setProfileData] = useState([]);
-  const [profileLanguages, setProfileLanguages] = useState(profileData?.languages);
-  const [profileInterests, setProfileInterests] = useState(profileData?.topics);
+  const [profileLanguages, setProfileLanguages] = useState([]);
+  const [profileInterests, setProfileInterests] = useState([]);
   const [projectList, setProjectList] = useState([]);
   const [tops, setTops] = useState({})
   const [langs, setLangs] = useState({})
@@ -86,20 +86,20 @@ function ProfilePage() {
               console.log(language)
               if (resp.status === "ok") {
                 console.log(resp.message)
-
               }
               else {
                 console.log(resp.error)
-
               }
             })
         })
+
         return present({
           header: "Done",
           buttons: [
             {
               text: 'Ok', handler: (d) => {
                 setEditLanguagesDetails(false)
+                setProfileLanguages([])
                 setEdited((Math.random() + 1).toString(36).substring(7))
               }
             }
