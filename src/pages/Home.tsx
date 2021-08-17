@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 import { IonRow } from "@ionic/react";
 import ProjectCard from "../components/ProjectCard.component";
 import CategoryButton from "../components/CategoryButton.component";
-import Searchbar from '../components/Searchbar.component';
+import Searchbar from '../components/SearchBar.component';
 import NotFound from '../components/NotFound.component';
 import GlobalContext from "../utils/state/GlobalContext";
 import { useJwt } from "react-jwt";
-import { Title, Separator } from "../components/PageComponentStyles";
-import PageContainer from '../components/PageContainer'
+import { Title, Separator } from "../components/PageComponents.styles";
+import PageContainer from '../components/PageContainer.component'
 
 function Home() {
   const [search, setSearch] = useState('');

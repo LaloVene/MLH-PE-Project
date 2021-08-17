@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { IonRow } from "@ionic/react";
-import Searchbar from '../components/Searchbar.component';
+import Searchbar from '../components/SearchBar.component';
 import ProjectCard from '../components/ProjectCard.component';
 import NotFound from '../components/NotFound.component';
 import { useProjects } from "../utils/hooks/useProject";
-import { SearchBarContainer, Title } from '../components/PageComponentStyles'
-import PageContainer from "../components/PageContainer";
+import { SearchBarContainer, Title } from '../components/PageComponents.styles'
+import PageContainer from "../components/PageContainer.component";
 import { Link } from "react-router-dom";
 
 function Category(props) {

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { IonRow, IonSelect } from '@ionic/react';
+import { IonRow, IonSelect, IonChip } from '@ionic/react';
 
 const PageWrapper = styled.div`
   max-width: 1200px;
@@ -54,7 +54,7 @@ const ProfileDetailsSelect = styled(IonSelect)`
   width: 500px;
   margin-left: 20px;
   max-width: 55%;
-  margin-top: 16px
+  margin-top: 16px;
 `
 
 const SelectButtonRow = styled(IonRow)`
@@ -62,4 +62,8 @@ const SelectButtonRow = styled(IonRow)`
   margin-top: 10px;
 `
 
-export { PageWrapper, SearchBarContainer, Separator, Title, SmallTitle, Section, TagSection, EditIcon, ProfileDetailsSelect, SelectButtonRow };
+const ProfileChip = styled(IonChip)`
+  background-color: #f1c0f1;
+`
+
+export { PageWrapper, SearchBarContainer, Separator, Title, SmallTitle, Section, TagSection, EditIcon, ProfileDetailsSelect, SelectButtonRow, ProfileChip };

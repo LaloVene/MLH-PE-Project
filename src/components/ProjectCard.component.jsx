@@ -22,12 +22,12 @@ import {
   ModalContent,
   ModalContentView,
   ButtonsWrapper
-} from './ProjectCardStyles';
-import ProjectTags from './ProjectTags';
+} from './ProjectCard.styles';
+import ProjectTags from './ProjectTags.component';
 import { personCircleOutline, send, close, open } from "ionicons/icons";
 import { useJwt } from "react-jwt";
 import GlobalContext from "../utils/state/GlobalContext";
-import { LRButton } from '../components/LRStyles'
+import { LRButton } from './LR.styles'
 
 
 function CategoryCard(props) {

@@ -2,10 +2,10 @@ import { useIonAlert, IonInput, IonItem, IonLabel, IonRow } from '@ionic/react';
 import React, { useState, useContext } from 'react';
 
 import GlobalContext from "../utils/state/GlobalContext";
-import { LRTitle, LRWrapper, LRSmall, LRSwitch, LRLink, LRCol, LRButton } from '../components/LRStyles';
+import { LRTitle, LRWrapper, LRSmall, LRSwitch, LRLink, LRCol, LRButton } from '../components/LR.styles';
 
 import { ReactComponent as LoginPic } from "../imgs/LoginIcon.svg"
-import PageContainer from '../components/PageContainer';
+import PageContainer from '../components/PageContainer.component';
 
 const Login: React.FC = () => {
   const { dispatch } = useContext(GlobalContext);

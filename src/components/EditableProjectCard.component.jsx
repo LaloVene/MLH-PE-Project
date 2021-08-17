@@ -31,13 +31,13 @@ import {
   ModalContent,
   ModalContentView,
   ButtonsWrapper,
-} from './ProjectCardStyles'
-import { SelectButtonRow } from './PageComponentStyles';
-import ProjectTags from './ProjectTags'
+} from './ProjectCard.styles'
+import { SelectButtonRow } from './PageComponents.styles';
+import ProjectTags from './ProjectTags.component'
 import { personCircleOutline } from "ionicons/icons";
 import { useJwt } from "react-jwt";
 import GlobalContext from "../utils/state/GlobalContext";
-import { LRButton } from '../components/LRStyles'
+import { LRButton } from './LR.styles'
 import dbtopics from "../utils/topics.json";
 import dblanguages from "../utils/languages.json";
 import { open, checkmark, create, trash, close } from 'ionicons/icons';

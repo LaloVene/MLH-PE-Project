@@ -4,13 +4,13 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import styled from "styled-components";
 
-import { LRTitle, LRWrapper, LRSwitch, LRLink, LRCol, LRButton } from '../components/LRStyles'
+import { LRTitle, LRWrapper, LRSwitch, LRLink, LRCol, LRButton } from '../components/LR.styles'
 
 import dblanguages from "../utils/languages.json";
 import dbtopics from "../utils/topics.json";
 
 import { ReactComponent as RegisterPic } from "../imgs/RegisterIcon.svg"
-import PageContainer from '../components/PageContainer';
+import PageContainer from '../components/PageContainer.component';
 
 const ErrorMsg = styled.small`
   color: red;
