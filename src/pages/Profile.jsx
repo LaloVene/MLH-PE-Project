@@ -193,48 +193,20 @@ function ProfilePage() {
       <>
         <IonModal isOpen={editLanguagesDetails || editInterestsDetails}>
           <ModalContent>
-            {editLanguagesDetails ?
 
+            {editLanguagesDetails ?
               <>
                 <div style={{ marginTop: "60px", marginBottom: "30px" }}>
                   <SmallTitle>Edit Language(s)</SmallTitle>
                 </div>
                 <div style={{ maxWidth: "500px", margin: "auto" }}>
-
                   {profileData?.languages ? profileData.languages.map(language =>
                   (<IonChip key={language.id} onClick={() => deleteItem(language.name)}>
-                    <IonLabel>
-                      {language.name}
-                    </IonLabel>
+                    <IonLabel>{language.name}</IonLabel>
                     <IonIcon icon={close} />
-
                   </IonChip>))
                     : <div />}
                 </div>
-              </> : <> </>}
-
-            {editInterestsDetails ?
-              <>
-                <div style={{ marginTop: "60px", marginBottom: "30px" }}>
-                  <SmallTitle>Edit Interest(s)</SmallTitle>
-                </div>
-                <div style={{ maxWidth: "500px", margin: "auto" }}>
-
-                  {profileData?.topics ? profileData.topics.map(topic =>
-                  (<IonChip key={topic.id} onClick={() => deleteItem(topic.name)}>
-                    <IonLabel>
-                      {topic.name}
-                    </IonLabel>
-                    <IonIcon icon={close} />
-
-                  </IonChip>))
-                    : <div />}
-                </div>
-              </> : <> </>}
-
-
-            {editLanguagesDetails ?
-              <>
                 <ProfileDetailsSelect
                   value={profileLanguages}
                   multiple={true}
@@ -248,12 +220,22 @@ function ProfilePage() {
                     )
                   }
                 </ProfileDetailsSelect>
-
-              </>
-              : <></>}
+              </> : <> </>}
 
             {editInterestsDetails ?
               <>
+                <div style={{ marginTop: "60px", marginBottom: "30px" }}>
+                  <SmallTitle>Edit Interest(s)</SmallTitle>
+                </div>
+                <div style={{ maxWidth: "500px", margin: "auto" }}>
+
+                  {profileData?.topics ? profileData.topics.map(topic =>
+                  (<IonChip key={topic.id} onClick={() => deleteItem(topic.name)}>
+                    <IonLabel>{topic.name}</IonLabel>
+                    <IonIcon icon={close} />
+                  </IonChip>))
+                    : <div />}
+                </div>
                 <ProfileDetailsSelect
                   value={profileInterests}
                   multiple={true}
@@ -267,8 +249,7 @@ function ProfilePage() {
                     )
                   }
                 </ProfileDetailsSelect>
-              </>
-              : <></>}
+              </> : <> </>}
 
             <ButtonsWrapper>
               <IonButton color="success" id="closemodal" onClick={saveChanges}  >
@@ -278,12 +259,12 @@ function ProfilePage() {
             </ButtonsWrapper>
 
             <ButtonsWrapper>
-
               <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={() => { setEditLanguagesDetails(false); setEditInterestsDetails(false) }}>
                 <SmallIcon slot="start" icon={close} />
                 Close
               </IonButton>
             </ButtonsWrapper>
+
           </ModalContent>
         </IonModal>
       </>
