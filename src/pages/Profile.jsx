@@ -1,17 +1,19 @@
+import React, { useEffect, useState, useContext } from 'react';
 import { useIonAlert, IonGrid, IonRow, IonIcon, IonButton, IonModal, IonSelectOption, IonChip, IonLabel } from '@ionic/react';
+import { SmallTitle, Section, TagSection, EditIcon, ProfileDetailsSelect, SelectButtonRow } from '../components/PageComponentStyles';
 import { ModalContent, ButtonsWrapper, SmallIcon } from '../components/ProjectCardStyles';
-import { useEffect, useState, useContext } from 'react';
+
 import ProjectCard from "../components/ProjectCard.component";
 import Profile from '../components/Profile';
 import Tag from '../components/Tag';
 import NotFound from '../components/NotFound.component';
-import GlobalContext from "../utils/state/GlobalContext";
+import PageContainer from '../components/PageContainer';
+
 import { useJwt } from "react-jwt";
 import { pencilOutline, close, checkmark } from 'ionicons/icons';
+import GlobalContext from "../utils/state/GlobalContext";
 import dbtopics from "../utils/topics.json";
 import dblanguages from "../utils/languages.json";
-import PageContainer from '../components/PageContainer';
-import { SmallTitle, Section, TagSection, EditIcon, ProfileDetailsSelect, SelectButtonRow } from '../components/PageComponentStyles';
 
 
 function ProfilePage() {
@@ -34,9 +36,86 @@ function ProfilePage() {
   const [edited, setEdited] = useState("");
   const [present] = useIonAlert();
 
-  function saveChanges() {
-    console.log('pressed save')
+  // Fetch user profile data
+  useEffect(() => {
+    if (decodedToken) {
+      fetch(`/api/getUserData?username=${decodedToken.username}`).then(res => res.json()).then(data => {
+        setProfileData(data.userData)
+      })
+    }
+  }, [decodedToken, edited])
 
+  // Fetch user projects data
+  useEffect(() => {
+    if (decodedToken) {
+      fetch("/api/getProjects").then(res => res.json()).then(async data => {
+        const projs = data.projects.filter((proj) => proj.owner === decodedToken?.username)
+        setProjectList(projs)
+        console.log(projectList)
+        var langdict = {}
+        var topdict = {}
+        var userdict = {}
+
+        for (var proj in data.projects) {
+
+          let id = data.projects[proj].id;
+          await Promise.all([
+            fetch('/api/getProjectLanguages', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ "projectId": id })
+            }),
+            fetch('/api/getProjectTopics', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ "projectId": id })
+            }),
+            fetch('/api/getUsersInProject', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ "projectId": id })
+            })
+          ]).then(responses =>
+            Promise.all(responses.map(response => response.json()))
+          ).then(data => {
+            const languages = []
+            for (var lang in data[0].languages) {
+              languages.push(data[0].languages[lang].language)
+            }
+            langdict[id] = languages
+
+            const topics = []
+            for (var top in data[1].topics) {
+              topics.push(data[1].topics[top].topic)
+            }
+            topdict[id] = topics
+
+            const users = []
+            for (var us in data[2].users) {
+              users.push(data[2].users[us].username)
+            }
+            userdict[id] = users
+
+          })
+        }
+
+        setTops(topdict)
+        setLangs(langdict)
+        setUsers(userdict)
+
+      })
+    }
+  }, [decodedToken])
+
+  function saveChanges() {
+
+    // Save changes after editing user languages
     if (editLanguagesDetails) {
       if (!profileLanguages) {
         return present({
@@ -84,6 +163,8 @@ function ProfilePage() {
 
       }
     }
+
+    // Save changes after editing user interests
     if (editInterestsDetails) {
       if (!profileInterests) {
         return present({
@@ -134,7 +215,8 @@ function ProfilePage() {
   }
 
   function deleteItem(item) {
-    console.log(item)
+
+    // Delete user language
     if (editLanguagesDetails) {
 
       fetch('/api/deleteUserLanguage', {
@@ -157,11 +239,10 @@ function ProfilePage() {
           else {
             console.log(resp.error)
           }
-        }
-        )
-
+        })
     }
 
+    // Delete user interest
     if (editInterestsDetails) {
       fetch('/api/deleteUserTopic', {
         method: 'DELETE',
@@ -198,7 +279,7 @@ function ProfilePage() {
       </ButtonsWrapper>
     )
   }
-  
+
   function EditProfileDetails() {
     return (
       <>
@@ -285,81 +366,6 @@ function ProfilePage() {
     )
   }
 
-  useEffect(() => {
-    if (decodedToken) {
-      fetch(`/api/getUserData?username=${decodedToken.username}`).then(res => res.json()).then(data => {
-        setProfileData(data.userData)
-      })
-    }
-  }, [decodedToken, edited])
-
-  useEffect(() => {
-    if (decodedToken) {
-      fetch("/api/getProjects").then(res => res.json()).then(async data => {
-        const projs = data.projects.filter((proj) => proj.owner === decodedToken?.username)
-        setProjectList(projs)
-        console.log(projectList)
-        var langdict = {}
-        var topdict = {}
-        var userdict = {}
-
-        for (var proj in data.projects) {
-
-          let id = data.projects[proj].id;
-          await Promise.all([
-            fetch('/api/getProjectLanguages', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({ "projectId": id })
-            }),
-            fetch('/api/getProjectTopics', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({ "projectId": id })
-            }),
-            fetch('/api/getUsersInProject', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({ "projectId": id })
-            })
-          ]).then(responses =>
-            Promise.all(responses.map(response => response.json()))
-          ).then(data => {
-            const languages = []
-            for (var lang in data[0].languages) {
-              languages.push(data[0].languages[lang].language)
-            }
-            langdict[id] = languages
-
-            const topics = []
-            for (var top in data[1].topics) {
-              topics.push(data[1].topics[top].topic)
-            }
-            topdict[id] = topics
-
-            const users = []
-            for (var us in data[2].users) {
-              users.push(data[2].users[us].username)
-            }
-            userdict[id] = users
-
-          })
-        }
-
-        setTops(topdict)
-        setLangs(langdict)
-        setUsers(userdict)
-
-      })
-    }
-  }, [decodedToken])
-
   const placeholderBio = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
 
   return (
@@ -370,14 +376,13 @@ function ProfilePage() {
 
       {/* Languages and interests row */}
       <IonRow>
+
         <Section>
           <SmallTitle>
             &nbsp;&nbsp;
             Languages
             &nbsp;
-            <EditIcon
-              onClick={() => setEditLanguagesDetails(true)}
-            >
+            <EditIcon onClick={() => setEditLanguagesDetails(true)}>
               <IonIcon slot="icon-only" icon={pencilOutline} />
             </EditIcon>
             <EditProfileDetails />
@@ -386,14 +391,13 @@ function ProfilePage() {
             {profileData.languages ? profileData.languages.map(language => <Tag key={language.name} text={language.name} />) : <div />}
           </TagSection>
         </Section>
+
         <Section>
           <SmallTitle>
             &nbsp;&nbsp;
             Interests
             &nbsp;
-            <EditIcon
-              onClick={() => setEditInterestsDetails(true)}
-            >
+            <EditIcon onClick={() => setEditInterestsDetails(true)}            >
               <IonIcon slot="icon-only" icon={pencilOutline} />
             </EditIcon>
           </SmallTitle>
@@ -437,7 +441,6 @@ function ProfilePage() {
       </IonGrid>
 
     </PageContainer>
-
   );
 };
 
