@@ -1,11 +1,6 @@
 import { useIonAlert, IonGrid, IonRow, IonIcon, IonButton, IonModal, IonSelect, IonSelectOption, IonChip, IonLabel } from '@ionic/react';
-import {
-  ModalContent,
-  ButtonsWrapper,
-  SmallIcon
-} from '../components/ProjectCardStyles';
+import { ModalContent, ButtonsWrapper, SmallIcon } from '../components/ProjectCardStyles';
 import { useEffect, useState, useContext } from 'react';
-import styled from 'styled-components'
 import ProjectCard from "../components/ProjectCard.component";
 import Profile from '../components/Profile';
 import Tag from '../components/Tag';
@@ -16,27 +11,8 @@ import { pencilOutline, close, checkmark } from 'ionicons/icons';
 import dbtopics from "../utils/topics.json";
 import dblanguages from "../utils/languages.json";
 import PageContainer from '../components/PageContainer';
-import { SmallTitle, Title } from '../components/PageComponentStyles';
-import { heart } from 'ionicons/icons'
+import { SmallTitle, Section, TagSection, EditIcon, ProfileDetailsSelect } from '../components/PageComponentStyles';
 
-const Section = styled.div`
-  width: 50%;
-  position: relative;
-`
-const TagSection = styled(IonRow)`
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-`
-
-const EditIcon = styled.button`
-  background-color: rgba(0,0,0,0);
-  color: black;
-  font-size: 1.1rem;
-  &:hover {
-    color: grey;
-  }
-`;
 
 function ProfilePage() {
 
@@ -259,8 +235,7 @@ function ProfilePage() {
 
             {editLanguagesDetails ?
               <>
-                <IonSelect
-                  style={{ height: "40px", width: "500px", marginLeft: "20px" }}
+                <ProfileDetailsSelect
                   value={profileLanguages}
                   multiple={true}
                   cancelText="Close"
@@ -272,15 +247,14 @@ function ProfilePage() {
                       <IonSelectOption key={language} value={language}>{language}</IonSelectOption>
                     )
                   }
-                </IonSelect>
+                </ProfileDetailsSelect>
 
               </>
               : <></>}
 
             {editInterestsDetails ?
               <>
-                <IonSelect
-                  style={{ height: "40px", width: "500px", marginLeft: "20px" }}
+                <ProfileDetailsSelect
                   value={profileInterests}
                   multiple={true}
                   cancelText="Close"
@@ -292,7 +266,7 @@ function ProfilePage() {
                       <IonSelectOption key={topic} value={topic}>{topic}</IonSelectOption>
                     )
                   }
-                </IonSelect>
+                </ProfileDetailsSelect>
               </>
               : <></>}
 
