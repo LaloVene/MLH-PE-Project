@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { IonRow, IonCol } from "@ionic/react";
-import Searchbar from '../components/Searchbar.component';
+import Searchbar from '../components/SearchBar.component';
 import CategoryCard from '../components/CategoryCard.component';
-import PageContainer from "../components/PageContainer";
-import { Title, SearchBarContainer } from '../components/PageComponentStyles';
+import PageContainer from "../components/PageContainer.component";
+import { Title, SearchBarContainer } from '../components/PageComponents.styles';
 
 function Categories() {
 

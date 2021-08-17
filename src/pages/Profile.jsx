@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useIonAlert, IonGrid, IonRow, IonIcon, IonButton, IonModal, IonSelectOption, IonChip, IonLabel } from '@ionic/react';
-import { SmallTitle, Section, TagSection, EditIcon, ProfileDetailsSelect, SelectButtonRow } from '../components/PageComponentStyles';
-import { ModalContent, ButtonsWrapper, SmallIcon } from '../components/ProjectCardStyles';
+import { SmallTitle, Section, TagSection, EditIcon, ProfileDetailsSelect, SelectButtonRow, ProfileChip } from '../components/PageComponents.styles';
+import { ModalContent, ButtonsWrapper, SmallIcon } from '../components/ProjectCard.styles';
 
 import ProjectCard from "../components/ProjectCard.component";
-import Profile from '../components/Profile';
+import Profile from '../components/ProfileHeader.component';
 import Tag from '../components/Tag';
 import NotFound from '../components/NotFound.component';
-import PageContainer from '../components/PageContainer';
+import PageContainer from '../components/PageContainer.component';
 
 import { useJwt } from "react-jwt";
 import { pencilOutline, close, checkmark } from 'ionicons/icons';
@@ -388,7 +388,7 @@ function ProfilePage() {
             <EditProfileDetails />
           </SmallTitle>
           <TagSection>
-            {profileData.languages ? profileData.languages.map(language => <Tag key={language.name} text={language.name} />) : <div />}
+            {profileData.languages ? profileData.languages.map(language => <ProfileChip key={language.name}>{language.name}</ProfileChip>) : <div />}
           </TagSection>
         </Section>
 
@@ -402,7 +402,7 @@ function ProfilePage() {
             </EditIcon>
           </SmallTitle>
           <TagSection>
-            {profileData.topics ? profileData.topics.map(topic => <Tag key={topic.name} text={topic.name} />) : <div />}
+            {profileData.topics ? profileData.topics.map(topic => <ProfileChip key={topic.name}>{topic.name}</ProfileChip>) : <div />}
           </TagSection>
         </Section>
       </IonRow>

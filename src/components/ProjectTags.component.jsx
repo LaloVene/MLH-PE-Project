@@ -1,4 +1,4 @@
-import { TagText } from './ProjectCardStyles';
+import { TagText } from './ProjectCard.styles';
 import { IonChip } from '@ionic/react';
 
 const ProjectTags = ({ title, tagType, limit }) => {

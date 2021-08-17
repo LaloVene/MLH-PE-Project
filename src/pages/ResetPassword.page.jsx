@@ -4,7 +4,7 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import styled from "styled-components";
 
-import { LRTitle, LRWrapper, LRCol, LRButton } from '../components/LRStyles' 
+import { LRTitle, LRWrapper, LRCol, LRButton } from '../components/LR.styles' 
 import Header from '../components/Header.component';
 
 import { ReactComponent as RegisterPic } from "../imgs/RegisterIcon.svg"

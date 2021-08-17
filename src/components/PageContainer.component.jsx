@@ -1,5 +1,5 @@
 import { IonPage, IonContent } from "@ionic/react";
-import { PageWrapper } from './PageComponentStyles';
+import { PageWrapper } from './PageComponents.styles';
 import Header from './Header.component';
 
 function PageContainer(props) {

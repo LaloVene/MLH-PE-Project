@@ -18,16 +18,16 @@ import {
 	ButtonsWrapper,
 	SmallIcon,
 	CreateCard
-} from '../components/ProjectCardStyles';
+} from '../components/ProjectCard.styles';
 import EditableProjectCard from "../components/EditableProjectCard.component";
-import Searchbar from '../components/Searchbar.component';
+import Searchbar from '../components/SearchBar.component';
 import { useJwt } from "react-jwt";
 import GlobalContext from "../utils/state/GlobalContext";
 import dbtopics from "../utils/topics.json";
 import dblanguages from "../utils/languages.json";
 import { checkmark, close, addCircleOutline } from 'ionicons/icons';
-import { Title, SearchBarContainer } from "../components/PageComponentStyles";
-import PageContainer from '../components/PageContainer';
+import { Title, SearchBarContainer } from "../components/PageComponents.styles";
+import PageContainer from '../components/PageContainer.component';
 
 
 function Projects() {
