@@ -1,4 +1,4 @@
-import { useIonAlert, IonGrid, IonRow, IonIcon, IonButton, IonModal, IonSelect, IonSelectOption, IonChip, IonLabel } from '@ionic/react';
+import { useIonAlert, IonGrid, IonRow, IonIcon, IonButton, IonModal, IonSelectOption, IonChip, IonLabel } from '@ionic/react';
 import { ModalContent, ButtonsWrapper, SmallIcon } from '../components/ProjectCardStyles';
 import { useEffect, useState, useContext } from 'react';
 import ProjectCard from "../components/ProjectCard.component";
@@ -236,27 +236,29 @@ function ProfilePage() {
                   </IonChip>))
                     : <div />}
                 </div>
-                <ProfileDetailsSelect
-                  value={profileInterests}
-                  multiple={true}
-                  cancelText="Close"
-                  okText="Done"
-                  placeholder="Select language(s)"
-                  onIonChange={e => (setProfileInterests(e.target.value))}>
-                  {
-                    dbtopics.map(topic =>
-                      <IonSelectOption key={topic} value={topic}>{topic}</IonSelectOption>
-                    )
-                  }
-                </ProfileDetailsSelect>
-              </> : <> </>}
+                <IonRow style={{ alignItems: "center", marginTop: "10px" }}>
+                  <ProfileDetailsSelect style={{ maxWidth: "55%", marginTop: "16px" }}
+                    value={profileInterests}
+                    multiple={true}
+                    cancelText="Close"
+                    okText="Done"
+                    placeholder="Add interest(s)"
+                    onIonChange={e => (setProfileInterests(e.target.value))}>
+                    {
+                      dbtopics.map(topic =>
+                        <IonSelectOption key={topic} value={topic}>{topic}</IonSelectOption>
+                      )
+                    }
+                  </ProfileDetailsSelect>
+                  <ButtonsWrapper>
+                    <IonButton color="success" id="closemodal" onClick={saveChanges}  >
+                      <SmallIcon slot="start" icon={checkmark} />
+                      Add
+                    </IonButton>
+                  </ButtonsWrapper>
+                </IonRow>
 
-            <ButtonsWrapper>
-              <IonButton color="success" id="closemodal" onClick={saveChanges}  >
-                <SmallIcon slot="start" icon={checkmark} />
-                Add
-              </IonButton>
-            </ButtonsWrapper>
+              </> : <> </>}
 
             <ButtonsWrapper>
               <IonButton style={{ marginBottom: "50px" }} id="closemodal" onClick={() => { setEditLanguagesDetails(false); setEditInterestsDetails(false) }}>
@@ -270,6 +272,7 @@ function ProfilePage() {
       </>
     )
   }
+
   useEffect(() => {
     if (decodedToken) {
       fetch(`/api/getUserData?username=${decodedToken.username}`).then(res => res.json()).then(data => {
@@ -277,8 +280,6 @@ function ProfilePage() {
       })
     }
   }, [decodedToken, edited])
-
-
 
   useEffect(() => {
     if (decodedToken) {
@@ -289,7 +290,6 @@ function ProfilePage() {
         var langdict = {}
         var topdict = {}
         var userdict = {}
-
 
         for (var proj in data.projects) {
 
