@@ -9,7 +9,8 @@ import {
   IonSelectOption,
   IonChip,
   IonLabel,
-  IonIcon
+  IonIcon,
+  IonRow
 } from "@ionic/react";
 import {
   Card,
@@ -30,6 +31,7 @@ import {
   ModalContent,
   ModalContentView,
   ButtonsWrapper,
+  CollabRow
 } from './ProjectCardStyles'
 import ProjectTags from './ProjectTags'
 import { personCircleOutline } from "ionicons/icons";
@@ -299,25 +301,26 @@ function EditableProjectCard(props) {
         })
       })
   }
-  function checkUser(method) {
+  function checkUser() {
     console.log(eCollab)
 
-    fetch(`/api/getUserData?username=${eCollab}`).then(res => res.json()).then(resp => {
-      console.log(resp)
-      if (resp.userData) {
-        addUser(eCollab)
-        setCollab("")
+    fetch(`/api/getUserData?username=${eCollab}`)
+      .then(res => res.json())
+      .then(resp => {
+        console.log(resp)
+        if (resp.userData) {
+          addUser(eCollab)
+          setCollab("")
 
-      } else {
-        return present({
-          header: "Invalid Username!",
-          buttons: [
-            'Ok'
-          ]
-        })
-      }
-    })
-
+        } else {
+          return present({
+            header: "Invalid Username!",
+            buttons: [
+              'Ok'
+            ]
+          })
+        }
+      })
   }
 
   return (
@@ -335,7 +338,6 @@ function EditableProjectCard(props) {
                 <ProjectTags title="Languages" tagType={languages} />
                 <ProjectTags title="Tags" tagType={topics} />
                 <ProjectTags title="Collaborators" tagType={collabs} />
-
 
               </TagsWrapper>
               <ButtonsWrapper>
@@ -409,16 +411,20 @@ function EditableProjectCard(props) {
             </IonChip>))
               : <div />}
 
-            <LinkInput
-              placeholder="Collaborator Username"
-              value={eCollab}
-              onIonChange={(e) => setCollab(e.target.value)}
-              type="text"
-              rows={1}
-              maxlength={47}
-            />
+            <IonRow style={{ alignItems: "center", marginTop: "10px" }}>
+              <LinkInput style={{ maxWidth: "55%", marginTop: "0px" }}
+                placeholder="Collaborator Username"
+                value={eCollab}
+                onIonChange={(e) => setCollab(e.target.value)}
+                type="text"
+                rows={1}
+                maxlength={47}
+              />
+              <IonButton style={{ margin: "20px" }} onClick={() => checkUser("add")}>
+                Add User
+              </IonButton>
+            </IonRow>
 
-            <IonButton onClick={() => checkUser("add")}>Add User</IonButton>
             <TagTitle>Languages</TagTitle>
             <IonSelect style={{ height: "40px", width: "500px", marginLeft: "20px" }} value={eLanguages ? eLanguages : languages} multiple={true} cancelText="Close" okText="Done" placeholder="Select language(s)"
               onIonChange={e => (setLanguages(e.target.value))}>
