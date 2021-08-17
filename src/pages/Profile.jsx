@@ -146,6 +146,7 @@ function ProfilePage() {
             {
               text: 'Ok', handler: (d) => {
                 setEditInterestsDetails(false)
+                setProfileInterests([])
                 setEdited((Math.random() + 1).toString(36).substring(7))
               }
             }
