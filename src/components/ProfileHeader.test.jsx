@@ -1,17 +1,16 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { getByTestId, render } from '@testing-library/react';
 
 import ProfileHeader from './ProfileHeader.component';
 
 describe('<ProfileHeader />', () => {
+    const mockUser = {
+        name: "Test User",
+        username: "Test Username",
+        bio: "Test Bio"
+    };
 
     test('Profile Header is rendered', async () => {
-
-        const mockUser = {
-            name: "Test User",
-            username: "Test Username",
-            bio: "Test Bio"
-        };
 
         const { getAllByText } = await render(<ProfileHeader {...mockUser} />);
 
@@ -23,4 +22,12 @@ describe('<ProfileHeader />', () => {
         expect(username).toBeDefined();
         expect(bio).toBeDefined();
     });
+
+    test('Profile Picture is rendered', async () => {
+
+        const { getByTestId } = await render(<ProfileHeader {...mockUser} />)
+
+        const profilePicture = getByTestId('profile-picture');
+        expect(profilePicture).toBeDefined();
+    })
 });
