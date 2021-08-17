@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 const Form = styled.form`
 `;
+
 const Input = styled.input`
   width: 100%;
   background-color: hsl(0, 0%, 91.37254901960785%);
