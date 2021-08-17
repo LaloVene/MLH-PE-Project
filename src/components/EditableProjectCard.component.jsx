@@ -31,8 +31,8 @@ import {
   ModalContent,
   ModalContentView,
   ButtonsWrapper,
-  CollabRow
 } from './ProjectCardStyles'
+import { SelectButtonRow } from './PageComponentStyles';
 import ProjectTags from './ProjectTags'
 import { personCircleOutline } from "ionicons/icons";
 import { useJwt } from "react-jwt";
@@ -411,7 +411,7 @@ function EditableProjectCard(props) {
             </IonChip>))
               : <div />}
 
-            <IonRow style={{ alignItems: "center", marginTop: "10px" }}>
+            <SelectButtonRow >
               <LinkInput style={{ maxWidth: "55%", marginTop: "0px" }}
                 placeholder="Collaborator Username"
                 value={eCollab}
@@ -423,7 +423,7 @@ function EditableProjectCard(props) {
               <IonButton style={{ margin: "20px" }} onClick={() => checkUser("add")}>
                 Add User
               </IonButton>
-            </IonRow>
+            </SelectButtonRow>
 
             <TagTitle>Languages</TagTitle>
             <IonSelect style={{ height: "40px", width: "500px", marginLeft: "20px" }} value={eLanguages ? eLanguages : languages} multiple={true} cancelText="Close" okText="Done" placeholder="Select language(s)"

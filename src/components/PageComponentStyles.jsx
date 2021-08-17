@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { IonRow, IonSelect } from '@ionic/react';
 
 const PageWrapper = styled.div`
   max-width: 1200px;
@@ -29,4 +30,36 @@ const SmallTitle = styled.h4`
   font-weight: bold;
 `;
 
-export { PageWrapper, SearchBarContainer, Separator, Title, SmallTitle};
+const Section = styled.div`
+  width: 50%;
+  position: relative;
+`
+const TagSection = styled(IonRow)`
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+`
+
+const EditIcon = styled.button`
+  background-color: rgba(0,0,0,0);
+  color: black;
+  font-size: 1.1rem;
+  &:hover {
+    color: grey;
+  }
+`;
+
+const ProfileDetailsSelect = styled(IonSelect)`
+  height: 40px;
+  width: 500px;
+  margin-left: 20px;
+  max-width: 55%;
+  margin-top: 16px
+`
+
+const SelectButtonRow = styled(IonRow)`
+  align-items: center;
+  margin-top: 10px;
+`
+
+export { PageWrapper, SearchBarContainer, Separator, Title, SmallTitle, Section, TagSection, EditIcon, ProfileDetailsSelect, SelectButtonRow };
