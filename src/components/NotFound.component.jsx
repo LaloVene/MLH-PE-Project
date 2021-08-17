@@ -23,7 +23,7 @@ const Message = styled.p`
   font-size: 1.2rem;
 `;
 
-function Searchbar(props) {
+function NotFound(props) {
   const { title, message } = props;
   return (
     <Container>
@@ -34,4 +34,4 @@ function Searchbar(props) {
   );
 }
 
-export default Searchbar;
+export default NotFound;
