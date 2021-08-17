@@ -36,11 +36,13 @@ const Profile: React.FC<ContainerProps> = ({ name, username, bio }) => {
                     <ProfPic style={{
                         width: "200px",
                         height: "200px"
-                    }} />
+                    }}
+                        data-testid="profile-picture"
+                    />
                 </Col3>
                 <Col7>
                     <IonCardHeader>
-                        <IonCardTitle style={{fontSize: "165%"}}><strong>{name}</strong></IonCardTitle>
+                        <IonCardTitle style={{ fontSize: "165%" }}><strong>{name}</strong></IonCardTitle>
                         <i><IonCardSubtitle>{username}</IonCardSubtitle></i>
                     </IonCardHeader>
                     <IonCardContent>
