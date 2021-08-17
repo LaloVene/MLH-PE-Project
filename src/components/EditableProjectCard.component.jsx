@@ -7,6 +7,9 @@ import {
   useIonAlert,
   IonSelect,
   IonSelectOption,
+  IonChip,
+  IonLabel,
+  IonIcon
 } from "@ionic/react";
 import {
   Card,
@@ -302,19 +305,8 @@ function EditableProjectCard(props) {
     fetch(`/api/getUserData?username=${eCollab}`).then(res => res.json()).then(resp => {
       console.log(resp)
       if (resp.userData) {
-        // var currCollabs = eCollabs
-        // currCollabs.push(eCollab)
-        // setCollabs(currCollabs)
-
-
-        if (method === "add") {
-          addUser(eCollab)
-        } else {
-          deleteUser(eCollab)
-        }
-
+        addUser(eCollab)
         setCollab("")
-
 
       } else {
         return present({
@@ -408,6 +400,15 @@ function EditableProjectCard(props) {
 
             <TagTitle>Collaborators</TagTitle>
 
+            {collabs ? collabs.map(collab =>
+            (<IonChip key={collab} onClick={() => deleteUser(collab)}>
+              <IonLabel>
+                {collab}
+              </IonLabel>
+              <IonIcon icon={close} />
+            </IonChip>))
+              : <div />}
+
             <LinkInput
               placeholder="Collaborator Username"
               value={eCollab}
@@ -416,8 +417,8 @@ function EditableProjectCard(props) {
               rows={1}
               maxlength={47}
             />
+
             <IonButton onClick={() => checkUser("add")}>Add User</IonButton>
-            <IonButton onClick={() => checkUser("remove")}>Remove User</IonButton>
             <TagTitle>Languages</TagTitle>
             <IonSelect style={{ height: "40px", width: "500px", marginLeft: "20px" }} value={eLanguages ? eLanguages : languages} multiple={true} cancelText="Close" okText="Done" placeholder="Select language(s)"
               onIonChange={e => (setLanguages(e.target.value))}>
