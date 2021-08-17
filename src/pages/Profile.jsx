@@ -188,6 +188,17 @@ function ProfilePage() {
     }
   }
 
+  function AddButton() {
+    return (
+      <ButtonsWrapper>
+        <IonButton color="success" id="closemodal" onClick={saveChanges}  >
+          <SmallIcon slot="start" icon={checkmark} />
+          Add
+        </IonButton>
+      </ButtonsWrapper>
+    )
+  }
+  
   function EditProfileDetails() {
     return (
       <>
@@ -207,19 +218,24 @@ function ProfilePage() {
                   </IonChip>))
                     : <div />}
                 </div>
-                <ProfileDetailsSelect
-                  value={profileLanguages}
-                  multiple={true}
-                  cancelText="Close"
-                  okText="Done"
-                  placeholder="Select language(s)"
-                  onIonChange={e => (setProfileLanguages(e.target.value))}>
-                  {
-                    dblanguages.map(language =>
-                      <IonSelectOption key={language} value={language}>{language}</IonSelectOption>
-                    )
-                  }
-                </ProfileDetailsSelect>
+
+                <SelectButtonRow>
+                  <ProfileDetailsSelect
+                    value={profileLanguages}
+                    multiple={true}
+                    cancelText="Close"
+                    okText="Done"
+                    placeholder="Add language(s)"
+                    onIonChange={e => (setProfileLanguages(e.target.value))}>
+                    {
+                      dblanguages.map(language =>
+                        <IonSelectOption key={language} value={language}>{language}</IonSelectOption>
+                      )
+                    }
+                  </ProfileDetailsSelect>
+                  <AddButton />
+                </SelectButtonRow>
+
               </> : <> </>}
 
             {editInterestsDetails ?
@@ -236,6 +252,7 @@ function ProfilePage() {
                   </IonChip>))
                     : <div />}
                 </div>
+
                 <SelectButtonRow>
                   <ProfileDetailsSelect
                     value={profileInterests}
@@ -250,12 +267,7 @@ function ProfilePage() {
                       )
                     }
                   </ProfileDetailsSelect>
-                  <ButtonsWrapper>
-                    <IonButton color="success" id="closemodal" onClick={saveChanges}  >
-                      <SmallIcon slot="start" icon={checkmark} />
-                      Add
-                    </IonButton>
-                  </ButtonsWrapper>
+                  <AddButton />
                 </SelectButtonRow>
 
               </> : <> </>}
