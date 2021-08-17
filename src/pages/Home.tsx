@@ -157,7 +157,6 @@ function Home() {
       <section>
         <Title>{search ? "Search Results" : "Recommended for You"}</Title>
         <IonRow>
-
           {filteredProjects.map((project: any) => {
             const { id, title, description, date, url, owner } = project;
 

@@ -51,7 +51,7 @@ def getProjectLanguages():
         response = RelProjectLanguage.query.filter_by(projectId=projectId).all()
         languages = []
         for item in response:
-            languages.languageProject_apiend({"language": item.language})
+            languages.append({"language": item.language})
         return jsonify({"languages": languages}), 200
     else:
         return jsonify({"status": "bad", "error": error}), 400
