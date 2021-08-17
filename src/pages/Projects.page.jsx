@@ -32,7 +32,6 @@ import PageContainer from '../components/PageContainer.component';
 
 function Projects() {
 	const [searchText, setSearchText] = useState("");
-	const [searchQuery, setSearchQuery] = useState("");
 	const [showProject, setShowProject] = useState(false);
 	const [mTitle, setMTitle] = useState("");
 	const [mDescription, setMDescription] = useState("");
@@ -43,8 +42,6 @@ function Projects() {
 	const [tops, setTops] = useState({})
 	const [langs, setLangs] = useState({})
 	const [users, setUsers] = useState({})
-	const [mCollaborators, setMCollaborators] = useState([""]);
-
 
 	const [edited, setEdited] = useState("");
 	const [projects, setProjects] = useState([]);
