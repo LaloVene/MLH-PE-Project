@@ -10,13 +10,13 @@ import {
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { grid, layers, analyticsOutline, albums } from 'ionicons/icons';
-import Home from './pages/Home';
+import Home from './pages/Home.page';
 import Categories from './pages/Categories.page';
 import Category from './pages/Category.page';
-import Login from './pages/Login';
-import Register from './pages/Register.jsx';
-import Profile from './pages/Profile.jsx';
-import Projects from './pages/Projects.jsx'
+import Login from './pages/Login.page';
+import Register from './pages/Register.page.jsx';
+import Profile from './pages/Profile.page.jsx';
+import Projects from './pages/Projects.page.jsx'
 import Private from './pages/Private.page';
 import ResetPassword from './pages/ResetPassword.page';
 import ForgotPassword from './pages/ForgotPassword.page';
