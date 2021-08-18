@@ -45,10 +45,10 @@ import GlobalContext from './utils/state/GlobalContext';
 import GlobalReducer, { initialState } from "./utils/state/GlobalReducer";
 
 
-const App: React.FC = () => {
-  const [state, dispatch]: any = useReducer(GlobalReducer, initialState);
+const App = () => {
+  const [state, dispatch] = useReducer(GlobalReducer, initialState);
   const [showNav, setShowNav] = useState(true);
-  const url: any = window.location.pathname.split("/").pop();
+  const url = window.location.pathname.split("/").pop();
 
 
   useEffect(() => {
@@ -96,12 +96,12 @@ const App: React.FC = () => {
               <Route
                 exact
                 path="/reset/:user"
-                render={(props: any) => <ResetPassword {...props} />}
+                render={(props) => <ResetPassword {...props} />}
               />
               <Route
                 exact
                 path="/category/:id"
-                render={(props: any) => <Category {...props} />}
+                render={(props) => <Category {...props} />}
               />
             </IonRouterOutlet>
 

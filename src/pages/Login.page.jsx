@@ -7,7 +7,7 @@ import { LRTitle, LRWrapper, LRSmall, LRSwitch, LRLink, LRCol, LRButton } from '
 import { ReactComponent as LoginPic } from "../imgs/LoginIcon.svg"
 import PageContainer from '../components/PageContainer.component';
 
-const Login: React.FC = () => {
+const Login = () => {
   const { dispatch } = useContext(GlobalContext);
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -77,8 +77,8 @@ const Login: React.FC = () => {
               <IonInput
                 type="text"
                 value={username}
-                onIonChange={(e: { detail: { value: any } }) =>
-                  setUsername(e.detail.value!)
+                onIonChange={(e) =>
+                  setUsername(e.target.value)
                 }
                 style={{
                   "color": "black"
@@ -91,8 +91,8 @@ const Login: React.FC = () => {
               <IonInput
                 type="password"
                 value={password}
-                onIonChange={(e: { detail: { value: any } }) =>
-                  setPassword(e.detail.value!)
+                onIonChange={(e) =>
+                  setPassword(e.detargettail.value)
                 }
               />
             </IonItem>
