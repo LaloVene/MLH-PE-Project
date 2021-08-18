@@ -48,7 +48,7 @@ The architecture is highly modularized, where every service has its own containe
 This project has a full Continuos Integration and Delivery system.
 - All code is tested the moment a pull request is created using Linters and Unit Tests (Postman Testsing and Jest).
 - When all tests pass merging with main is possible.
-- Continuos Delivery is triggered, Github Actions builds the Client and API images and pushes them into a Github Package Repository.
+- Continuos Delivery is triggered, Github Actions builds the Client and API images and pushes them into a Github Package Registry.
 - Finally Github Actions SSH into the AWS instance, pulls the new images, stops the current docker compose and runs it again.
 ![CI_CD](https://user-images.githubusercontent.com/54692916/129964647-82232158-9081-4284-9036-2f0af0556397.png)
 
