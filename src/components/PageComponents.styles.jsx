@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { IonRow, IonSelect, IonChip } from '@ionic/react';
+import React from 'react';
 
 const PageWrapper = styled.div`
   max-width: 1200px;

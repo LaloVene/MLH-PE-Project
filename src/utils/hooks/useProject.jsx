@@ -121,7 +121,7 @@ function useProjects() {
         dispatch({ type: 'FETCH_SUCCESS', payload: data,topics:topdict,languages:langdict ,users:userdict});
       } catch (error) {
         dispatch({ type: 'FETCH_FAILURE' });
-        console.error('Bad data: ', error);
+        // console.error('Bad data: ', error);
       }
     }
 

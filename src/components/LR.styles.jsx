@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Link } from 'react-router-dom';
 import { IonCol } from '@ionic/react';
+import React from 'react';
 
 const LRTitle = styled.h3`
     margin-bottom: 24px;

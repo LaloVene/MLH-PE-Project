@@ -21,6 +21,7 @@
     "@types/react-router-dom": "^5.1.7",
     "formik": "^2.2.9",
     "ionicons": "^5.4.0",
+    "jest": "^26.6.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.1",
     "react-hook-form": "^7.12.2",
@@ -70,6 +71,8 @@
     ]
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.15.0",
+    "@babel/preset-react": "^7.15.0",
     "@capacitor/cli": "3.1.2",
     "@types/styled-components": "^5.1.12",
     "@typescript-eslint/eslint-plugin": "^4.29.0",
@@ -77,6 +80,15 @@
     "eslint": "^7.32.0",
     "eslint-plugin-react": "^7.24.0",
     "react-scripts": "4.0.2"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|ico|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/__mocks__/fileMock.js"
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?react-native|react-navigation)"
+    ]
   },
   "proxy": "http://localhost:5000",
   "description": "An Ionic project"

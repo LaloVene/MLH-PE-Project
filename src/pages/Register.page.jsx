@@ -3,6 +3,7 @@ import { IonInput, IonItem, IonLabel, IonRow,useIonAlert, IonSelect, IonSelectOp
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import styled from "styled-components";
+import React from 'react';
 
 import { LRTitle, LRWrapper, LRSwitch, LRLink, LRCol, LRButton } from '../components/LR.styles'
 

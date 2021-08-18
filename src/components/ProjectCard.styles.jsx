@@ -10,6 +10,7 @@ import {
   IonRow
 } from "@ionic/react";
 import styled from "styled-components";
+import React from 'react';
 
 
 const CreateCard = styled(IonCard)`

@@ -9,6 +9,7 @@ import GlobalContext from "../utils/state/GlobalContext";
 import { useJwt } from "react-jwt";
 import { Title, Separator } from "../components/PageComponents.styles";
 import PageContainer from '../components/PageContainer.component'
+import React from "react";
 
 function Home() {
   const [search, setSearch] = useState('');

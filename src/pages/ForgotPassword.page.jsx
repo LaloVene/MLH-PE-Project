@@ -2,6 +2,8 @@ import { IonInput, IonItem, IonRow, useIonAlert } from '@ionic/react';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import styled from "styled-components";
+import React from 'react';
+
 
 import { LRTitle, LRWrapper, LRCol, LRButton } from '../components/LR.styles'
 import PageContainer from '../components/PageContainer.component';
@@ -62,7 +64,7 @@ const ForgotPassword = () => {
     <PageContainer>
       <IonRow>
         <LRCol>
-          <RegisterPic style={{ width: "200px", height: "200px" }} />
+          {/* <RegisterPic style={{ width: "200px", height: "200px" }} /> */}
           <LRTitle>
             Forgot Password
           </LRTitle>
