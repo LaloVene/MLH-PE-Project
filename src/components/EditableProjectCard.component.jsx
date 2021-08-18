@@ -10,7 +10,6 @@ import {
   IonChip,
   IonLabel,
   IonIcon,
-  IonRow
 } from "@ionic/react";
 import {
   Card,
@@ -430,7 +429,7 @@ function EditableProjectCard(props) {
               onIonChange={e => (setLanguages(e.target.value))}>
               {
                 dblanguages.map(lang =>
-                  <IonSelectOption value={lang}>{lang}</IonSelectOption>
+                  <IonSelectOption key={lang} value={lang}>{lang}</IonSelectOption>
                 )
               }
             </IonSelect>
@@ -440,7 +439,7 @@ function EditableProjectCard(props) {
               onIonChange={e => (setTopics(e.target.value))}>
               {
                 dbtopics.map(topic =>
-                  <IonSelectOption value={topic}>{topic}</IonSelectOption>
+                  <IonSelectOption key={topic} value={topic}>{topic}</IonSelectOption>
                 )
               }
             </IonSelect>
