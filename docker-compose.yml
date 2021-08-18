@@ -64,6 +64,8 @@ services:
     container_name: prometheus
     image: prom/prometheus:latest
     restart: unless-stopped
+    ports:
+    - "9100:9100"
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus_data:/prometheus
@@ -92,10 +94,8 @@ services:
     container_name: grafana
     image: grafana/grafana
     user: "1000"
-    environment:
-      - GF_SERVER_PROTOCOL=http
-      - GF_SERVER_ROOT_URL=https://dev-up.tech/grafana/
-      - GF_SERVER_DOMAIN=dev-up.tech
+    env_file:
+      - .env
     volumes:
       - grafana_data:/var/lib/grafana
     depends_on:
