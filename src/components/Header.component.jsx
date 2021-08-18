@@ -24,8 +24,7 @@ const Logo = styled(IonImg)`
   margin: 8px;
 `
 
-
-function Searchbar() {
+function Header() {
   const {state, dispatch} = useContext(GlobalContext);
   const { decodedToken } = useJwt(state.token);
   const [user, setUser] = useState(null);
@@ -62,4 +61,4 @@ function Searchbar() {
   );
 }
 
-export default Searchbar;
+export default Header;
