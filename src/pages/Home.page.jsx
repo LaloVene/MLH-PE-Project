@@ -20,26 +20,18 @@ function Home() {
   const [users, setUsers] = useState([])
 
   const { state } = useContext(GlobalContext);
+  
   var decodedToken;
   decodedToken = useJwt(state.token);
 
   useEffect(() => {
     fetch('/api/getProjects').then(res => res.json()).then(async data => {
-
-      // console.log(decodedToken.decodedToken.username)
-      // if (decodedToken?.decodedToken?.username) {
-      //   setProjectList(data.projects.filter((p) => {
-      //     return (p.owner.toLowerCase() != decodedToken.decodedToken.username);
-      //   }));
-      // }
-      // else {
       setProjectList(data.projects)
-      // }
+      
+      var langdict = new Map();
+      var topdict = new Map();
+      var userdict = new Map();
 
-      console.log(data.projects);
-      var langdict = [];
-      var topdict = [];
-      var userdict = [];
       for (var proj in data.projects) {
         let id;
         id = data.projects[proj].id;
@@ -168,9 +160,9 @@ function Home() {
                 url={url}
                 owner={owner}
                 id={id}
-                languages={langs.get(id)}
-                topics={tops.get(id)}
-                collabs={users.get(id)}
+                languages={langs[id]}
+                topics={tops[id]}
+                collabs={users[id]}
                 showContactButton={true}
               />
             );
