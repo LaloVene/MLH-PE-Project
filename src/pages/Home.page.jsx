@@ -12,15 +12,15 @@ import PageContainer from '../components/PageContainer.component'
 
 function Home() {
   const [search, setSearch] = useState('');
-  const [projectList, setProjectList]: any = useState([]);
-  const [categories, setCategories]: any = useState([]);
-  const [filteredProjects, setFilteredProjects]: any = useState(projectList);
-  const [tops, setTops]: any = useState(new Map<number, any[]>())
-  const [langs, setLangs]: any = useState(new Map<number, any[]>())
-  const [users, setUsers]: any = useState(new Map<number, any[]>())
+  const [projectList, setProjectList] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [filteredProjects, setFilteredProjects] = useState(projectList);
+  const [tops, setTops] = useState([])
+  const [langs, setLangs] = useState([])
+  const [users, setUsers] = useState([])
 
   const { state } = useContext(GlobalContext);
-  var decodedToken: any;
+  var decodedToken;
   decodedToken = useJwt(state.token);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ function Home() {
 
       // console.log(decodedToken.decodedToken.username)
       // if (decodedToken?.decodedToken?.username) {
-      //   setProjectList(data.projects.filter((p: any) => {
+      //   setProjectList(data.projects.filter((p) => {
       //     return (p.owner.toLowerCase() != decodedToken.decodedToken.username);
       //   }));
       // }
@@ -37,11 +37,11 @@ function Home() {
       // }
 
       console.log(data.projects);
-      var langdict = new Map<number, any[]>();
-      var topdict = new Map<number, any[]>();
-      var userdict = new Map<number, any[]>();
+      var langdict = [];
+      var topdict = [];
+      var userdict = [];
       for (var proj in data.projects) {
-        let id: number;
+        let id;
         id = data.projects[proj].id;
         await Promise.all([
           fetch('/api/getProjectLanguages', {
@@ -100,13 +100,13 @@ function Home() {
   useEffect(() => {
     var filteredProjects = projectList
     if (decodedToken?.decodedToken?.username) {
-      filteredProjects = filteredProjects.filter((p: any) => {
+      filteredProjects = filteredProjects.filter((p) => {
         return (p.owner != decodedToken.decodedToken.username);
       });
       
     } 
     if (search) {
-      filteredProjects = filteredProjects.filter((p: any) => {
+      filteredProjects = filteredProjects.filter((p) => {
         return (p.title.toLowerCase().includes(search.toLowerCase()));
       });
 
@@ -135,14 +135,14 @@ function Home() {
       <section>
         <Searchbar
           placeholder="Search"
-          onChange={(e: any) => setSearch(e.target.value!)}
+          onChange={(e) => setSearch(e.target.value)}
         />
       </section>
 
       {/* Categories */}
       <section>
         <Title>Explore by Category</Title>
-        {categories.slice(0, 4).map((category: any) => (
+        {categories.slice(0, 4).map((category) => (
           <Link to={`/category/${category.name}`}>
             <CategoryButton key={category.name}>
               {category.name}
@@ -157,7 +157,7 @@ function Home() {
       <section>
         <Title>{search ? "Search Results" : "Recommended for You"}</Title>
         <IonRow>
-          {filteredProjects.map((project: any) => {
+          {filteredProjects.map((project) => {
             const { id, title, description, date, url, owner } = project;
 
             return (

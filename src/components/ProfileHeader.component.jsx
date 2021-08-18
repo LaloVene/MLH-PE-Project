@@ -1,13 +1,7 @@
 import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle } from '@ionic/react';
 import React from 'react';
 import styled from 'styled-components'
-import { ReactComponent as ProfPic } from "../imgs/ProfileIcon.svg"
-
-interface ContainerProps {
-    name: string;
-    username: string;
-    bio: string;
-}
+import { profileIcon } from "../imgs/ProfileIcon.svg"
 
 const ProfileWrapper = styled.div`
     padding: 12px;
@@ -28,12 +22,12 @@ const Col7 = styled(IonCard)`
 `;
 
 
-const Profile: React.FC<ContainerProps> = ({ name, username, bio }) => {
+const Profile = ({ name, username, bio }) => {
     return (
         <div >
             <ProfileWrapper>
                 <Col3>
-                    <ProfPic style={{
+                    <profileIcon style={{
                         width: "200px",
                         height: "200px"
                     }}
