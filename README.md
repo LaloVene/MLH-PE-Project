@@ -13,7 +13,7 @@ Developers can search for projects that they are interested in, and contact the 
 ## 📍 Table of Contents
 - [Technologies Used](https://github.com/LaloVene/MLH-PE-Project#-technologies-used)
 - [Architecture](https://github.com/LaloVene/MLH-PE-Project#-architecture)
-- [CI/CD](https://github.com/LaloVene/MLH-PE-Project#-ci/cd)
+- [CI/CD](https://github.com/LaloVene/MLH-PE-Project#-cicd)
 - [Site Overview](https://github.com/LaloVene/MLH-PE-Project#-site-overview)
 - [Monitoring](https://github.com/LaloVene/MLH-PE-Project#%EF%B8%8F-monitoring)
 - [Installation](https://github.com/LaloVene/MLH-PE-Project#%EF%B8%8F-installation)
