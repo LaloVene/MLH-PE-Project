@@ -82,7 +82,7 @@ The Projects Page displays all of the projects that the user is contributing to.
 ### Prometheus
 ![Prometheus](https://user-images.githubusercontent.com/54692916/129935101-8c2206ce-5b88-409b-b567-8d3b18b15b8e.png)
 ### Grafana
-![Grafana](https://user-images.githubusercontent.com/54692916/129935190-ae32230c-2e59-4348-adc7-4e3ae0006c66.png)
+![Grafana](https://user-images.githubusercontent.com/54692916/129982602-9be6d3ef-223a-4e70-9c6d-ce4b5f476b29.png)
 
 ## ⬇️ Installation
 
