@@ -6,7 +6,19 @@ By Michelle Shen, Eduardo Venegas, and Angela Wang
 **Deployment: https://dev-up.tech**
 
 ## 📖 Project Overview
-DevUp is a platform where developers of all skill levels can find other developers to team up with on a project. Developers can search for projects that they are interested in, and contact the current team members of the project to learn more about them and join their team. Developers that already have an project idea can make a post on DevUp to display it to other seeking developers and find new team members.
+Ever want to work on a project with others but don't know where to get started? Introducing DevUp - A platform to help developers find teammates for side projects.
+
+Developers can search for projects that they are interested in, and contact the current team members of the project to learn more about them and join their team. Developers that already have an project idea can make a post on DevUp to display it to other seeking developers and find new team members.
+
+## 📍 Table of Contents
+- [Technologies Used](https://github.com/LaloVene/MLH-PE-Project#-technologies-used)
+- [Architecture](https://github.com/LaloVene/MLH-PE-Project#-architecture)
+- [Project Overview](https://github.com/LaloVene/MLH-PE-Project#-project-overview-1)
+- [Monitoring](https://github.com/LaloVene/MLH-PE-Project#%EF%B8%8F-monitoring)
+- [Installation](https://github.com/LaloVene/MLH-PE-Project#%EF%B8%8F-installation)
+- [Usage](https://github.com/LaloVene/MLH-PE-Project#-usage)
+- [Contributing](https://github.com/LaloVene/MLH-PE-Project#-contributing)
+
 
 ## 💻 Technologies Used
 - Docker
@@ -24,17 +36,17 @@ DevUp is a platform where developers of all skill levels can find other develope
 - JavaScript
 
 ## 📚 Architecture
-The architecture is highly modularized, were every service has its own container and is independent from the others.
-- The Nginx service Container loads the SSL certificate and has a reverse proxy to connect the client app and the monitoring tools.
-- The client and api containers get their images by pulling from our Github Package Registry, these images are built in the CI/CD workflow with Github Actions.
-- The API image is only accesible via the internal nginx service in the client container. On top of that, the API container connects to a Database contianer that has its own volume for data persistance.
-- Finally the monitoring containers are accessible by their own routes or ports and have some volumes to keep their data.
+The architecture is highly modularized, where every service has its own container and is independent from the others.
+- The Nginx service container loads the SSL certificate and has a reverse proxy to connect the client app and the monitoring tools.
+- The Client and API containers get their images by pulling from our Github Package Registry. These images are built in the CI/CD workflow with Github Actions.
+- The API image is only accesible via the internal Nginx service in the Client container. On top of that, the API container connects to a Database contianer that has its own volume for data persistance.
+- The Monitoring containers are accessible by their own routes or ports and have volumes to keep their data persistant.
 ![DOCKER ARCHITECTURE](https://user-images.githubusercontent.com/54692916/129938902-fccfd75c-d9e9-4366-8167-0077ea170052.png)
 
 ## 🔍 Project Overview
 ### Login/Register
-![image](https://user-images.githubusercontent.com/74735037/129318143-f7a9b079-90bc-41e5-8aa4-c6f4f76db48c.png)
-![image](https://user-images.githubusercontent.com/74735037/129318198-f6763547-4745-4fbe-be49-dee9a9105b1d.png)
+![Login Page](https://user-images.githubusercontent.com/74735037/129318143-f7a9b079-90bc-41e5-8aa4-c6f4f76db48c.png)
+![Register Page](https://user-images.githubusercontent.com/74735037/129318198-f6763547-4745-4fbe-be49-dee9a9105b1d.png)
 Developers can create a DevUp account to share their interests and languages, post about their projects, and contact other project owners.
 
 ### Explore/Home Page
