@@ -20,7 +20,7 @@ function Categories() {
       setCategories(data.topics)
       setFilteredCategories(data.topics)
     }
-    fetchData();
+    fetchData().catch((e)=>console.log(e));
   }, [setCategories, setFilteredCategories]);
 
   const Search = (event) => {
