@@ -29,7 +29,7 @@ The architecture is highly modularized, were every service has its own container
 - The client and api containers get their images by pulling from our Github Package Registry, these images are built in the CI/CD workflow with Github Actions.
 - The API image is only accesible via the internal nginx service in the client container. On top of that, the API container connects to a Database contianer that has its own volume for data persistance.
 - Finally the monitoring containers are accessible by their own routes or ports and have some volumes to keep their data.
-![DOCKER ARCHITECTURE](https://user-images.githubusercontent.com/54692916/129931677-4619fff9-a6fc-4905-af29-caf64bf409dc.png)
+![DOCKER ARCHITECTURE](https://user-images.githubusercontent.com/54692916/129938902-fccfd75c-d9e9-4366-8167-0077ea170052.png)
 
 ## 🔍 Project Overview
 ### Login/Register
