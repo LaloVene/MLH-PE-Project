@@ -33,15 +33,27 @@ services:
       context: .
       dockerfile: Dockerfile.client
     image: ghcr.io/lalovene/dev-up-client
+  
+  nginx-certbot:
+    container_name: nginx-certbot
+    image: jonasal/nginx-certbot:latest
+    restart: unless-stopped
+    environment:
+      - CERTBOT_EMAIL=lalohdez77@gmail.com 
     ports:
-      - "8100:80"
+      - 80:80
+      - 443:443
+    volumes:
+      - nginx_secrets:/etc/letsencrypt
+      - ./user_conf.d:/etc/nginx/user_conf.d
+    depends_on:
+      - client
+      - api
 
   cadvisor:
     container_name: cadvisor
     image: gcr.io/cadvisor/cadvisor:latest
     restart: unless-stopped
-    ports:
-      - 8080:8080
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:rw
@@ -52,8 +64,6 @@ services:
     container_name: prometheus
     image: prom/prometheus:latest
     restart: unless-stopped
-    ports:
-      - 9090:9090
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus_data:/prometheus
@@ -67,8 +77,6 @@ services:
     container_name: node-exporter
     image: prom/node-exporter
     restart: unless-stopped
-    ports:
-      - 9100:9100
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
@@ -83,8 +91,6 @@ services:
   grafana:
     container_name: grafana
     image: grafana/grafana
-    ports:
-      - 3000:3000
     user: "1000"
     environment:
       - GF_SERVER_PROTOCOL=http
@@ -98,5 +104,6 @@ services:
 
 volumes:
   mydatabase:
+  nginx_secrets:
   grafana_data:
   prometheus_data:
