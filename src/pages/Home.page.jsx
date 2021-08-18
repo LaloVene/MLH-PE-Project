@@ -93,7 +93,7 @@ function Home() {
     var filteredProjects = projectList
     if (decodedToken?.decodedToken?.username) {
       filteredProjects = filteredProjects.filter((p) => {
-        return (p.owner != decodedToken.decodedToken.username);
+        return (p.owner !== decodedToken.decodedToken.username);
       });
       
     } 
