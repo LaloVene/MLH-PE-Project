@@ -13,7 +13,7 @@ Developers can search for projects that they are interested in, and contact the 
 ## 📍 Table of Contents
 - [Technologies Used](https://github.com/LaloVene/MLH-PE-Project#-technologies-used)
 - [Architecture](https://github.com/LaloVene/MLH-PE-Project#-architecture)
-- [Project Overview](https://github.com/LaloVene/MLH-PE-Project#-project-overview-1)
+- [Site Overview](https://github.com/LaloVene/MLH-PE-Project#-site-overview)
 - [Monitoring](https://github.com/LaloVene/MLH-PE-Project#%EF%B8%8F-monitoring)
 - [Installation](https://github.com/LaloVene/MLH-PE-Project#%EF%B8%8F-installation)
 - [Usage](https://github.com/LaloVene/MLH-PE-Project#-usage)
@@ -43,7 +43,7 @@ The architecture is highly modularized, where every service has its own containe
 - The Monitoring containers are accessible by their own routes or ports and have volumes to keep their data persistant.
 ![DOCKER ARCHITECTURE](https://user-images.githubusercontent.com/54692916/129938902-fccfd75c-d9e9-4366-8167-0077ea170052.png)
 
-## 🔍 Project Overview
+## 🔍 Site Overview
 ### Login/Register
 ![Login Page](https://user-images.githubusercontent.com/74735037/129318143-f7a9b079-90bc-41e5-8aa4-c6f4f76db48c.png)
 ![Register Page](https://user-images.githubusercontent.com/74735037/129318198-f6763547-4745-4fbe-be49-dee9a9105b1d.png)
