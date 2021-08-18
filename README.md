@@ -13,6 +13,7 @@ Developers can search for projects that they are interested in, and contact the 
 ## 📍 Table of Contents
 - [Technologies Used](https://github.com/LaloVene/MLH-PE-Project#-technologies-used)
 - [Architecture](https://github.com/LaloVene/MLH-PE-Project#-architecture)
+- [CI/CD](https://github.com/LaloVene/MLH-PE-Project#-ci/cd)
 - [Site Overview](https://github.com/LaloVene/MLH-PE-Project#-site-overview)
 - [Monitoring](https://github.com/LaloVene/MLH-PE-Project#%EF%B8%8F-monitoring)
 - [Installation](https://github.com/LaloVene/MLH-PE-Project#%EF%B8%8F-installation)
@@ -42,6 +43,14 @@ The architecture is highly modularized, where every service has its own containe
 - The API image is only accesible via the internal Nginx service in the Client container. On top of that, the API container connects to a Database contianer that has its own volume for data persistance.
 - The Monitoring containers are accessible by their own routes or ports and have volumes to keep their data persistant.
 ![DOCKER ARCHITECTURE](https://user-images.githubusercontent.com/54692916/129938902-fccfd75c-d9e9-4366-8167-0077ea170052.png)
+
+## 🤖 CI/CD
+This project has a full Continuos Integration and Delivery system.
+- All code is tested the moment a pull request is created using Linters and Unit Tests (Postman Testsing and Jest).
+- When all tests pass merging with main is possible.
+- Continuos Delivery is triggered, Github Actions builds the Client and API images and pushes them into a Github Package Repository.
+- Finally Github Actions SSH into the AWS instance, pulls the new images, stops the current docker compose and runs it again.
+![CI_CD](https://user-images.githubusercontent.com/54692916/129964647-82232158-9081-4284-9036-2f0af0556397.png)
 
 ## 🔍 Site Overview
 ### Login/Register
