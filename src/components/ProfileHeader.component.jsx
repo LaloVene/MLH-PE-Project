@@ -1,7 +1,7 @@
 import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle } from '@ionic/react';
 import React from 'react';
 import styled from 'styled-components'
-import { profileIcon } from "../imgs/ProfileIcon.svg"
+import {ReactComponent as ProfileIcon} from "../imgs/ProfileIcon.svg"
 
 const ProfileWrapper = styled.div`
     padding: 12px;
@@ -27,7 +27,7 @@ const Profile = ({ name, username, bio }) => {
         <div >
             <ProfileWrapper>
                 <Col3>
-                    <profileIcon style={{
+                    <ProfileIcon style={{
                         width: "200px",
                         height: "200px"
                     }}

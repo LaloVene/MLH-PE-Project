@@ -92,7 +92,7 @@ const Login = () => {
                 type="password"
                 value={password}
                 onIonChange={(e) =>
-                  setPassword(e.detargettail.value)
+                  setPassword(e.target.value)
                 }
               />
             </IonItem>
