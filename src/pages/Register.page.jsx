@@ -3,6 +3,7 @@ import { IonInput, IonItem, IonLabel, IonRow,useIonAlert, IonSelect, IonSelectOp
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import styled from "styled-components";
+import React from 'react';
 
 import { LRTitle, LRWrapper, LRSwitch, LRLink, LRCol, LRButton } from '../components/LR.styles'
 
@@ -137,7 +138,7 @@ const Register = () => {
           <RegisterPic style={{
             width: "200px",
             height: "200px"
-          }} />
+          }} data-testid="registerpic"/>
           <LRTitle>
             Register for DevUp
           </LRTitle>
@@ -155,6 +156,7 @@ const Register = () => {
             onSubmit={values => {
               onSubmitClick(values);
             }}
+            data-testid="inputs"
           >
             {formikProps => (
               <>
@@ -169,6 +171,7 @@ const Register = () => {
                         placeholder="Name*"
                         value={formikProps.values.name}
                         onIonChange={formikProps.handleChange}
+                        
                       />
                     </IonItem>
                     <ErrorMsg>

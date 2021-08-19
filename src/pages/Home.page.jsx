@@ -9,6 +9,7 @@ import GlobalContext from "../utils/state/GlobalContext";
 import { useJwt } from "react-jwt";
 import { Title, Separator } from "../components/PageComponents.styles";
 import PageContainer from '../components/PageContainer.component'
+import React from "react";
 
 function Home() {
   const [search, setSearch] = useState('');
@@ -85,7 +86,7 @@ function Home() {
       setLangs(langdict)
       setUsers(userdict)
 
-    })
+    }).catch(e=>console.log(e))
   }, [])
 
 
@@ -111,13 +112,12 @@ function Home() {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(
-        "/api/getTopics"
-      );
+      const response = await fetch("/api/getTopics");
       const data = await response.json();
-      setCategories(data.topics);
+      setCategories(data.topics)
+      setFilteredCategories(data.topics)
     }
-    fetchData();
+    fetchData().catch((e)=>console.log(e));
   }, []);
 
   return (
@@ -133,9 +133,9 @@ function Home() {
 
       {/* Categories */}
       <section>
-        <Title>Explore by Category</Title>
+        <Title data-testid="cat">Explore by Category</Title>
         {categories.slice(0, 4).map((category) => (
-          <Link to={`/category/${category.name}`}>
+          <Link to={`/category/${category.name}`} >
             <CategoryButton key={category.name}>
               {category.name}
             </CategoryButton>
@@ -148,7 +148,7 @@ function Home() {
       {/* Projects */}
       <section>
         <Title>{search ? "Search Results" : "Recommended for You"}</Title>
-        <IonRow>
+        <IonRow data-testid="projects">
           {filteredProjects.map((project) => {
             const { id, title, description, date, url, owner } = project;
 

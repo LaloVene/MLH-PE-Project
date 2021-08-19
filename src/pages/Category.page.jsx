@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import React from 'react';
+
 import { IonRow } from "@ionic/react";
 import Searchbar from '../components/SearchBar.component';
 import ProjectCard from '../components/ProjectCard.component';
@@ -68,6 +70,7 @@ function Category(props) {
                   topics={state.top[id]}
                   collabs={state.us[id]}
                   showContactButton={true}
+                  data-testid="proj"
                 />
               );
             })

@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { useEffect, useState, useContext } from "react";
 import {
 	IonModal,
@@ -229,14 +231,14 @@ function Projects() {
 
 			{/* Projects */}
 			<section>
-				<Title>Your Projects</Title>
+				<Title data-testid="proj">Your Projects</Title>
 				{/* Search Bar */}
 				<SearchBarContainer>
 					<Searchbar placeholder="Search" onChange={(e) => setSearchText(e.target.value)} />
 				</SearchBarContainer>
 				<IonRow>
-					<IonCol size="12" size-md="4">
-						<IonModal id="projmod" isOpen={showProject}>
+					<IonCol size="12" size-md="4" data-testid="modal">
+						<IonModal id="projmod" isOpen={showProject} data-testid="modal">
 							<ModalContent>
 								<TitleInput
 									value={mTitle}
@@ -304,7 +306,7 @@ function Projects() {
 						</IonModal>
 
 						<CreateCard class="ion-align-items-center ion-justify-content-center"
-							onClick={() => setShowProject(true)}>
+							onClick={() => setShowProject(true)} data-testid="clickcard">
 							<Icon icon={addCircleOutline} />
 						</CreateCard>
 					</IonCol>

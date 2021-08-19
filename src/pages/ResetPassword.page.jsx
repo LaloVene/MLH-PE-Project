@@ -76,7 +76,7 @@ const ResetPassword = ({match, location, history}) => {
         </IonHeader>
         <IonRow>
           <LRCol>
-          <RegisterPic style={{width: "200px", height: "200px"}} />
+          <RegisterPic style={{width: "200px", height: "200px"}} data-testid="resetpic"/>
           <LRTitle>
               Reset Password
           </LRTitle>
@@ -89,7 +89,7 @@ const ResetPassword = ({match, location, history}) => {
             >
               {formikProps => (
                 <LRWrapper>
-                  <form onSubmit={formikProps.handleSubmit}>
+                  <form onSubmit={formikProps.handleSubmit} data-testid="input">
                     <IonItem>
                       <IonInput
                       type="password"

@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { IonRow, IonCol } from "@ionic/react";
@@ -19,7 +20,7 @@ function Categories() {
       setCategories(data.topics)
       setFilteredCategories(data.topics)
     }
-    fetchData();
+    fetchData().catch((e)=>console.log(e));
   }, [setCategories, setFilteredCategories]);
 
   const Search = (event) => {
@@ -33,10 +34,10 @@ function Categories() {
       <SearchBarContainer>
         <Searchbar placeholder="Search" onChange={Search} onSubmit={() => { }} />
       </SearchBarContainer>
-      <IonRow>
+      <IonRow data-testid="cat">
         {
           filteredCategories.map(category =>
-            <IonCol size="6" size-md="3" key={category.name}>
+            <IonCol size="6" size-md="3" key={category.name} data-testid="cat">
               <Link style={{ textDecoration: "none" }} to={`/category/${category.name}`}>
                 <CategoryCard
                   name={category.name}

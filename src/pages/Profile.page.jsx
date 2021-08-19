@@ -377,7 +377,7 @@ function ProfilePage() {
       <IonRow>
 
         <Section>
-          <SmallTitle>
+          <SmallTitle data-testid="languages">
             &nbsp;&nbsp;
             Languages
             &nbsp;
@@ -392,7 +392,7 @@ function ProfilePage() {
         </Section>
 
         <Section>
-          <SmallTitle>
+          <SmallTitle data-testid="topics">
             &nbsp;&nbsp;
             Interests
             &nbsp;
