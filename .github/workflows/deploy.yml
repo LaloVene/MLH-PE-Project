@@ -80,3 +80,10 @@ jobs:
         uses: matt-ball/newman-action@master
         with:
           collection: postman/MLH-PE-Project.postman_collection.json
+      
+      - name: Discord Notification
+        run: curl -s -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "content=🚀 Deployment Successful"
+
+      - name: Discord Fail Notification
+        if: ${{ failure() }}
+        run: curl -s -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "content=🚨 Deployment Failed"
