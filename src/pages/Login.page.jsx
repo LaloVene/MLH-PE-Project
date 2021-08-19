@@ -66,7 +66,7 @@ const Login = () => {
         }}
       >
         <LRCol>
-          <LoginPic style={{ width: "200px", height: "200px" }} />
+          <LoginPic style={{ width: "200px", height: "200px" }} data-testid="loginpic" />
           <LRTitle>Login to DevUp</LRTitle>
 
           <LRWrapper>
@@ -83,6 +83,7 @@ const Login = () => {
                 style={{
                   "color": "black"
                 }}
+                data-testid="username"
               />
             </IonItem>
 
@@ -94,6 +95,7 @@ const Login = () => {
                 onIonChange={(e) =>
                   setPassword(e.target.value)
                 }
+                data-testid="password"
               />
             </IonItem>
 

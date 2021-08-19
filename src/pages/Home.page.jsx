@@ -86,7 +86,7 @@ function Home() {
       setLangs(langdict)
       setUsers(userdict)
 
-    })
+    }).catch(e=>console.log(e))
   }, [])
 
 
@@ -112,13 +112,12 @@ function Home() {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(
-        "/api/getTopics"
-      );
+      const response = await fetch("/api/getTopics");
       const data = await response.json();
-      setCategories(data.topics);
+      setCategories(data.topics)
+      setFilteredCategories(data.topics)
     }
-    fetchData();
+    fetchData().catch((e)=>console.log(e));
   }, []);
 
   return (
@@ -136,7 +135,7 @@ function Home() {
       <section>
         <Title>Explore by Category</Title>
         {categories.slice(0, 4).map((category) => (
-          <Link to={`/category/${category.name}`}>
+          <Link to={`/category/${category.name}`} data-testid="cat">
             <CategoryButton key={category.name}>
               {category.name}
             </CategoryButton>

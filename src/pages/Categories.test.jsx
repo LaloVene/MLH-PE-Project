@@ -7,11 +7,16 @@ import { useState, useReducer, useEffect } from 'react';
 import {BrowserRouter as Router} from 'react-router-dom'
 import { IonReactRouter } from '@ionic/react-router';
 
+// function mockFetch(data: any) {
+//   return jest.spyOn(window, 'fetch').mockResolvedValue(new Response(JSON.stringify(data)));
+// }
 
+// beforeEach(() => mockFetch([]));
 
 
 describe('<Categories />', () => {
   test('Categories are rendered', async () => {
+    
     const mockstate = {
       state:{token:null},
       dispatch:jest.fn()
