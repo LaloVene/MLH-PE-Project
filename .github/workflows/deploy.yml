@@ -63,3 +63,19 @@ jobs:
           docker-compose up -d'
       - name: Print container status
         run: ssh my-vm 'cd ${{ secrets.PROJECT_ROOT }} && docker-compose ps'
+  
+  test-backend:
+    name: Test Backend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+
+      - name: Wait for the backend to be ready
+        run: sleep 5
+
+      - name: Test with New man
+        uses: matt-ball/newman-action@master
+        with:
+          collection: postman/MLH-PE-Project.postman_collection.json
