@@ -324,9 +324,9 @@ function EditableProjectCard(props) {
   }
 
   return (
-    <IonCol size="12" size-md="4" key={id}>
+    <IonCol data-testid="viewCard" size="12" size-md="4" key={id}>
       {!editMode &&
-        <IonModal data-testid="viewCard" isOpen={showProject}>
+        <IonModal isOpen={showProject}>
           <ModalContent>
             <ModalContentView>
               <ProjTitle >{title}</ProjTitle>
