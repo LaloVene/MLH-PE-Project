@@ -115,7 +115,6 @@ function Home() {
       const response = await fetch("/api/getTopics");
       const data = await response.json();
       setCategories(data.topics)
-      setFilteredCategories(data.topics)
     }
     fetchData().catch((e)=>console.log(e));
   }, []);
