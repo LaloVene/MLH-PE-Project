@@ -50,7 +50,7 @@ This project has a full Continuos Integration and Delivery system.
 - When all tests pass merging with main is possible.
 - Continuos Delivery is triggered, Github Actions builds the Client and API images and pushes them into a Github Package Registry.
 - Finally Github Actions SSH into the AWS instance, pulls the new images, stops the current docker compose and runs it again.
-![CI_CD](https://user-images.githubusercontent.com/54692916/130148421-daa58544-f89b-4f27-80ff-f79e018b4e4d.png)
+![CI_CD](https://user-images.githubusercontent.com/54692916/130151094-c816d17d-f13a-4995-8473-9658d3342949.png)
 
 ## 🔍 Site Overview
 ### Login/Register
