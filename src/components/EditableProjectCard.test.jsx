@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, getByTestId} from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import EditableProjectCard from './EditableProjectCard.component';
 import GlobalContext from '../utils/state/GlobalContext';
@@ -34,7 +34,7 @@ describe('<EditableProjectCard />', () => {
         const cardLanguages = getByText("Python", "JavaScript")
         const cardTopics = getByText("Machine Learning" && "Production Engineering")
         const cardCollabs = getByText("Test Collaborator")
-        
+
         expect(cardTitle).toBeDefined();
         expect(cardDescription).toBeDefined();
         expect(cardOwner).toBeDefined();
@@ -42,4 +42,21 @@ describe('<EditableProjectCard />', () => {
         expect(cardTopics).toBeDefined();
         expect(cardCollabs).toBeDefined();
     });
+
+    test('Editable Project Card is clickable', async () => {
+
+        const { getByTestId } = await render(<GlobalContext.Provider value={mockstate}><EditableProjectCard {...mockProjectCard}></EditableProjectCard></GlobalContext.Provider>);
+
+        const card = getByTestId('projectCard');
+        fireEvent(
+            card,
+            new MouseEvent('click', {
+                bubbles: true,
+                cancelable: true,
+            }),
+        )
+        var modal = getByTestId('viewCard')
+        expect(modal).toBeDefined();
+    })
+
 });

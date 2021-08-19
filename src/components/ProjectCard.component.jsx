@@ -98,7 +98,7 @@ function CategoryCard(props) {
   }
 
   return (
-    <IonCol size="12" size-md="4" key={id}>
+    <IonCol data-testid="viewCard" size="12" size-md="4" key={id}>
       {!showContact &&
         <IonModal id="projmod" isOpen={showProject}>
           <ModalContent>
@@ -184,7 +184,7 @@ function CategoryCard(props) {
         </IonModal>
       }
 
-      <Card onClick={() => setShowProject(true)}>
+      <Card data-testid="projectCard" onClick={() => setShowProject(true)}>
         <CardHeader>
           <Icon icon={personCircleOutline} />
           <Username>{owner}</Username>
