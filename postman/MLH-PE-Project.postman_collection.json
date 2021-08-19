@@ -1,0 +1,1204 @@
+{
+	"info": {
+		"_postman_id": "0b183e3d-40f4-4277-856c-f24dbc9c1eba",
+		"name": "MLH-PE-Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "General",
+			"item": [
+				{
+					"name": "Health",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", () => {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Works\");\r",
+									"});\r",
+									"\r",
+									"postman.setNextRequest('Register');"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{origin}}/api/health",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"api",
+								"health"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fill Languages & Topics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/filldb",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"filldb"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"User Created\", function () {\r",
+									"    const username = pm.variables.get(\"test_user\");\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.eql(`User ${username} created successfully`);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"{{test_user}}\",\r\n    \"password\": \"{{test_password}}\",\r\n    \"name\": \"{{test_name}}\",\r\n    \"email\": \"{{test_email}}\",\r\n    \"github\": \"{{test_github}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin}}/api/register",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Token is returned\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.token).to.be.a(\"string\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"{{test_user}}\",\r\n    \"password\": \"{{test_password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin}}/api/login",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request reset Password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Reset Requested\", function () {\r",
+									"    const username = pm.variables.get(\"test_user\");\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.eql(`User ${username} request password change successfully`);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"{{test_user}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin}}/api/requestReset",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"api",
+								"requestReset"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Pasword",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Token is invalid\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.error).to.eql('Invalid Token');\r",
+									"});\r",
+									"\r",
+									"postman.setNextRequest('Delete User');"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"{{test_user}}\",\r\n    \"password\": \"{{test_password}}\",\r\n    \"token\": \"331d9d0f-ad5a-4f85-b4ad-0967c48f9f60\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin}}/api/resetPassword",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"api",
+								"resetPassword"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Languages",
+			"item": [
+				{
+					"name": "Option Languages",
+					"item": [
+						{
+							"name": "Add Language",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"language\": \"Python\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin}}/api/addLanguage",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"api",
+										"addLanguage"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetLanguages",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{origin}}/api/getLanguages",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"api",
+										"getLanguages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Detele Language",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"language\": \"Python\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin}}/api/deleteLanguage",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"api",
+										"deleteLanguage"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "User Languages",
+					"item": [
+						{
+							"name": "Add User Language",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"test\",\r\n    \"language\": \"Python\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin}}/api/addUserLanguage",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"api",
+										"addUserLanguage"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get User Languages",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin}}/api/getUserLanguages",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"api",
+										"getUserLanguages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Detele User Language",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 4\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin}}/api/deleteUserLanguage",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"api",
+										"deleteUserLanguage"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Topics",
+			"item": [
+				{
+					"name": "Option Topics",
+					"item": [
+						{
+							"name": "Add Topic",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"topic\": \"ML\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin}}/api/addTopic",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"api",
+										"addTopic"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Topics",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{origin}}/api/getTopics",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"api",
+										"getTopics"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Detele Topic",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"topic\": \"ML\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin}}/api/deleteTopic",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"api",
+										"deleteTopic"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "User Topics",
+					"item": [
+						{
+							"name": "Add User Topic",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"test\",\r\n    \"topic\": \"ML\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin}}/api/addUserTopic",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"api",
+										"addUserTopic"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get User Topics",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin}}/api/getUserTopics",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"api",
+										"getUserTopics"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Detele User Topic",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin}}/api/deleteUserTopic",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"api",
+										"deleteUserTopic"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Projects",
+			"item": [
+				{
+					"name": "Project",
+					"item": [
+						{
+							"name": "Get Projects",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{origin}}/api/getProjects?language=Python&searchterm=side&topic=ML",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"api",
+										"getProjects"
+									],
+									"query": [
+										{
+											"key": "language",
+											"value": "Python"
+										},
+										{
+											"key": "searchterm",
+											"value": "side"
+										},
+										{
+											"key": "topic",
+											"value": "ML"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Project",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"Side Project\",\r\n    \"description\": \"Lorem ipsum\",\r\n    \"url\": \"http://www.github.com\",\r\n    \"owner\": \"test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin}}/api/addProject",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"api",
+										"addProject"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Project",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 1,\r\n    \"owner\": \"test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin}}/api/deleteProject",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"api",
+										"deleteProject"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Edit Project",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 7,\r\n    \"title\": \"Changed title\",\r\n    \"description\": \"Lorem ipsum\",\r\n    \"url\": \"http://www.github.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin}}/api/editProject",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"api",
+										"editProject"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Project Topics",
+					"item": [
+						{
+							"name": "Add Project Topic",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"topic\": \"ML\",\r\n    \"projectId\": 8\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin}}/api/addProjectTopic",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"api",
+										"addProjectTopic"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Project Topics",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"projectId\": 3\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin}}/api/getProjectTopics",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"api",
+										"getProjectTopics"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remove Project Topic",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"topic\": \"ML\",\r\n    \"projectId\": 3\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin}}/api/deleteProjectTopic",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"api",
+										"deleteProjectTopic"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Project Languages",
+					"item": [
+						{
+							"name": "Add Project Language",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"language\": \"Python\",\r\n    \"projectId\": 3\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin}}/api/addProjectLanguage",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"api",
+										"addProjectLanguage"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Project Languages",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"projectId\": 3\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin}}/api/getProjectLanguages",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"api",
+										"getProjectLanguages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remove Project Language",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"language\": \"Python\",\r\n    \"projectId\": 3\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin}}/api/deleteProjectLanguage",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"api",
+										"deleteProjectLanguage"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "User In Project",
+					"item": [
+						{
+							"name": "Add User In Project",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"test\",\r\n    \"projectId\": 2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin}}/api/addUserInProject",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"api",
+										"addUserInProject"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Users In Project",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"projectId\": 2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin}}/api/getUsersInProject",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"api",
+										"getUsersInProject"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remove User In Project",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"test\",\r\n    \"projectId\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin}}/api/deleteUserInProject",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"api",
+										"deleteUserInProject"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "User Favorite Project",
+					"item": [
+						{
+							"name": "Add User Fav Project",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"test\",\r\n    \"projectId\": 3\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin}}/api/addUserFavProject",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"api",
+										"addUserFavProject"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Users Fav Project",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"projectId\": 3\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin}}/api/getUsersFavProject",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"api",
+										"getUsersFavProject"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remove User Fav Project",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"test\",\r\n    \"projectId\": 3\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin}}/api/deleteUserFavProject",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"api",
+										"deleteUserFavProject"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Fill Projects",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/fillprojects",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"fillprojects"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get User Data",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{origin}}/api/getUserData?username=test",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"api",
+								"getUserData"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "test"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"User Deleted\", function () {\r",
+									"    const username = pm.variables.get(\"test_user\");\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.eql(`User ${username} deleted`);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"{{test_user}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin}}/api/deleteUser",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"api",
+								"deleteUser"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "origin",
+			"value": "http://dev-up.tech:5000"
+		},
+		{
+			"key": "test_user",
+			"value": "Mona_Lott_7a9f6574"
+		},
+		{
+			"key": "test_name",
+			"value": "Mona Lott"
+		},
+		{
+			"key": "test_password",
+			"value": "a0f20117c86c"
+		},
+		{
+			"key": "test_email",
+			"value": "Mona_Lott@example.com"
+		},
+		{
+			"key": "test_github",
+			"value": "https://github.com/Mona_Lott"
+		}
+	]
+}
