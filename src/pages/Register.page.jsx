@@ -138,7 +138,7 @@ const Register = () => {
           <RegisterPic style={{
             width: "200px",
             height: "200px"
-          }} />
+          }} data-testid="registerpic"/>
           <LRTitle>
             Register for DevUp
           </LRTitle>
@@ -156,6 +156,7 @@ const Register = () => {
             onSubmit={values => {
               onSubmitClick(values);
             }}
+            data-testid="inputs"
           >
             {formikProps => (
               <>
@@ -170,6 +171,7 @@ const Register = () => {
                         placeholder="Name*"
                         value={formikProps.values.name}
                         onIonChange={formikProps.handleChange}
+                        
                       />
                     </IonItem>
                     <ErrorMsg>
