@@ -44,9 +44,9 @@ function Header() {
     <IonHeader>
       <IonToolbar>
         <Link to='/explore' style={{ textDecoration: 'none' }}>
-          <Logo src={logo}/>
+          <Logo data-testid="headerLogo" src={logo}/>
         </Link>
-        <IonButtons slot="end">
+        <IonButtons slot="end" >
           {
             user ?
             <IonButton onClick={logOut}> <Icon icon={logOutOutline} />Log Out</IonButton>

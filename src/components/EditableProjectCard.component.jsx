@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useState, useContext } from "react";
 
-import { useState, useContext } from "react";
 import {
   IonCardContent,
   IonCol,
@@ -327,7 +326,7 @@ function EditableProjectCard(props) {
   return (
     <IonCol size="12" size-md="4" key={id}>
       {!editMode &&
-        <IonModal id="projmod" isOpen={showProject}>
+        <IonModal data-testid="viewCard" isOpen={showProject}>
           <ModalContent>
             <ModalContentView>
               <ProjTitle >{title}</ProjTitle>
@@ -368,7 +367,7 @@ function EditableProjectCard(props) {
         </IonModal>}
 
       {editMode &&
-        <IonModal id="projmod" isOpen={showProject}>
+        <IonModal data-testid="editCard" isOpen={showProject}>
           <ModalContent>
             <TitleInput
               value={eTitle}
@@ -466,7 +465,7 @@ function EditableProjectCard(props) {
         </IonModal>
       }
 
-      <Card onClick={() => setShowProject(true)}>
+      <Card data-testid="projectCard" onClick={() => setShowProject(true)}>
         <CardHeader>
           <Icon icon={personCircleOutline} />
           <Username>{owner}</Username>
