@@ -8,14 +8,7 @@ import {BrowserRouter as Router} from 'react-router-dom'
 import { IonReactRouter } from '@ionic/react-router';
 var React = require('react/addons');
 require('react-test-utils');
-// or var ReactTestUtils = require('react-test-utils');
-// var test = require('tape');
-// var Player = require('../../js/Player');
-// var sinon = require('sinon');
 var ReactTestUtils = React.addons.ReactTestUtils;
-// import { act } from 'react-dom/test-utils';
-// import { ionFireEvent as fireEvent } from '@ionic/react-test-utils';
-
 
 
 
