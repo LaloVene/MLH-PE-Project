@@ -10,7 +10,7 @@ describe('<ProjectTags />', () => {
         limit: true
     };
 
-    test('Profile Header is rendered', async () => {
+    test('Project Tags are rendered', async () => {
 
         const { getByText } = await render(<ProjectTags {...mockTags} />);
 
