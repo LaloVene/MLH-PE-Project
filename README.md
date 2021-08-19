@@ -5,6 +5,10 @@ By Michelle Shen, Eduardo Venegas, and Angela Wang
 
 **Deployment: https://dev-up.tech**
 
+[![License](https://img.shields.io/github/license/LaloVene/MLH-PE-Project)](https://github.com/LaloVene/MLH-PE-Project/blob/main/LICENSE)
+[![Monitoring](https://img.shields.io/website?url=https%3A%2F%2Fdev-up.tech)](https://dev-up.tech)
+
+
 ## 📖 Project Overview
 Ever want to work on a project with others but don't know where to get started? Introducing DevUp - A platform to help developers find teammates for side projects.
 
