@@ -133,9 +133,9 @@ function Home() {
 
       {/* Categories */}
       <section>
-        <Title>Explore by Category</Title>
+        <Title data-testid="cat">Explore by Category</Title>
         {categories.slice(0, 4).map((category) => (
-          <Link to={`/category/${category.name}`} data-testid="cat">
+          <Link to={`/category/${category.name}`} >
             <CategoryButton key={category.name}>
               {category.name}
             </CategoryButton>
@@ -148,7 +148,7 @@ function Home() {
       {/* Projects */}
       <section>
         <Title>{search ? "Search Results" : "Recommended for You"}</Title>
-        <IonRow>
+        <IonRow data-testid="projects">
           {filteredProjects.map((project) => {
             const { id, title, description, date, url, owner } = project;
 
