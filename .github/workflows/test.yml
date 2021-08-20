@@ -7,7 +7,7 @@ on:
     branches:
       - main
 
-name: Lint
+name: Test
 
 on:
   # Trigger the workflow on pull request,
@@ -17,8 +17,8 @@ on:
       - main
 
 jobs:
-  backend-linters:
-    name: Backend Linters
+  client-linters:
+    name: Client Linters
     runs-on: ubuntu-latest
 
     steps:
