@@ -140,6 +140,11 @@ POSTGRES_DB=[db_name]
  ```
  This will create a server running on localhost:5000 and a client running on localhost:3000. Data will be stored in a Docker volume.
  
+ ### AWS Configuration
+ - Instance:      AWS EC2
+ - Instance type: t2.small
+ - Traffic:       All
+ 
 ## 📝 Contributing
 Contributions are welcome! Please refer to the [Contributing](https://github.com/LaloVene/MLH-PE-Project/blob/main/CONTRIBUTING.md) guidelines.
 
