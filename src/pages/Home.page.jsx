@@ -1,3 +1,4 @@
+import React from "react";
 import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { IonRow } from "@ionic/react";
@@ -9,26 +10,25 @@ import GlobalContext from "../utils/state/GlobalContext";
 import { useJwt } from "react-jwt";
 import { Title, Separator } from "../components/PageComponents.styles";
 import PageContainer from '../components/PageContainer.component'
-import React from "react";
 
 function Home() {
   const [search, setSearch] = useState('');
   const [projectList, setProjectList] = useState([]);
   const [categories, setCategories] = useState([]);
   const [filteredProjects, setFilteredProjects] = useState(projectList);
-  const [tops, setTops] = useState([])
-  const [langs, setLangs] = useState([])
-  const [users, setUsers] = useState([])
+  const [tops, setTops] = useState(new Map())
+  const [langs, setLangs] = useState(new Map())
+  const [users, setUsers] = useState(new Map())
 
   const { state } = useContext(GlobalContext);
-  
+
   var decodedToken;
   decodedToken = useJwt(state.token);
 
   useEffect(() => {
     fetch('/api/getProjects').then(res => res.json()).then(async data => {
       setProjectList(data.projects)
-      
+
       var langdict = new Map();
       var topdict = new Map();
       var userdict = new Map();
@@ -86,7 +86,7 @@ function Home() {
       setLangs(langdict)
       setUsers(userdict)
 
-    }).catch(e=>console.log(e))
+    }).catch(e => console.log(e))
   }, [])
 
 
@@ -96,8 +96,8 @@ function Home() {
       filteredProjects = filteredProjects.filter((p) => {
         return (p.owner !== decodedToken.decodedToken.username);
       });
-      
-    } 
+
+    }
     if (search) {
       filteredProjects = filteredProjects.filter((p) => {
         return (p.title.toLowerCase().includes(search.toLowerCase()));
@@ -116,7 +116,7 @@ function Home() {
       const data = await response.json();
       setCategories(data.topics)
     }
-    fetchData().catch((e)=>console.log(e));
+    fetchData().catch((e) => console.log(e));
   }, []);
 
   return (
@@ -159,9 +159,9 @@ function Home() {
                 url={url}
                 owner={owner}
                 id={id}
-                languages={langs[id]}
-                topics={tops[id]}
-                collabs={users[id]}
+                languages={langs.get(id)}
+                topics={tops.get(id)}
+                collabs={users.get(id)}
                 showContactButton={true}
               />
             );
