@@ -17,8 +17,8 @@ on:
       - main
 
 jobs:
-  client-linters:
-    name: Client Linters
+  client-test:
+    name: Client test
     runs-on: ubuntu-latest
 
     steps:
