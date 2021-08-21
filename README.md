@@ -10,9 +10,9 @@ By Michelle Shen, Eduardo Venegas, and Angela Wang
 
 
 ## 📖 Project Overview
-Ever want to work on a project with others but don't know where to get started? Introducing DevUp - A platform to help developers find teammates for side projects.
+Ever wanted to work on a project with others but don't know where to get started? Introducing DevUp - a platform to help developers find teammates for side projects.
 
-Developers can search for projects that they are interested in, and contact the current team members of the project to learn more about them and join their team. Developers that already have an project idea can make a post on DevUp to display it to other seeking developers and find new team members.
+Developers can search for projects that they are interested in, and contact the current team members of the project to learn more about them and join their team. Developers that already have an project idea can make a post on DevUp to display it to other project-seeking developers and find new team members.
 
 ## 📍 Table of Contents
 - [Technologies Used](https://github.com/LaloVene/MLH-PE-Project#-technologies-used)
@@ -43,17 +43,17 @@ Developers can search for projects that they are interested in, and contact the 
 ## 📚 Architecture
 The architecture is highly modularized, where every service has its own container and is independent from the others.
 - The Nginx service container loads the SSL certificate and has a reverse proxy to connect the client app and the monitoring tools.
-- The Client and API containers get their images by pulling from our Github Package Registry. These images are built in the CI/CD workflow with Github Actions.
+- The Client and API containers get their images by pulling from our Github Package Registry. These images are built into the CI/CD workflow with Github Actions.
 - The API image is only accesible via the internal Nginx service in the Client container. On top of that, the API container connects to a Database contianer that has its own volume for data persistance.
 - The Monitoring containers are accessible by their own routes or ports and have volumes to keep their data persistant.
 ![DOCKER ARCHITECTURE](https://user-images.githubusercontent.com/54692916/129938902-fccfd75c-d9e9-4366-8167-0077ea170052.png)
 
 ## 🤖 CI/CD
-This project has a full Continuos Integration and Delivery system.
+This project has a full Continuous Integration and Delivery system.
 - All code is tested the moment a pull request is created using Linters and Unit Tests (Postman Testsing and Jest).
-- When all tests pass merging with main is possible.
-- Continuos Delivery is triggered, Github Actions builds the Client and API images and pushes them into a Github Package Registry.
-- Finally Github Actions SSH into the AWS instance, pulls the new images, stops the current docker compose and runs it again.
+- You can merge into main when all tests pass 
+- When Continuous Delivery is triggered, Github Actions builds the Client and API images and pushes them into a Github Package Registry.
+- Finally, Github Actions SSHs into the AWS instance, pulls the new images, stops the current docker compose and runs it again.
 ![CI_CD](https://user-images.githubusercontent.com/54692916/130151094-c816d17d-f13a-4995-8473-9658d3342949.png)
 
 ## 🔍 Site Overview
@@ -74,7 +74,7 @@ The Categories Page shows all available topics and users can click on a topic to
 ### Projects Page
 ![Projects Page](https://user-images.githubusercontent.com/74735037/129464603-7b70f2f4-2e11-49cf-bf95-a0138f8143ea.png)
 ![Project example](https://user-images.githubusercontent.com/74735037/129464596-38fe0434-7f54-4ba9-a5a4-f728f71dd63e.png)
-The Projects Page displays all of the projects that the user is contributing to. It is also where the user can post about their own project to look for other developers.
+The Projects Page displays all of the projects that the user is contributing to. It is also where the user can post about their own project to look for other developers, and make edits to their post when necessary. 
 
 
 ### Profile Page
